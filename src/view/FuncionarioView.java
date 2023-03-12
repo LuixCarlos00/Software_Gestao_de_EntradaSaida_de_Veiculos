@@ -39,7 +39,7 @@ public class FuncionarioView extends javax.swing.JInternalFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        Tabela_funcionarios = new javax.swing.JTable();
         textSetor = new javax.swing.JFormattedTextField();
         textNome = new javax.swing.JFormattedTextField();
         ID = new javax.swing.JLabel();
@@ -86,7 +86,7 @@ public class FuncionarioView extends javax.swing.JInternalFrame {
 
         jLabel4.setText("SETOR:");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        Tabela_funcionarios.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
                 {null, null, null, null, null},
@@ -112,7 +112,7 @@ public class FuncionarioView extends javax.swing.JInternalFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(Tabela_funcionarios);
 
         ID.setText("ID:");
 
@@ -362,8 +362,7 @@ public class FuncionarioView extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_jbPesquisarActionPerformed
 
-    
-    
+   
     private void limparCampos() {
         textID.setText("");
         textCPF.setText("");
@@ -375,12 +374,12 @@ public class FuncionarioView extends javax.swing.JInternalFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel ID;
+    private javax.swing.JTable Tabela_funcionarios;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JButton jbApagar;
     private javax.swing.JButton jbEditar;
     private javax.swing.JButton jbNovo;
