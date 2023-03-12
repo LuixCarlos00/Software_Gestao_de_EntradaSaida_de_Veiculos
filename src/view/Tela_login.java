@@ -4,6 +4,7 @@
  */
 package view;
 
+import controller.UsuarioController;
 import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
 import model.UsuarioModel;
@@ -140,7 +141,7 @@ public class Tela_login extends javax.swing.JFrame {
             UsuarioModel usuario = new UsuarioModel();
             usuario.setLogin_usuario(String(textUsuario.getText()));
             usuario.setSenha_usuario(String(textSenha.getText()));
-           // UsuarioModel usuario_Encontrado = CadastroUsuario.selecionar(usuario);
+           //UsuarioModel usuario_Encontrado = UsuarioController.selecionar(usuario);
         
         
         if (this.ChecarLogin(textUsuario.getText(), textSenha.getText())) {

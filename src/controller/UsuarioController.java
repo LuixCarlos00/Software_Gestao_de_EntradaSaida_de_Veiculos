@@ -20,7 +20,7 @@ public class UsuarioController {
     
     
      public static boolean inserir (UsuarioModel usuario){
-     String sql = "insert into cadastro_usuario(usuario,senha) values (?,?);";
+     String sql = "insert into usuarios (nome ,senha) values (?,?);";
     boolean retorno = false;
         Conexao.conectar();   
          try {
@@ -43,7 +43,11 @@ public class UsuarioController {
         
     }
     
+    public static boolean selecionar (UsuarioModel usuario){
+    String sql = "select into cadastro_usuario(usuario,senha) values (?,?);";
+         return false;
     
+    }
      
     
     
