@@ -1,22 +1,89 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JInternalFrame.java to edit this template
- */
 package view;
 
-/**
- *
- * @author luixc
- */
+import controller.VeiculoController;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import model.VeiculoModel;
+
 public class VeiculoView extends javax.swing.JInternalFrame {
 
-    /**
-     * Creates new form VeiculoView
-     */
     public VeiculoView() {
         initComponents();
+        carregarTabela();
+        
+        //Ao abrir a janela, desabilita os campos de texto e os botões Salvar, Editar e Excluir
+        jtfID.setEditable(false);
+        jtfPlaca.setEditable(false);
+        jtfMarca.setEditable(false);
+        jtfModelo.setEditable(false);
+        jftfAno.setEditable(false);
+        
+        jbSalvar.setEnabled(false);
+        jbEditar.setEnabled(false);
+        jbExcluir.setEnabled(false);
     }
 
+    public void resetTela() {
+        //Ativa os botões Novo e Limpar e a tabela
+        jbNovo.setEnabled(true);
+        jbLimpar.setEnabled(true);
+        jtVeiculos.setEnabled(true);
+        
+        //Desativa os outros botões e campos de texto
+        jbSalvar.setEnabled(false);
+        jbEditar.setEnabled(false);
+        jbExcluir.setEnabled(false);
+        jtfPlaca.setEditable(false);
+        jtfMarca.setEditable(false);
+        jtfModelo.setEditable(false);
+        jftfAno.setEditable(false);
+        
+        //Esvazia todos os campos de texto
+        jtfID.setText("");
+        jtfPlaca.setText("");
+        jtfMarca.setText("");
+        jtfModelo.setText("");
+        jftfAno.setText("");
+        
+        //Recarrega a tabela
+        carregarTabela();
+    }
+    
+    public void ativarEdicao() {
+        //Desabilita os botões Novo, Editar, Excluir e Limpar
+        jbNovo.setEnabled(false);
+        jbEditar.setEnabled(false);
+        jbExcluir.setEnabled(false);
+        jbLimpar.setEnabled(false);
+        jtVeiculos.setEnabled(false);
+        
+        //Habilita o botão Salvar e os campos de texto
+        jbSalvar.setEnabled(true);
+        jtfPlaca.setEditable(true);
+        jtfMarca.setEditable(true);
+        jtfModelo.setEditable(true);
+        jftfAno.setEditable(true);
+    }
+    
+    public void carregarTabela() {
+        
+        ArrayList <VeiculoModel> veiculos = VeiculoController.selecionarTodos();
+        DefaultTableModel modelo = (DefaultTableModel)jtVeiculos.getModel();
+        modelo.setRowCount(0);
+        
+        for (int i = 0; i < veiculos.size(); i++) {
+            modelo.addRow(new String[]{
+                String.valueOf(veiculos.get(i).getId()), 
+                veiculos.get(i).getPlaca(),
+                veiculos.get(i).getMarca(),
+                veiculos.get(i).getModelo(),
+                Integer.toString(veiculos.get(i).getAno()),
+                veiculos.get(i).getStatus()
+            });
+        }
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -26,63 +93,79 @@ public class VeiculoView extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jFormattedTextField1 = new javax.swing.JFormattedTextField();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
-        jLabel5 = new javax.swing.JLabel();
-        jTextField5 = new javax.swing.JTextField();
+        jbNovo = new javax.swing.JButton();
+        jbSalvar = new javax.swing.JButton();
+        jbEditar = new javax.swing.JButton();
+        jbExcluir = new javax.swing.JButton();
+        jlMarca = new javax.swing.JLabel();
+        jlAno = new javax.swing.JLabel();
+        jlPlaca = new javax.swing.JLabel();
+        jftfAno = new javax.swing.JFormattedTextField();
+        jsVeiculos = new javax.swing.JScrollPane();
+        jtVeiculos = new javax.swing.JTable();
+        jtfMarca = new javax.swing.JTextField();
+        jtfPlaca = new javax.swing.JTextField();
+        jlModelo = new javax.swing.JLabel();
+        jtfModelo = new javax.swing.JTextField();
+        jlID = new javax.swing.JLabel();
+        jtfID = new javax.swing.JTextField();
+        jbLimpar = new javax.swing.JButton();
 
         setClosable(true);
+        setTitle("Cadastro de Veículos");
 
-        jButton1.setText("NOVO");
+        jbNovo.setText("Novo");
+        jbNovo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbNovoActionPerformed(evt);
+            }
+        });
 
-        jButton2.setText("SALVAR");
+        jbSalvar.setText("Salvar");
+        jbSalvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbSalvarActionPerformed(evt);
+            }
+        });
 
-        jButton3.setText("EDITAR");
+        jbEditar.setText("Editar");
+        jbEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbEditarActionPerformed(evt);
+            }
+        });
 
-        jButton4.setText("APAGAR");
+        jbExcluir.setText("Excluir");
+        jbExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbExcluirActionPerformed(evt);
+            }
+        });
 
-        jLabel1.setText("MARCA");
+        jlMarca.setText("Marca:");
 
-        jLabel2.setText("MODELO");
+        jlAno.setText("Ano:");
 
-        jLabel3.setText("ANO");
+        jlPlaca.setText("Placa:");
 
-        jLabel4.setText("PLACA");
+        jftfAno.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
 
-        try {
-            jFormattedTextField1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("####")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jtVeiculos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "MARCA", "NOME", "ANO", "MODELO", "PLACA"
+                "ID", "Placa", "Marca", "Modelo", "Ano", "Status"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.Object.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, true, false, false, false
+                false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -93,110 +176,209 @@ public class VeiculoView extends javax.swing.JInternalFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        jtVeiculos.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_LAST_COLUMN);
+        jtVeiculos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jtVeiculosMouseClicked(evt);
+            }
+        });
+        jsVeiculos.setViewportView(jtVeiculos);
 
-        jTextField3.addActionListener(new java.awt.event.ActionListener() {
+        jtfMarca.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField3ActionPerformed(evt);
+                jtfMarcaActionPerformed(evt);
             }
         });
 
-        jLabel5.setText("NOME");
+        jlModelo.setText("Modelo:");
+
+        jlID.setText("ID:");
+
+        jbLimpar.setText("Limpar seleção");
+        jbLimpar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbLimparActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(25, 25, 25)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton1)
-                        .addGap(138, 138, 138)
-                        .addComponent(jButton4)
-                        .addGap(167, 167, 167)
-                        .addComponent(jButton3)
-                        .addGap(114, 114, 114)
-                        .addComponent(jButton2))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(13, 13, 13)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel4))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jlModelo)
+                                .addGap(11, 11, 11))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jlAno, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jlMarca, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jlPlaca, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jlID, javax.swing.GroupLayout.Alignment.TRAILING))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jtfID)
+                            .addComponent(jtfPlaca)
+                            .addComponent(jtfMarca)
+                            .addComponent(jtfModelo)
+                            .addComponent(jftfAno)))
+                    .addComponent(jbLimpar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jbEditar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jbNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(4, 4, 4)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 497, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(0, 10, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jbExcluir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jbSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(18, 18, 18)
+                .addComponent(jsVeiculos, javax.swing.GroupLayout.DEFAULT_SIZE, 533, Short.MAX_VALUE)
+                .addGap(17, 17, 17))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(19, 19, 19)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton1)
-                    .addComponent(jButton4)
-                    .addComponent(jButton3)
-                    .addComponent(jButton2))
-                .addGap(46, 46, 46)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(20, 20, 20)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jsVeiculos, javax.swing.GroupLayout.PREFERRED_SIZE, 326, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(15, 15, 15)
-                        .addComponent(jLabel1)
-                        .addGap(23, 23, 23)
-                        .addComponent(jLabel5)
-                        .addGap(24, 24, 24)
-                        .addComponent(jLabel3)
-                        .addGap(24, 24, 24)
-                        .addComponent(jLabel2)
-                        .addGap(27, 27, 27)
-                        .addComponent(jLabel4))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(12, 12, 12)
-                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(17, 17, 17)
-                        .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jbNovo)
+                            .addComponent(jbSalvar))
                         .addGap(18, 18, 18)
-                        .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jbEditar)
+                            .addComponent(jbExcluir))
                         .addGap(18, 18, 18)
-                        .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(21, 21, 21)
-                        .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(25, Short.MAX_VALUE))
+                        .addComponent(jbLimpar)
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jtfID, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jlID))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jlPlaca)
+                            .addComponent(jtfPlaca, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(20, 20, 20)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jlMarca)
+                            .addComponent(jtfMarca, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(20, 20, 20)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jlModelo)
+                            .addComponent(jtfModelo, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(20, 20, 20)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jlAno)
+                            .addComponent(jftfAno, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(23, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
+    private void jbNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbNovoActionPerformed
+        jtfID.setText("");
+        jtfPlaca.setText("");
+        jtfMarca.setText("");
+        jtfModelo.setText("");
+        jftfAno.setText("");
+        ativarEdicao();
+    }//GEN-LAST:event_jbNovoActionPerformed
+
+    private void jbSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSalvarActionPerformed
+        
+        VeiculoModel veiculo = new VeiculoModel();
+        
+        //Se o campo ID está vazio, o botão Novo foi pressionado
+        if ("".equals(jtfID.getText())) {
+            veiculo.setPlaca(jtfPlaca.getText());
+            veiculo.setMarca(jtfMarca.getText());
+            veiculo.setModelo(jtfModelo.getText());
+            veiculo.setAno(Integer.parseInt(jftfAno.getText()));
+
+            if (VeiculoController.inserir(veiculo)) 
+                JOptionPane.showMessageDialog(this, "Veículo cadastrado com sucesso.");
+            else
+                JOptionPane.showMessageDialog(this, "Erro ao cadastrar o veículo.");
+        }
+        
+        //Caso contrário, uma linha da tabela foi selecionada e o botão Editar foi pressionado
+        else {
+            veiculo.setId(Integer.parseInt(jtfID.getText()));
+            veiculo.setPlaca(jtfPlaca.getText());
+            veiculo.setMarca(jtfMarca.getText());
+            veiculo.setModelo(jtfModelo.getText());
+
+            if(VeiculoController.editar(veiculo))
+                JOptionPane.showMessageDialog(this, "Os dados do veículo foram atualizados com sucesso.");
+            else
+                JOptionPane.showMessageDialog(this, "Erro ao atualizar dados do veículo.");
+        }
+
+        resetTela();
+    }//GEN-LAST:event_jbSalvarActionPerformed
+
+    private void jtVeiculosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtVeiculosMouseClicked
+        int linha = jtVeiculos.getSelectedRow();
+        DefaultTableModel modelo = (DefaultTableModel)jtVeiculos.getModel();
+        
+        jtfID.setText((modelo.getValueAt(linha, 0)).toString());
+        jtfPlaca.setText((modelo.getValueAt(linha, 1)).toString());
+        jtfMarca.setText((modelo.getValueAt(linha,2)).toString());
+        jtfModelo.setText((modelo.getValueAt(linha,3)).toString());
+        jftfAno.setText((modelo.getValueAt(linha,4)).toString());
+        
+        jbEditar.setEnabled(true);
+        jbExcluir.setEnabled(true);
+    }//GEN-LAST:event_jtVeiculosMouseClicked
+
+    private void jbEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEditarActionPerformed
+        ativarEdicao();
+    }//GEN-LAST:event_jbEditarActionPerformed
+
+    private void jbExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbExcluirActionPerformed
+        VeiculoModel veiculo = new VeiculoModel();
+        veiculo.setId(Integer.parseInt(jtfID.getText()));
+        
+        if(VeiculoController.excluir(veiculo))
+            JOptionPane.showMessageDialog(this, "Veículo excluído com sucesso.");
+        else
+            JOptionPane.showMessageDialog(this, "Erro ao excluir o veículo.");
+        
+        resetTela();
+    }//GEN-LAST:event_jbExcluirActionPerformed
+
+    private void jbLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbLimparActionPerformed
+        resetTela();
+    }//GEN-LAST:event_jbLimparActionPerformed
+
+    private void jtfMarcaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfMarcaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField3ActionPerformed
+    }//GEN-LAST:event_jtfMarcaActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JFormattedTextField jFormattedTextField1;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
+    private javax.swing.JButton jbEditar;
+    private javax.swing.JButton jbExcluir;
+    private javax.swing.JButton jbLimpar;
+    private javax.swing.JButton jbNovo;
+    private javax.swing.JButton jbSalvar;
+    private javax.swing.JFormattedTextField jftfAno;
+    private javax.swing.JLabel jlAno;
+    private javax.swing.JLabel jlID;
+    private javax.swing.JLabel jlMarca;
+    private javax.swing.JLabel jlModelo;
+    private javax.swing.JLabel jlPlaca;
+    private javax.swing.JScrollPane jsVeiculos;
+    private javax.swing.JTable jtVeiculos;
+    private javax.swing.JTextField jtfID;
+    private javax.swing.JTextField jtfMarca;
+    private javax.swing.JTextField jtfModelo;
+    private javax.swing.JTextField jtfPlaca;
     // End of variables declaration//GEN-END:variables
 }

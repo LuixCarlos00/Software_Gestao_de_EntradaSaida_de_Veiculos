@@ -138,9 +138,9 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_Cadastro_FuncionarioActionPerformed
 
     private void Cadastro_veiculoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Cadastro_veiculoActionPerformed
-        VisualizarEntradaeSaidaView  entrada_saida = new VisualizarEntradaeSaidaView();
-        Area_trabalho.add(entrada_saida);
-        entrada_saida.setVisible(true);
+        VeiculoView veiculo = new VeiculoView();
+        Area_trabalho.add(veiculo);
+        veiculo.setVisible(true);
     }//GEN-LAST:event_Cadastro_veiculoActionPerformed
 
     private void Nova_Entrada_SaidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Nova_Entrada_SaidaActionPerformed
