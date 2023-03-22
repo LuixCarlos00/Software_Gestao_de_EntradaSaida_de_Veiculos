@@ -13,7 +13,7 @@ import util.Conexao;
 
 public class VeiculoController {
     
-    public static boolean inserir(VeiculoModel veiculo) {
+    public boolean inserir(VeiculoModel veiculo) {
         String sql = "INSERT INTO veiculos (placa,marca,modelo,ano,status) VALUES (?,?,?,?,?);";
         boolean retorno = false;
         Conexao.conectar();
@@ -37,7 +37,7 @@ public class VeiculoController {
         return retorno;
     }
     
-    public static VeiculoModel selecionar(VeiculoModel veiculo){
+    public VeiculoModel selecionar(VeiculoModel veiculo){
         String sql = "SELECT * FROM veiculos WHERE id = ?;";
         VeiculoModel modeloEncontrado = null;
         Conexao.conectar();
@@ -67,7 +67,7 @@ public class VeiculoController {
         return modeloEncontrado;
     }
     
-    public static boolean editar(VeiculoModel veiculo) {
+    public boolean editar(VeiculoModel veiculo) {
         String sql = "UPDATE veiculos SET placa = ?, marca = ?, modelo = ?, ano = ? WHERE id = ?;";
         boolean retorno = false;
         Conexao.conectar();
@@ -91,7 +91,7 @@ public class VeiculoController {
         return retorno;
     }
     
-    public static boolean excluir(VeiculoModel veiculo) {
+    public boolean excluir(VeiculoModel veiculo) {
         String sql = "DELETE FROM veiculos WHERE id = ?;";
         boolean retorno = false;
         Conexao.conectar();
@@ -111,7 +111,7 @@ public class VeiculoController {
         return retorno;
     }
     
-    public static ArrayList <VeiculoModel> selecionarTodos() {
+    public ArrayList <VeiculoModel> selecionarTodos() {
         ArrayList<VeiculoModel> veiculos = new ArrayList<>();
         String sql = "SELECT * FROM veiculos";
         Conexao.conectar();

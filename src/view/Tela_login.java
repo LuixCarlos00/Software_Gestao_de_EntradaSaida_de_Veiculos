@@ -158,7 +158,7 @@ public class Tela_login extends javax.swing.JFrame {
     }//GEN-LAST:event_jBEntrarActionPerformed
 
     public boolean ChecarLogin(String usuario, String senha) {
-        return usuario.equals(this.textUsuario) && senha.equals(this.textSenha);
+        return usuario.equals("admin") && senha.equals("admin");
 
     }
     private void textSenhaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textSenhaKeyPressed

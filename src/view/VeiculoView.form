@@ -50,16 +50,19 @@
                           <Component id="jftfAno" alignment="0" max="32767" attributes="0"/>
                       </Group>
                   </Group>
-                  <Component id="jbLimpar" alignment="0" max="32767" attributes="0"/>
                   <Group type="102" alignment="1" attributes="0">
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="jbEditar" max="32767" attributes="0"/>
-                          <Component id="jbNovo" alignment="0" min="-2" pref="80" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="1" attributes="0">
+                          <Component id="jbSalvar" min="-2" pref="80" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                              <Component id="jbEditar" alignment="0" max="32767" attributes="0"/>
+                              <Component id="jbNovo" alignment="0" pref="80" max="32767" attributes="0"/>
+                          </Group>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="jbExcluir" max="32767" attributes="0"/>
-                          <Component id="jbSalvar" min="-2" pref="80" max="-2" attributes="0"/>
+                          <Component id="jbExcluir" pref="80" max="32767" attributes="0"/>
+                          <Component id="jbLimpar" alignment="1" max="32767" attributes="0"/>
+                          <Component id="jbCancelar" alignment="0" max="32767" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -78,7 +81,7 @@
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jbNovo" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jbSalvar" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jbLimpar" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
@@ -86,7 +89,10 @@
                           <Component id="jbExcluir" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="jbLimpar" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="jbSalvar" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jbCancelar" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jtfID" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
@@ -251,10 +257,18 @@
     </Component>
     <Component class="javax.swing.JButton" name="jbLimpar">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Limpar sele&#xe7;&#xe3;o"/>
+        <Property name="text" type="java.lang.String" value="Limpar"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbLimparActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="jbCancelar">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Cancelar"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbCancelarActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

@@ -7,9 +7,11 @@ import javax.swing.table.DefaultTableModel;
 import model.VeiculoModel;
 
 public class VeiculoView extends javax.swing.JInternalFrame {
-
+    VeiculoController v = new VeiculoController();
+    
     public VeiculoView() {
         initComponents();
+        
         carregarTabela();
         
         //Ao abrir a janela, desabilita os campos de texto e os botões Salvar, Editar e Excluir
@@ -22,6 +24,7 @@ public class VeiculoView extends javax.swing.JInternalFrame {
         jbSalvar.setEnabled(false);
         jbEditar.setEnabled(false);
         jbExcluir.setEnabled(false);
+        jbCancelar.setEnabled(false);
     }
 
     public void resetTela() {
@@ -34,6 +37,7 @@ public class VeiculoView extends javax.swing.JInternalFrame {
         jbSalvar.setEnabled(false);
         jbEditar.setEnabled(false);
         jbExcluir.setEnabled(false);
+        jbCancelar.setEnabled(false);
         jtfPlaca.setEditable(false);
         jtfMarca.setEditable(false);
         jtfModelo.setEditable(false);
@@ -58,8 +62,9 @@ public class VeiculoView extends javax.swing.JInternalFrame {
         jbLimpar.setEnabled(false);
         jtVeiculos.setEnabled(false);
         
-        //Habilita o botão Salvar e os campos de texto
+        //Habilita o botão Salvar e Cancelar e os campos de texto
         jbSalvar.setEnabled(true);
+        jbCancelar.setEnabled(true);
         jtfPlaca.setEditable(true);
         jtfMarca.setEditable(true);
         jtfModelo.setEditable(true);
@@ -68,7 +73,7 @@ public class VeiculoView extends javax.swing.JInternalFrame {
     
     public void carregarTabela() {
         
-        ArrayList <VeiculoModel> veiculos = VeiculoController.selecionarTodos();
+        ArrayList <VeiculoModel> veiculos = v.selecionarTodos();
         DefaultTableModel modelo = (DefaultTableModel)jtVeiculos.getModel();
         modelo.setRowCount(0);
         
@@ -110,6 +115,7 @@ public class VeiculoView extends javax.swing.JInternalFrame {
         jlID = new javax.swing.JLabel();
         jtfID = new javax.swing.JTextField();
         jbLimpar = new javax.swing.JButton();
+        jbCancelar = new javax.swing.JButton();
 
         setClosable(true);
         setTitle("Cadastro de Veículos");
@@ -194,10 +200,17 @@ public class VeiculoView extends javax.swing.JInternalFrame {
 
         jlID.setText("ID:");
 
-        jbLimpar.setText("Limpar seleção");
+        jbLimpar.setText("Limpar");
         jbLimpar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbLimparActionPerformed(evt);
+            }
+        });
+
+        jbCancelar.setText("Cancelar");
+        jbCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbCancelarActionPerformed(evt);
             }
         });
 
@@ -226,15 +239,17 @@ public class VeiculoView extends javax.swing.JInternalFrame {
                             .addComponent(jtfMarca)
                             .addComponent(jtfModelo)
                             .addComponent(jftfAno)))
-                    .addComponent(jbLimpar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jbEditar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jbNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jbSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(jbEditar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jbNovo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jbExcluir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jbSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(jbExcluir, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)
+                            .addComponent(jbLimpar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jbCancelar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addGap(18, 18, 18)
                 .addComponent(jsVeiculos, javax.swing.GroupLayout.DEFAULT_SIZE, 533, Short.MAX_VALUE)
                 .addGap(17, 17, 17))
@@ -248,13 +263,15 @@ public class VeiculoView extends javax.swing.JInternalFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jbNovo)
-                            .addComponent(jbSalvar))
+                            .addComponent(jbLimpar))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jbEditar)
                             .addComponent(jbExcluir))
                         .addGap(18, 18, 18)
-                        .addComponent(jbLimpar)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jbSalvar)
+                            .addComponent(jbCancelar))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jtfID, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -300,8 +317,8 @@ public class VeiculoView extends javax.swing.JInternalFrame {
             veiculo.setMarca(jtfMarca.getText());
             veiculo.setModelo(jtfModelo.getText());
             veiculo.setAno(Integer.parseInt(jftfAno.getText()));
-
-            if (VeiculoController.inserir(veiculo)) 
+            
+            if (v.inserir(veiculo)) 
                 JOptionPane.showMessageDialog(this, "Veículo cadastrado com sucesso.");
             else
                 JOptionPane.showMessageDialog(this, "Erro ao cadastrar o veículo.");
@@ -314,7 +331,7 @@ public class VeiculoView extends javax.swing.JInternalFrame {
             veiculo.setMarca(jtfMarca.getText());
             veiculo.setModelo(jtfModelo.getText());
 
-            if(VeiculoController.editar(veiculo))
+            if(v.editar(veiculo))
                 JOptionPane.showMessageDialog(this, "Os dados do veículo foram atualizados com sucesso.");
             else
                 JOptionPane.showMessageDialog(this, "Erro ao atualizar dados do veículo.");
@@ -345,7 +362,7 @@ public class VeiculoView extends javax.swing.JInternalFrame {
         VeiculoModel veiculo = new VeiculoModel();
         veiculo.setId(Integer.parseInt(jtfID.getText()));
         
-        if(VeiculoController.excluir(veiculo))
+        if(v.excluir(veiculo))
             JOptionPane.showMessageDialog(this, "Veículo excluído com sucesso.");
         else
             JOptionPane.showMessageDialog(this, "Erro ao excluir o veículo.");
@@ -361,8 +378,13 @@ public class VeiculoView extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jtfMarcaActionPerformed
 
+    private void jbCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCancelarActionPerformed
+        resetTela();
+    }//GEN-LAST:event_jbCancelarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jbCancelar;
     private javax.swing.JButton jbEditar;
     private javax.swing.JButton jbExcluir;
     private javax.swing.JButton jbLimpar;
