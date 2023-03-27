@@ -10,9 +10,6 @@ package view;
  */
 public class Principal extends javax.swing.JFrame {
 
-    /**
-     * Creates new form Principlal
-     */
     public Principal() {
         initComponents();
     }
@@ -43,7 +40,7 @@ public class Principal extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        Area_trabalho.setBackground(new java.awt.Color(153, 153, 255));
+        Area_trabalho.setBackground(new java.awt.Color(50, 50, 50));
         Area_trabalho.setPreferredSize(new java.awt.Dimension(809, 606));
 
         javax.swing.GroupLayout Area_trabalhoLayout = new javax.swing.GroupLayout(Area_trabalho);
@@ -129,6 +126,7 @@ public class Principal extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void Cadastro_FuncionarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Cadastro_FuncionarioActionPerformed
@@ -157,8 +155,8 @@ public class Principal extends javax.swing.JFrame {
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         setVisible(false);
-        Tela_login tela = new Tela_login();
-        tela.setVisible(true);
+        LoginView login = new LoginView();
+        login.setVisible(true);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     /**

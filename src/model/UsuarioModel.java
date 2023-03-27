@@ -1,31 +1,57 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package model;
 
-/**
- *
- * @author luixc
- */
 public class UsuarioModel {
 
-    private String senha_Usuario;
-    private String login_Usuario;
+    private int id;
+    private String nome;
+    private String senha;
+    private String admin;
 
-    public String getSenha_usuario() {
-        return senha_Usuario;
+    public UsuarioModel(int id, String nome, String senha, String admin) {
+        this.id = id;
+        this.nome = nome;
+        this.senha = senha;
+        this.admin = admin;
+    }
+    
+    public UsuarioModel() {
+        id = 0;
+        nome = "";
+        senha = "";
+        admin = "N";
     }
 
-    public void setSenha_usuario(String senha_usuario) {
-        this.senha_Usuario = senha_usuario;
+    public int getId() {
+        return id;
     }
 
-    public String getLogin_usuario() {
-        return login_Usuario;
+    public void setId(int id) {
+        this.id = id;
+    }
+    
+    public String getNome() {
+        return nome;
     }
 
-    public void setLogin_usuario(String login_usuario) {
-        this.login_Usuario = login_usuario;
+    public void setNome(String nome) {
+        this.nome = nome;
     }
+
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
+    }
+
+    public String getAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(String admin) {
+        this.admin = admin;
+    }
+
+    
 }

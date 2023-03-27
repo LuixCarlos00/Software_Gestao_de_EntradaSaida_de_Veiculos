@@ -8,6 +8,7 @@ import model.VeiculoModel;
 
 public class VeiculoView extends javax.swing.JInternalFrame {
     VeiculoController v = new VeiculoController();
+    boolean tabelaAtiva = true;
     
     public VeiculoView() {
         initComponents();
@@ -28,10 +29,9 @@ public class VeiculoView extends javax.swing.JInternalFrame {
     }
 
     public void resetTela() {
-        //Ativa os botões Novo e Limpar e a tabela
+        //Ativa os botões Novo e Limpar
         jbNovo.setEnabled(true);
         jbLimpar.setEnabled(true);
-        jtVeiculos.setEnabled(true);
         
         //Desativa os outros botões e campos de texto
         jbSalvar.setEnabled(false);
@@ -52,6 +52,8 @@ public class VeiculoView extends javax.swing.JInternalFrame {
         
         //Recarrega a tabela
         carregarTabela();
+        //Altera o status da flag que ativa o evento de clique na tabela para true
+        tabelaAtiva = true;
     }
     
     public void ativarEdicao() {
@@ -60,7 +62,6 @@ public class VeiculoView extends javax.swing.JInternalFrame {
         jbEditar.setEnabled(false);
         jbExcluir.setEnabled(false);
         jbLimpar.setEnabled(false);
-        jtVeiculos.setEnabled(false);
         
         //Habilita o botão Salvar e Cancelar e os campos de texto
         jbSalvar.setEnabled(true);
@@ -69,6 +70,9 @@ public class VeiculoView extends javax.swing.JInternalFrame {
         jtfMarca.setEditable(true);
         jtfModelo.setEditable(true);
         jftfAno.setEditable(true);
+        
+        //Altera o status da flag que ativa o evento de clique na tabela para false
+        tabelaAtiva = false;
     }
     
     public void carregarTabela() {
@@ -341,17 +345,21 @@ public class VeiculoView extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jbSalvarActionPerformed
 
     private void jtVeiculosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtVeiculosMouseClicked
-        int linha = jtVeiculos.getSelectedRow();
-        DefaultTableModel modelo = (DefaultTableModel)jtVeiculos.getModel();
         
-        jtfID.setText((modelo.getValueAt(linha, 0)).toString());
-        jtfPlaca.setText((modelo.getValueAt(linha, 1)).toString());
-        jtfMarca.setText((modelo.getValueAt(linha,2)).toString());
-        jtfModelo.setText((modelo.getValueAt(linha,3)).toString());
-        jftfAno.setText((modelo.getValueAt(linha,4)).toString());
+        if(tabelaAtiva == true) {
+            int linha = jtVeiculos.getSelectedRow();
+            DefaultTableModel modelo = (DefaultTableModel)jtVeiculos.getModel();
+
+            jtfID.setText((modelo.getValueAt(linha, 0)).toString());
+            jtfPlaca.setText((modelo.getValueAt(linha, 1)).toString());
+            jtfMarca.setText((modelo.getValueAt(linha,2)).toString());
+            jtfModelo.setText((modelo.getValueAt(linha,3)).toString());
+            jftfAno.setText((modelo.getValueAt(linha,4)).toString());
+
+            jbEditar.setEnabled(true);
+            jbExcluir.setEnabled(true);
+        }
         
-        jbEditar.setEnabled(true);
-        jbExcluir.setEnabled(true);
     }//GEN-LAST:event_jtVeiculosMouseClicked
 
     private void jbEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEditarActionPerformed
