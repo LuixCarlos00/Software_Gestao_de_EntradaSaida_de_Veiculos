@@ -2,7 +2,9 @@ package controller;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import model.FuncionarioModel;
+import model.VeiculoModel;
 import util.Conexao;
 
 public class FuncionarioController {
@@ -108,4 +110,36 @@ public class FuncionarioController {
         return retorno;
     }
     
+      public ArrayList <FuncionarioModel> selecionarTodos() {
+        ArrayList<FuncionarioModel> funcionarios = new ArrayList<>();
+        String sql = "SELECT * FROM funcionarios";
+        Conexao.conectar();
+        
+        try {
+            PreparedStatement sentenca = Conexao.con.prepareStatement(sql);
+            ResultSet resultado = sentenca.executeQuery();
+            
+            while(resultado.next()) {
+                FuncionarioModel modelo = new FuncionarioModel();
+                modelo.setId(resultado.getInt("id"));
+                modelo.setNome(resultado.getString("nome"));
+                modelo.setCPF(resultado.getString("cpf"));
+                modelo.setData_nascimento(resultado.getString("data_nascimento"));
+                modelo.setSetor(resultado.getString("setor"));
+               
+                funcionarios.add(modelo);
+            }
+        }
+        
+        catch(SQLException e) {
+            System.out.println("Erro na sentença SQL de seleção.\n" + e.getMessage());
+        }
+        
+        Conexao.desconectar();
+        return funcionarios;
+    }
+    
+     
+     
+     
 }

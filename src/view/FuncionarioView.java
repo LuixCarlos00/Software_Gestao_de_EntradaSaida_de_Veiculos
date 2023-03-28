@@ -5,8 +5,11 @@
 package view;
 
 import controller.FuncionarioController;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import model.FuncionarioModel;
+import model.VeiculoModel;
 
 /**
  *
@@ -14,11 +17,30 @@ import model.FuncionarioModel;
  */
 public class FuncionarioView extends javax.swing.JInternalFrame {
 
+    FuncionarioController f = new FuncionarioController();
+    boolean tabelaAtiva = true;
+
     /**
      * Creates new form FuncionarioView
      */
     public FuncionarioView() {
         initComponents();
+        carregarTabela();
+        jbNovo.setEnabled(true);
+        jbPesquisar.setEnabled(true);
+        jbLimpar.setEnabled(true);
+
+        jbEditar.setEnabled(false);
+        jbSalvar.setEnabled(false);
+        jbCancelar.setEnabled(false);
+        jbEditar.setEnabled(false);
+        jbExcluir.setEnabled(false);
+
+        textCPF.setEditable(false);
+        textData_nascimento.setEditable(false);
+        textNome.setEditable(false);
+        textSetor.setEditable(false);
+
     }
 
     /**
@@ -33,7 +55,7 @@ public class FuncionarioView extends javax.swing.JInternalFrame {
         jbNovo = new javax.swing.JButton();
         jbSalvar = new javax.swing.JButton();
         jbEditar = new javax.swing.JButton();
-        jbApagar = new javax.swing.JButton();
+        jbExcluir = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -47,44 +69,49 @@ public class FuncionarioView extends javax.swing.JInternalFrame {
         textCPF = new javax.swing.JFormattedTextField();
         textData_nascimento = new javax.swing.JFormattedTextField();
         jbPesquisar = new javax.swing.JButton();
+        jbLimpar = new javax.swing.JButton();
+        jbCancelar = new javax.swing.JButton();
 
         setClosable(true);
 
-        jbNovo.setText("NOVO");
+        jbNovo.setText("Novo");
+        jbNovo.setMinimumSize(null);
         jbNovo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbNovoActionPerformed(evt);
             }
         });
 
-        jbSalvar.setText("SALVAR");
+        jbSalvar.setText("Salvar");
+        jbSalvar.setMinimumSize(null);
         jbSalvar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbSalvarActionPerformed(evt);
             }
         });
 
-        jbEditar.setText("EDITAR");
+        jbEditar.setText("Editar");
+        jbEditar.setMinimumSize(null);
         jbEditar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbEditarActionPerformed(evt);
             }
         });
 
-        jbApagar.setText("APAGAR");
-        jbApagar.addActionListener(new java.awt.event.ActionListener() {
+        jbExcluir.setText("Excluir");
+        jbExcluir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbApagarActionPerformed(evt);
+                jbExcluirActionPerformed(evt);
             }
         });
 
-        jLabel1.setText("NOME:");
+        jLabel1.setText("Nome:");
 
         jLabel2.setText("CPF:");
 
-        jLabel3.setText("DATA DE NACIMENTO :");
+        jLabel3.setText("Data de Nascimento:");
 
-        jLabel4.setText("SETOR:");
+        jLabel4.setText("Setor:");
 
         Tabela_funcionarios.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -112,6 +139,11 @@ public class FuncionarioView extends javax.swing.JInternalFrame {
                 return canEdit [columnIndex];
             }
         });
+        Tabela_funcionarios.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                Tabela_funcionariosMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(Tabela_funcionarios);
 
         ID.setText("ID:");
@@ -121,6 +153,11 @@ public class FuncionarioView extends javax.swing.JInternalFrame {
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
+        textCPF.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                textCPFActionPerformed(evt);
+            }
+        });
 
         try {
             textData_nascimento.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
@@ -128,10 +165,28 @@ public class FuncionarioView extends javax.swing.JInternalFrame {
             ex.printStackTrace();
         }
 
-        jbPesquisar.setText("PESQUISAR");
+        jbPesquisar.setText("Pesquisar");
+        jbPesquisar.setMaximumSize(new java.awt.Dimension(72, 22));
         jbPesquisar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbPesquisarActionPerformed(evt);
+            }
+        });
+
+        jbLimpar.setText("Limpar");
+        jbLimpar.setMinimumSize(null);
+        jbLimpar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbLimparActionPerformed(evt);
+            }
+        });
+
+        jbCancelar.setText("Cancelar");
+        jbCancelar.setMaximumSize(new java.awt.Dimension(72, 22));
+        jbCancelar.setMinimumSize(null);
+        jbCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbCancelarActionPerformed(evt);
             }
         });
 
@@ -140,73 +195,100 @@ public class FuncionarioView extends javax.swing.JInternalFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(6, 6, 6)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jbNovo)
-                        .addGap(60, 60, 60)
-                        .addComponent(jbApagar)
-                        .addGap(85, 85, 85)
-                        .addComponent(jbEditar)
-                        .addGap(102, 102, 102)
-                        .addComponent(jbSalvar))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(34, 34, 34)
-                        .addComponent(ID)
+                        .addComponent(jbNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(6, 6, 6)
-                        .addComponent(textID, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(30, 30, 30)
-                        .addComponent(jbPesquisar))
+                        .addComponent(jbLimpar, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(14, 14, 14)
-                        .addComponent(jLabel1)
-                        .addGap(2, 2, 2)
-                        .addComponent(textNome, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(33, 33, 33)
-                        .addComponent(jLabel2)
+                        .addComponent(jbEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(6, 6, 6)
-                        .addComponent(textCPF, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jbExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(14, 14, 14)
-                        .addComponent(jLabel3)
-                        .addGap(5, 5, 5)
-                        .addComponent(textData_nascimento, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(50, 50, 50)
-                        .addComponent(jLabel4)
-                        .addGap(3, 3, 3)
-                        .addComponent(textSetor, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 539, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jbSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(6, 6, 6)
+                        .addComponent(jbCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(44, 44, 44)
+                        .addComponent(jbPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(4, 4, 4)
+                        .addComponent(ID))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(4, 4, 4)
+                        .addComponent(textID, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(4, 4, 4)
+                        .addComponent(jLabel1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(4, 4, 4)
+                        .addComponent(textNome, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(4, 4, 4)
+                        .addComponent(jLabel2))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(4, 4, 4)
+                        .addComponent(textCPF, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(4, 4, 4)
+                        .addComponent(jLabel3))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(4, 4, 4)
+                        .addComponent(textData_nascimento, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(4, 4, 4)
+                        .addComponent(jLabel4))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(4, 4, 4)
+                        .addComponent(textSetor, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(8, 8, 8)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 606, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(6, 6, 6)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jbNovo)
-                    .addComponent(jbApagar)
-                    .addComponent(jbEditar)
-                    .addComponent(jbSalvar))
-                .addGap(19, 19, 19)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(ID, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(textID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jbPesquisar))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(textNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(textCPF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(28, 28, 28)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(textData_nascimento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(textSetor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(19, 19, 19)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 412, Short.MAX_VALUE)
+                        .addContainerGap())
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jbNovo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jbLimpar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(6, 6, 6)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jbEditar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jbExcluir))
+                        .addGap(6, 6, 6)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jbSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jbCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(6, 6, 6)
+                        .addComponent(jbPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(ID, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, 0)
+                        .addComponent(textID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, 0)
+                        .addComponent(textNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, 0)
+                        .addComponent(textCPF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, 0)
+                        .addComponent(textData_nascimento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, 0)
+                        .addComponent(textSetor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(4, 4, 4))))
         );
 
         pack();
@@ -214,12 +296,11 @@ public class FuncionarioView extends javax.swing.JInternalFrame {
 
     private void jbNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbNovoActionPerformed
         limparCampos();
-        jbSalvar.setEnabled(true);
-        textID.setEditable(true);
-        textNome.setEditable(true);
-        textCPF.setEditable(true);
-        textData_nascimento.setEditable(true);
-        textSetor.setEditable(true);
+        carregarTabela();
+        ativarEdicao();
+        jbLimpar.setEnabled(true);
+        textID.setEditable(false);//e necessario deixa o Id desabilitado poque quando ele chama ativarEdicao ele vem com ele ativado por padrao. 
+        jbPesquisar.setEnabled(false);//e necessario deixa desabilitado porue ele fica abilitado quando esta fazendo o cadastro e se voce  se clicar nele enquanto faz o cadastro ele da erro .
     }//GEN-LAST:event_jbNovoActionPerformed
 
     private void jbSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSalvarActionPerformed
@@ -228,16 +309,14 @@ public class FuncionarioView extends javax.swing.JInternalFrame {
         String nome = textNome.getText();
         String cpf = textCPF.getText();
         String data_nascimento = textData_nascimento.getText();
-        String setor= textSetor.getText();
+        String setor = textSetor.getText();
 
-        String dataSemMascara = data_nascimento.replaceAll("[^0-9]","");
-        String cpfSemMascara = cpf.replaceAll("[^0-9]","");
+        String dataSemMascara = data_nascimento.replaceAll("[^0-9]", "");
+        String cpfSemMascara = cpf.replaceAll("[^0-9]", "");
 
-        if (nome.isEmpty()|| setor.isEmpty()|| cpfSemMascara.isEmpty() || dataSemMascara.isEmpty()) {
+        if (nome.isEmpty() || setor.isEmpty() || cpfSemMascara.isEmpty() || dataSemMascara.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Por favor, prencha todos os campos solicitados.");
-        }
-
-        else if ("".equals(textID.getText())) {
+        } else if ("".equals(textID.getText())) {
             funcionario.setNome(textNome.getText());
             funcionario.setSetor(textSetor.getText());
             funcionario.setCPF(textCPF.getText());
@@ -245,15 +324,14 @@ public class FuncionarioView extends javax.swing.JInternalFrame {
 
             if (FuncionarioController.inserir(funcionario)) {
                 JOptionPane.showMessageDialog(this, "Cadastro realizado com sucesso.");
-            }
+                carregarTabela();
 
-            else {
+            } else {
                 JOptionPane.showMessageDialog(this, "Falha no cadastro.");
+                carregarTabela();
             }
 
-        }
-
-        else  {
+        } else {
             funcionario.setId(Integer.parseInt(textID.getText()));
             funcionario.setNome(textNome.getText());
             funcionario.setSetor(textSetor.getText());
@@ -262,45 +340,101 @@ public class FuncionarioView extends javax.swing.JInternalFrame {
 
             if (FuncionarioController.editar(funcionario)) {
                 JOptionPane.showMessageDialog(this, "O cadastro do funcionario foi atualizado com sucesso.");
-            }
-
-            else {
+            } else {
                 JOptionPane.showMessageDialog(this, "Erro ao atualizar o Cadastro.");
             }
         }
 
-        jbNovo.setEnabled(true);
-        jbEditar.setEnabled(true);
-        jbApagar.setEnabled(true);
-        jbPesquisar.setEnabled(true);
-
+        resetTela();
+        carregarTabela();
         limparCampos();
     }//GEN-LAST:event_jbSalvarActionPerformed
 
-    private void jbEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEditarActionPerformed
-
-        jbSalvar.setEnabled(true);
-        textNome.setEditable(true);
-        textSetor.setEditable(true);
-        textData_nascimento.setEditable(true);
-        textCPF.setEditable(true);
-
-        textID.setEditable(false);
-        jbPesquisar.setEnabled(false);
+    public void ativarEdicao() {
+        //Desabilita os botões Novo, Editar, Excluir e Limpar
         jbNovo.setEnabled(false);
         jbEditar.setEnabled(false);
-        jbApagar.setEnabled(false);
+        jbExcluir.setEnabled(false);
+        jbLimpar.setEnabled(false);
+
+        //Habilita o botão Salvar e Cancelar e os campos de texto
+        jbSalvar.setEnabled(true);
+        jbCancelar.setEnabled(true);
+        
+        textNome.setEditable(true);
+        textData_nascimento.setEditable(true);
+        textSetor.setEditable(true);
+        textCPF.setEditable(true);
+
+        //Altera o status da flag que ativa o evento de clique na tabela para false
+        tabelaAtiva = false;
+    }
+
+    public void resetTela() {
+        //Ativa os botões Novo e Limpar e o campo Id para poder pesquisar quando quiser 
+        textID.setEditable(true);
+        jbNovo.setEnabled(true);
+        jbLimpar.setEnabled(true);
+        jbPesquisar.setEnabled(true);
+
+        //Desativa os outros botões e campos de texto
+        jbEditar.setEnabled(false);
+        jbSalvar.setEnabled(false);
+        jbCancelar.setEnabled(false);
+        jbExcluir.setEnabled(false);
+
+        textCPF.setEditable(false);
+        textData_nascimento.setEditable(false);
+        textNome.setEditable(false);
+        textSetor.setEditable(false);
+
+        //Esvazia todos os campos de texto
+        limparCampos();
+
+        //Recarrega a tabela
+        carregarTabela();
+        //Altera o status da flag que ativa o evento de clique na tabela para true
+        tabelaAtiva = true;
+
+    }
+
+    public void carregarTabela() {
+
+        ArrayList<FuncionarioModel> funcionarios = f.selecionarTodos();
+        DefaultTableModel modelo = (DefaultTableModel) Tabela_funcionarios.getModel();
+        modelo.setRowCount(0);
+
+        for (int i = 0; i < funcionarios.size(); i++) {
+            modelo.addRow(new String[]{
+                String.valueOf(funcionarios.get(i).getId()),
+                funcionarios.get(i).getNome(),
+                funcionarios.get(i).getCPF(),
+                funcionarios.get(i).getData_nascimento(),
+                funcionarios.get(i).getSetor()
+            });
+        }
+    }
+
+
+    private void jbEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEditarActionPerformed
+        carregarTabela();
+        ativarEdicao();
     }//GEN-LAST:event_jbEditarActionPerformed
 
-    private void jbApagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbApagarActionPerformed
-        int resposta = JOptionPane.showConfirmDialog(null, "Deseja continuar ?", "Confirmação", JOptionPane.YES_NO_OPTION);
+    private void jbExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbExcluirActionPerformed
 
-        if (resposta == JOptionPane.CLOSED_OPTION) {
-            JOptionPane.showMessageDialog(this, "Operação cancelada.");
-            limparCampos();
-        }
+        String nome = textNome.getText();
+        String cpf = textCPF.getText();
+        String data_nascimento = textData_nascimento.getText();
+        String setor = textSetor.getText();
 
-        else if (resposta == JOptionPane.YES_OPTION) {
+        String dataSemMascara = data_nascimento.replaceAll("[^0-9]", "");
+        String cpfSemMascara = cpf.replaceAll("[^0-9]", "");
+
+        if (nome.isEmpty() || setor.isEmpty() && cpfSemMascara.isEmpty() || dataSemMascara.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Não há nada para ser excluído.");
+
+        } else if (JOptionPane.showConfirmDialog(null, "Tem certeza de que deseja excluir esse Cadastro ?", "Confirmação", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
             JOptionPane.showMessageDialog(this, "Funcionário apagado com sucesso.");
 
             FuncionarioModel funcionario = new FuncionarioModel();
@@ -312,29 +446,35 @@ public class FuncionarioView extends javax.swing.JInternalFrame {
 
             jbSalvar.setEnabled(false);
             jbEditar.setEnabled(false);
-            jbApagar.setEnabled(false);
+            jbExcluir.setEnabled(false);
 
             textNome.setEditable(false);
             textSetor.setEditable(false);
             textCPF.setEditable(false);
             textData_nascimento.setEditable(false);
-
             limparCampos();
 
             FuncionarioController.excluir(funcionario);
 
+        } else if (JOptionPane.CLOSED_OPTION == JOptionPane.CLOSED_OPTION) {
+            JOptionPane.showMessageDialog(this, "Operação cancelada.");
+            limparCampos();
+
+            textNome.setEnabled(false);
+            textCPF.setEnabled(false);
+            textData_nascimento.setEnabled(false);
+            textSetor.setEnabled(false);
         }
 
-        else {
-            JOptionPane.showMessageDialog(this, "Ação Revogada.");
-            limparCampos();
-        }
         jbSalvar.setEnabled(true);
         jbEditar.setEnabled(true);
-        jbApagar.setEnabled(true);
-    }//GEN-LAST:event_jbApagarActionPerformed
+        jbExcluir.setEnabled(true);
+        carregarTabela();
+    }//GEN-LAST:event_jbExcluirActionPerformed
+
 
     private void jbPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbPesquisarActionPerformed
+        carregarTabela();
         FuncionarioModel funcionario = new FuncionarioModel();
         funcionario.setId(Integer.parseInt(textID.getText()));
         FuncionarioModel funcionario_encontrado = FuncionarioController.selecionar(funcionario);
@@ -342,9 +482,7 @@ public class FuncionarioView extends javax.swing.JInternalFrame {
         if (funcionario_encontrado == null) {
             limparCampos();
             JOptionPane.showMessageDialog(this, "Funcionário não encontrado no banco de dados.");
-        }
-
-        else {
+        } else {
             textNome.setText(funcionario_encontrado.getNome());
             textCPF.setText(funcionario_encontrado.getCPF());
             textData_nascimento.setText(funcionario_encontrado.getData_nascimento());
@@ -352,17 +490,56 @@ public class FuncionarioView extends javax.swing.JInternalFrame {
 
             //Habilita os botões Editar e Excluir
             jbEditar.setEnabled(true);
-            jbApagar.setEnabled(true);
+            jbExcluir.setEnabled(true);
             jbSalvar.setEnabled(false);
+            jbLimpar.setEnabled(false);
+            jbNovo.setEnabled(false);
 
-            textNome.setEditable(false);
-            textID.setEditable(false);
+            textID.setEnabled(true);
+
+            textNome.setEnabled(true);
+            textSetor.setEnabled(true);
+            textData_nascimento.setEnabled(true);
+            textCPF.setEnabled(true);
+
+            textCPF.setEditable(false);
             textData_nascimento.setEditable(false);
+            textNome.setEditable(false);
             textSetor.setEditable(false);
         }
     }//GEN-LAST:event_jbPesquisarActionPerformed
 
-   
+    private void jbLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbLimparActionPerformed
+        limparCampos();
+    }//GEN-LAST:event_jbLimparActionPerformed
+
+    private void jbCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCancelarActionPerformed
+        resetTela();
+    }//GEN-LAST:event_jbCancelarActionPerformed
+
+    private void textCPFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textCPFActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_textCPFActionPerformed
+
+    private void Tabela_funcionariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Tabela_funcionariosMouseClicked
+
+        if (tabelaAtiva == true) {
+            int linha = Tabela_funcionarios.getSelectedRow();
+            DefaultTableModel modelo = (DefaultTableModel) Tabela_funcionarios.getModel();
+
+            textID.setText((modelo.getValueAt(linha, 0)).toString());
+            textNome.setText((modelo.getValueAt(linha, 1)).toString());
+            textCPF.setText((modelo.getValueAt(linha, 2)).toString());
+            textData_nascimento.setText((modelo.getValueAt(linha, 3)).toString());
+            textSetor.setText((modelo.getValueAt(linha, 4)).toString());
+
+            jbEditar.setEnabled(true);
+            jbExcluir.setEnabled(true);
+        }
+
+
+    }//GEN-LAST:event_Tabela_funcionariosMouseClicked
+
     private void limparCampos() {
         textID.setText("");
         textCPF.setText("");
@@ -370,7 +547,7 @@ public class FuncionarioView extends javax.swing.JInternalFrame {
         textNome.setText("");
         textSetor.setText("");
     }
-    
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel ID;
@@ -380,8 +557,10 @@ public class FuncionarioView extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JButton jbApagar;
+    private javax.swing.JButton jbCancelar;
     private javax.swing.JButton jbEditar;
+    private javax.swing.JButton jbExcluir;
+    private javax.swing.JButton jbLimpar;
     private javax.swing.JButton jbNovo;
     private javax.swing.JButton jbPesquisar;
     private javax.swing.JButton jbSalvar;
