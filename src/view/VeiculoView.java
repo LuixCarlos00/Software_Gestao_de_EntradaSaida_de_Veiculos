@@ -176,7 +176,7 @@ public class VeiculoView extends javax.swing.JInternalFrame {
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
                 false, false, false, false, false, false
@@ -197,6 +197,10 @@ public class VeiculoView extends javax.swing.JInternalFrame {
             }
         });
         jsVeiculos.setViewportView(jtVeiculos);
+        if (jtVeiculos.getColumnModel().getColumnCount() > 0) {
+            jtVeiculos.getColumnModel().getColumn(4).setResizable(false);
+            jtVeiculos.getColumnModel().getColumn(5).setResizable(false);
+        }
 
         jtfMarca.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -312,16 +316,20 @@ public class VeiculoView extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbNovoActionPerformed
-        jtfID.setText("");
+        LimparCampos();
+        ativarEdicao();
+        jbLimpar.setEnabled(true);
+        jbPesquisar.setEnabled(false);
+       
+        
+    }//GEN-LAST:event_jbNovoActionPerformed
+private void LimparCampos(){
+jtfID.setText("");
         jtfPlaca.setText("");
         jtfMarca.setText("");
         jtfModelo.setText("");
         jftfAno.setText("");
-        ativarEdicao();
-       
-        
-    }//GEN-LAST:event_jbNovoActionPerformed
-
+}
     private void jbSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSalvarActionPerformed
         
         VeiculoModel veiculo = new VeiculoModel();

@@ -46,20 +46,14 @@
               <Group type="102" attributes="0">
                   <EmptySpace max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="jlRepetirSenha" max="32767" attributes="0"/>
-                          <Component id="jlSenha" alignment="0" max="32767" attributes="0"/>
-                          <Component id="jlUsuario" alignment="0" max="32767" attributes="0"/>
-                      </Group>
-                      <Component id="jtfRepetirSenha" pref="175" max="32767" attributes="0"/>
+                      <Component id="jlRepetirSenha" pref="238" max="32767" attributes="0"/>
+                      <Component id="jlSenha" alignment="0" max="32767" attributes="0"/>
+                      <Component id="jlUsuario" alignment="0" max="32767" attributes="0"/>
+                      <Component id="jtfUsuario" alignment="0" pref="238" max="32767" attributes="0"/>
                       <Component id="jtfSenha" alignment="0" max="32767" attributes="0"/>
-                      <Component id="jtfUsuario" alignment="0" max="32767" attributes="0"/>
+                      <Component id="jtfRepetirSenha" max="32767" attributes="0"/>
+                      <Component id="jbCriarUsuario" alignment="0" max="32767" attributes="0"/>
                   </Group>
-                  <EmptySpace max="32767" attributes="0"/>
-              </Group>
-              <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace max="32767" attributes="0"/>
-                  <Component id="jbCriarUsuario" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
@@ -71,11 +65,11 @@
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="jlUsuario" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="32767" attributes="0"/>
-                  <Component id="jtfUsuario" min="-2" pref="22" max="-2" attributes="0"/>
+                  <Component id="jtfUsuario" max="32767" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="jlSenha" min="-2" pref="22" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jtfSenha" min="-2" max="-2" attributes="0"/>
+                  <Component id="jtfSenha" min="-2" pref="22" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="jlRepetirSenha" min="-2" pref="22" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
@@ -115,8 +109,6 @@
             <Property name="text" type="java.lang.String" value="Senha:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="jtfSenha">
-        </Component>
         <Component class="javax.swing.JLabel" name="jlRepetirSenha">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -127,8 +119,6 @@
             </Property>
             <Property name="text" type="java.lang.String" value="Digite a senha novamente:"/>
           </Properties>
-        </Component>
-        <Component class="javax.swing.JTextField" name="jtfRepetirSenha">
         </Component>
         <Component class="javax.swing.JButton" name="jbCriarUsuario">
           <Properties>
@@ -156,6 +146,10 @@
             <Property name="text" type="java.lang.String" value="Criar novo usu&#xe1;rio"/>
             <Property name="horizontalTextPosition" type="int" value="0"/>
           </Properties>
+        </Component>
+        <Component class="javax.swing.JPasswordField" name="jtfSenha">
+        </Component>
+        <Component class="javax.swing.JPasswordField" name="jtfRepetirSenha">
         </Component>
       </SubComponents>
     </Container>

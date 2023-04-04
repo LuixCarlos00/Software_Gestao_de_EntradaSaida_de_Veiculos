@@ -24,11 +24,11 @@ public class CriarContaView extends javax.swing.JFrame {
         jlUsuario = new javax.swing.JLabel();
         jtfUsuario = new javax.swing.JTextField();
         jlSenha = new javax.swing.JLabel();
-        jtfSenha = new javax.swing.JTextField();
         jlRepetirSenha = new javax.swing.JLabel();
-        jtfRepetirSenha = new javax.swing.JTextField();
         jbCriarUsuario = new javax.swing.JButton();
         jlTitulo = new javax.swing.JLabel();
+        jtfSenha = new javax.swing.JPasswordField();
+        jtfRepetirSenha = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Cadastro de Novo Usuário");
@@ -74,17 +74,13 @@ public class CriarContaView extends javax.swing.JFrame {
             .addGroup(jpCriarContaLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jpCriarContaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jpCriarContaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jlRepetirSenha, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jlSenha, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jlUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(jtfRepetirSenha, javax.swing.GroupLayout.DEFAULT_SIZE, 175, Short.MAX_VALUE)
+                    .addComponent(jlRepetirSenha, javax.swing.GroupLayout.DEFAULT_SIZE, 238, Short.MAX_VALUE)
+                    .addComponent(jlSenha, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jlUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jtfUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, 238, Short.MAX_VALUE)
                     .addComponent(jtfSenha)
-                    .addComponent(jtfUsuario))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jpCriarContaLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jbCriarUsuario)
+                    .addComponent(jtfRepetirSenha)
+                    .addComponent(jbCriarUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jpCriarContaLayout.setVerticalGroup(
@@ -94,11 +90,11 @@ public class CriarContaView extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jlUsuario)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jtfUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jtfUsuario)
                 .addGap(18, 18, 18)
                 .addComponent(jlSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jtfSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jtfSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jlRepetirSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -146,6 +142,8 @@ public class CriarContaView extends javax.swing.JFrame {
             
         }else {
             JOptionPane.showMessageDialog(this, "As senhas não são iguais. Tente novamente.");
+        limparCampos();
+        jtfUsuario.requestFocus();
         }
     }//GEN-LAST:event_jbCriarUsuarioActionPerformed
 
@@ -153,6 +151,12 @@ public class CriarContaView extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jtfUsuarioActionPerformed
 
+    private void limparCampos(){
+    jtfRepetirSenha.setText("");
+    jtfSenha.setText("");
+    jtfUsuario.setText("");
+    
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jbCriarUsuario;
     private javax.swing.JLabel jlRepetirSenha;
@@ -160,8 +164,8 @@ public class CriarContaView extends javax.swing.JFrame {
     private javax.swing.JLabel jlTitulo;
     private javax.swing.JLabel jlUsuario;
     private javax.swing.JPanel jpCriarConta;
-    private javax.swing.JTextField jtfRepetirSenha;
-    private javax.swing.JTextField jtfSenha;
+    private javax.swing.JPasswordField jtfRepetirSenha;
+    private javax.swing.JPasswordField jtfSenha;
     private javax.swing.JTextField jtfUsuario;
     // End of variables declaration//GEN-END:variables
 }

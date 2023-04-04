@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.FuncionarioModel;
-import model.VeiculoModel;
 
 /**
  *
@@ -41,6 +40,8 @@ public class FuncionarioView extends javax.swing.JInternalFrame {
         textNome.setEditable(false);
         textSetor.setEditable(false);
 
+        
+        
     }
 
     /**
@@ -65,12 +66,12 @@ public class FuncionarioView extends javax.swing.JInternalFrame {
         textSetor = new javax.swing.JFormattedTextField();
         textNome = new javax.swing.JFormattedTextField();
         ID = new javax.swing.JLabel();
-        textID = new javax.swing.JTextField();
         textCPF = new javax.swing.JFormattedTextField();
         textData_nascimento = new javax.swing.JFormattedTextField();
         jbPesquisar = new javax.swing.JButton();
         jbLimpar = new javax.swing.JButton();
         jbCancelar = new javax.swing.JButton();
+        textID = new javax.swing.JTextField();
 
         setClosable(true);
 
@@ -125,7 +126,7 @@ public class FuncionarioView extends javax.swing.JInternalFrame {
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
                 false, false, false, false, false
@@ -195,66 +196,49 @@ public class FuncionarioView extends javax.swing.JInternalFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(6, 6, 6)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jbNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(6, 6, 6)
-                        .addComponent(jbLimpar, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jbEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(6, 6, 6)
-                        .addComponent(jbExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jbSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(6, 6, 6)
-                        .addComponent(jbCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(44, 44, 44)
-                        .addComponent(jbPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(4, 4, 4)
-                        .addComponent(ID))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(4, 4, 4)
-                        .addComponent(textID, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(4, 4, 4)
-                        .addComponent(jLabel1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(4, 4, 4)
-                        .addComponent(textNome, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(4, 4, 4)
-                        .addComponent(jLabel2))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(4, 4, 4)
-                        .addComponent(textCPF, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(4, 4, 4)
-                        .addComponent(jLabel3))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(4, 4, 4)
-                        .addComponent(textData_nascimento, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(4, 4, 4)
-                        .addComponent(jLabel4))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(4, 4, 4)
-                        .addComponent(textSetor, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(8, 8, 8)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 606, Short.MAX_VALUE)
+                        .addGap(10, 10, 10)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(textNome, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel2)
+                            .addComponent(textCPF, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel3)
+                            .addComponent(textData_nascimento, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel4)
+                            .addComponent(textSetor, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(ID)
+                            .addComponent(textID, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(jbNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(6, 6, 6)
+                            .addComponent(jbLimpar, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(jbEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(6, 6, 6)
+                            .addComponent(jbExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(jbSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jbCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(37, 37, 37)
+                            .addComponent(jbPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 602, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(6, 6, 6)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 412, Short.MAX_VALUE)
-                        .addContainerGap())
+                        .addGap(6, 6, 6)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jbNovo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jbLimpar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -263,14 +247,14 @@ public class FuncionarioView extends javax.swing.JInternalFrame {
                             .addComponent(jbEditar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jbExcluir))
                         .addGap(6, 6, 6)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jbSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jbCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(6, 6, 6)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jbCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jbSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jbPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(ID, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, 0)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(textID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -288,7 +272,8 @@ public class FuncionarioView extends javax.swing.JInternalFrame {
                         .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, 0)
                         .addComponent(textSetor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(4, 4, 4))))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
 
         pack();
@@ -316,7 +301,7 @@ public class FuncionarioView extends javax.swing.JInternalFrame {
 
         if (nome.isEmpty() || setor.isEmpty() || cpfSemMascara.isEmpty() || dataSemMascara.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Por favor, prencha todos os campos solicitados.");
-        } else if ("".equals(textID.getText())) {
+        } else if ("".equals(textID.getText().trim())) {
             funcionario.setNome(textNome.getText());
             funcionario.setSetor(textSetor.getText());
             funcionario.setCPF(textCPF.getText());
@@ -332,7 +317,7 @@ public class FuncionarioView extends javax.swing.JInternalFrame {
             }
 
         } else {
-            funcionario.setId(Integer.parseInt(textID.getText()));
+            funcionario.setId(Integer.parseInt(textID.getText().trim()));
             funcionario.setNome(textNome.getText());
             funcionario.setSetor(textSetor.getText());
             funcionario.setCPF(textCPF.getText());
@@ -360,7 +345,7 @@ public class FuncionarioView extends javax.swing.JInternalFrame {
         //Habilita o botão Salvar e Cancelar e os campos de texto
         jbSalvar.setEnabled(true);
         jbCancelar.setEnabled(true);
-        
+
         textNome.setEditable(true);
         textData_nascimento.setEditable(true);
         textSetor.setEditable(true);
@@ -474,39 +459,99 @@ public class FuncionarioView extends javax.swing.JInternalFrame {
 
 
     private void jbPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbPesquisarActionPerformed
-        carregarTabela();
-        FuncionarioModel funcionario = new FuncionarioModel();
-        funcionario.setId(Integer.parseInt(textID.getText()));
-        FuncionarioModel funcionario_encontrado = FuncionarioController.selecionar(funcionario);
 
-        if (funcionario_encontrado == null) {
-            limparCampos();
-            JOptionPane.showMessageDialog(this, "Funcionário não encontrado no banco de dados.");
-        } else {
-            textNome.setText(funcionario_encontrado.getNome());
-            textCPF.setText(funcionario_encontrado.getCPF());
-            textData_nascimento.setText(funcionario_encontrado.getData_nascimento());
-            textSetor.setText(funcionario_encontrado.getSetor());
+        
+ String[] opcoesBusca = {"ID", "Nome", "Setor", "Data de Nascimento", "CPF"};
+        int escolha = JOptionPane.showOptionDialog(this, "Escolha o tipo de busca", "Busca por",
+                JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null,
+                opcoesBusca, opcoesBusca[0]);
 
-            //Habilita os botões Editar e Excluir
-            jbEditar.setEnabled(true);
-            jbExcluir.setEnabled(true);
-            jbSalvar.setEnabled(false);
-            jbLimpar.setEnabled(false);
-            jbNovo.setEnabled(false);
+        if (escolha >= 0) { // se o usuário selecionou uma opção
+            String opcaoBusca = opcoesBusca[escolha];
+            String valorBusca = textID.getText();
 
-            textID.setEnabled(true);
+            switch (opcaoBusca) {
+                case "ID":
+                    String inputValue = JOptionPane.showInputDialog(this, " Por favor insira o ID").trim();
+                    
+                    
+                    if (inputValue == null) {
+                        // o usuario apertou o X ou o botao de cancelar
+                        JOptionPane.showMessageDialog(this, "Operação cancelada pelo usuario.");
+                    } else {
 
-            textNome.setEnabled(true);
-            textSetor.setEnabled(true);
-            textData_nascimento.setEnabled(true);
-            textCPF.setEnabled(true);
+                           FuncionarioModel funcionario = new FuncionarioModel();
+                        
 
-            textCPF.setEditable(false);
-            textData_nascimento.setEditable(false);
-            textNome.setEditable(false);
-            textSetor.setEditable(false);
+                        if (inputValue.isEmpty()) {// o campo que o usuario digitou e vazio 
+                            JOptionPane.showMessageDialog(this, "Por Favor preencher o campo ID.");
+
+                        } else {
+                            try {
+                                int numero = Integer.parseInt(inputValue.trim()); // tenta converter o texto em um número inteiro positivo
+
+                                if (numero > 0) {
+                                    funcionario.setId(Integer.parseInt(textID.getText()));
+                                    FuncionarioModel funcionario_encontrado = FuncionarioController.selecionar(funcionario);
+                                    if (funcionario_encontrado == null) {
+                                        limparCampos();
+                                        JOptionPane.showMessageDialog(this, "Funcionario não encontrado no banco de dados");
+                                    } else {
+                                        textNome.setText(funcionario_encontrado.getNome());
+                                        textCPF.setText(funcionario_encontrado.getCPF());
+                                        textData_nascimento.setText(funcionario_encontrado.getData_nascimento());
+                                        textSetor.setText(funcionario_encontrado.getSetor());
+
+                                        //Habilita os botões Editar e Excluir
+                                        jbEditar.setEnabled(true);
+                                        jbExcluir.setEnabled(true);
+                                        jbSalvar.setEnabled(false);
+                                        jbLimpar.setEnabled(false);
+                                        jbNovo.setEnabled(false);
+
+                                        textID.setEnabled(true);
+                                        jbCancelar.setEnabled(true);
+
+                                        textNome.setEnabled(true);
+                                        textSetor.setEnabled(true);
+                                        textData_nascimento.setEnabled(true);
+                                        textCPF.setEnabled(true);
+
+                                        textCPF.setEditable(false);
+                                        textData_nascimento.setEditable(false);
+                                        textNome.setEditable(false);
+                                        textSetor.setEditable(false);
+                                    }
+                                } else {
+                                    JOptionPane.showMessageDialog(this, "O numero digitado não é valido.");
+                                }
+                            } catch (NumberFormatException e) {
+                                JOptionPane.showMessageDialog(this, "O campo ID deve conter apenas numeros.");
+                            }
+
+                        }
+
+                    }
+
+                    break;
+                case "CPF":
+                    // implemente a lógica para buscar pelo CPF
+                    break;
+                case "Nome":
+                    // implemente a lógica para buscar pelo nome
+                    break;
+                case "Setor":
+                    // implemente a lógica para buscar pelo setor
+                    break;
+                case "Data de Nascimento":
+                    // implemente a lógica para buscar pela data de nascimento
+                    break;
+            }
+
         }
+        
+        
+        
     }//GEN-LAST:event_jbPesquisarActionPerformed
 
     private void jbLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbLimparActionPerformed

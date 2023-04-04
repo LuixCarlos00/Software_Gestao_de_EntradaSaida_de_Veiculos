@@ -39,49 +39,52 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Component id="jlTitulo" alignment="1" max="32767" attributes="0"/>
-              <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace max="32767" attributes="0"/>
+              <Group type="102" attributes="0">
+                  <EmptySpace pref="31" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="1" attributes="0">
-                      <Component id="jlLogin" alignment="1" min="-2" max="-2" attributes="0"/>
-                      <Component id="jlSenha" alignment="1" min="-2" pref="50" max="-2" attributes="0"/>
+                      <Component id="jBEntrar" alignment="1" min="-2" pref="238" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="jlLogin" min="-2" max="-2" attributes="0"/>
+                          <Group type="102" attributes="0">
+                              <Component id="jlSenha" min="-2" pref="50" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="138" max="-2" attributes="0"/>
+                          </Group>
+                          <Component id="jtfUsuario" alignment="0" pref="238" max="32767" attributes="0"/>
+                          <Component id="jpfSenha" alignment="0" max="32767" attributes="0"/>
+                      </Group>
                   </Group>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jpfSenha" alignment="0" min="-2" pref="120" max="-2" attributes="0"/>
-                      <Component id="jtfUsuario" alignment="0" min="-2" pref="120" max="-2" attributes="0"/>
-                  </Group>
+                  <EmptySpace pref="31" max="32767" attributes="0"/>
+              </Group>
+              <Group type="102" alignment="0" attributes="0">
+                  <EmptySpace min="-2" pref="100" max="-2" attributes="0"/>
+                  <Component id="CriarConta" min="-2" pref="90" max="-2" attributes="0"/>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
               <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace min="-2" pref="105" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Component id="jBEntrar" alignment="0" max="32767" attributes="0"/>
-                      <Component id="CriarConta" alignment="0" min="-2" pref="90" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace pref="105" max="32767" attributes="0"/>
+                  <EmptySpace min="-2" pref="46" max="-2" attributes="0"/>
+                  <Component id="jlTitulo" min="-2" pref="194" max="-2" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
-                  <Component id="jlTitulo" min="-2" pref="99" max="-2" attributes="0"/>
-                  <EmptySpace pref="54" max="32767" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="jlLogin" alignment="3" min="-2" pref="22" max="-2" attributes="0"/>
-                      <Component id="jtfUsuario" alignment="3" min="-2" max="-2" attributes="0"/>
-                  </Group>
+                  <EmptySpace pref="58" max="32767" attributes="0"/>
+                  <Component id="jlTitulo" min="-2" pref="56" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="jpfSenha" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jlSenha" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace min="-2" pref="54" max="-2" attributes="0"/>
+                  <Component id="jlLogin" min="-2" pref="22" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="jtfUsuario" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <Component id="jlSenha" min="-2" pref="23" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="jpfSenha" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
                   <Component id="jBEntrar" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
                   <Component id="CriarConta" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="70" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="82" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
