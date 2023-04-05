@@ -39,9 +39,8 @@ public class FuncionarioView extends javax.swing.JInternalFrame {
         textData_nascimento.setEditable(false);
         textNome.setEditable(false);
         textSetor.setEditable(false);
+        textID.setEditable(false);
 
-        
-        
     }
 
     /**
@@ -63,7 +62,6 @@ public class FuncionarioView extends javax.swing.JInternalFrame {
         jLabel4 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         Tabela_funcionarios = new javax.swing.JTable();
-        textSetor = new javax.swing.JFormattedTextField();
         textNome = new javax.swing.JFormattedTextField();
         ID = new javax.swing.JLabel();
         textCPF = new javax.swing.JFormattedTextField();
@@ -72,6 +70,7 @@ public class FuncionarioView extends javax.swing.JInternalFrame {
         jbLimpar = new javax.swing.JButton();
         jbCancelar = new javax.swing.JButton();
         textID = new javax.swing.JTextField();
+        textSetor = new javax.swing.JComboBox<>();
 
         setClosable(true);
 
@@ -191,6 +190,8 @@ public class FuncionarioView extends javax.swing.JInternalFrame {
             }
         });
 
+        textSetor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Adiministração", "Almoxarifado", "Contabilidade", "Segurança do Trabalho", "Oficina de Auto", "Moagem", "Britagem", "Forno" }));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -205,11 +206,11 @@ public class FuncionarioView extends javax.swing.JInternalFrame {
                             .addComponent(jLabel2)
                             .addComponent(textCPF, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel3)
+                            .addComponent(ID)
+                            .addComponent(textID, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(textData_nascimento, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel4)
-                            .addComponent(textSetor, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(ID)
-                            .addComponent(textID, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(textSetor, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
                             .addComponent(jbNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -268,11 +269,11 @@ public class FuncionarioView extends javax.swing.JInternalFrame {
                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, 0)
                         .addComponent(textData_nascimento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, 0)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(textSetor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 12, Short.MAX_VALUE)))
                 .addContainerGap())
         );
 
@@ -294,16 +295,15 @@ public class FuncionarioView extends javax.swing.JInternalFrame {
         String nome = textNome.getText();
         String cpf = textCPF.getText();
         String data_nascimento = textData_nascimento.getText();
-        String setor = textSetor.getText();
 
         String dataSemMascara = data_nascimento.replaceAll("[^0-9]", "");
         String cpfSemMascara = cpf.replaceAll("[^0-9]", "");
 
-        if (nome.isEmpty() || setor.isEmpty() || cpfSemMascara.isEmpty() || dataSemMascara.isEmpty()) {
+        if (nome.isEmpty() || cpfSemMascara.isEmpty() || dataSemMascara.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Por favor, prencha todos os campos solicitados.");
         } else if ("".equals(textID.getText().trim())) {
             funcionario.setNome(textNome.getText());
-            funcionario.setSetor(textSetor.getText());
+            funcionario.setSetor((String) textSetor.getSelectedItem());
             funcionario.setCPF(textCPF.getText());
             funcionario.setData_nascimento(textData_nascimento.getText());
 
@@ -319,7 +319,7 @@ public class FuncionarioView extends javax.swing.JInternalFrame {
         } else {
             funcionario.setId(Integer.parseInt(textID.getText().trim()));
             funcionario.setNome(textNome.getText());
-            funcionario.setSetor(textSetor.getText());
+            funcionario.setSetor((String) textSetor.getSelectedItem());
             funcionario.setCPF(textCPF.getText());
             funcionario.setData_nascimento(textData_nascimento.getText());
 
@@ -357,7 +357,7 @@ public class FuncionarioView extends javax.swing.JInternalFrame {
 
     public void resetTela() {
         //Ativa os botões Novo e Limpar e o campo Id para poder pesquisar quando quiser 
-        textID.setEditable(true);
+        textID.setEditable(false);
         jbNovo.setEnabled(true);
         jbLimpar.setEnabled(true);
         jbPesquisar.setEnabled(true);
@@ -402,8 +402,23 @@ public class FuncionarioView extends javax.swing.JInternalFrame {
 
 
     private void jbEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEditarActionPerformed
-        carregarTabela();
-        ativarEdicao();
+
+        String nome = textNome.getText();
+        String cpf = textCPF.getText();
+        String data_nascimento = textData_nascimento.getText();
+
+        String dataSemMascara = data_nascimento.replaceAll("[^0-9]", "");
+        String cpfSemMascara = cpf.replaceAll("[^0-9]", "");
+
+        if (nome.isEmpty() || cpfSemMascara.isEmpty() || dataSemMascara.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Não a nada para ser editado ");
+        } else {
+            carregarTabela();
+            ativarEdicao();
+            
+        }
+
+
     }//GEN-LAST:event_jbEditarActionPerformed
 
     private void jbExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbExcluirActionPerformed
@@ -411,7 +426,7 @@ public class FuncionarioView extends javax.swing.JInternalFrame {
         String nome = textNome.getText();
         String cpf = textCPF.getText();
         String data_nascimento = textData_nascimento.getText();
-        String setor = textSetor.getText();
+        String setor = (String) textSetor.getSelectedItem();
 
         String dataSemMascara = data_nascimento.replaceAll("[^0-9]", "");
         String cpfSemMascara = cpf.replaceAll("[^0-9]", "");
@@ -425,18 +440,7 @@ public class FuncionarioView extends javax.swing.JInternalFrame {
             FuncionarioModel funcionario = new FuncionarioModel();
             funcionario.setId(Integer.parseInt(textID.getText()));
 
-            jbNovo.setEnabled(true);
-            jbPesquisar.setEnabled(true);
-            textID.setEditable(true);
-
-            jbSalvar.setEnabled(false);
-            jbEditar.setEnabled(false);
-            jbExcluir.setEnabled(false);
-
-            textNome.setEditable(false);
-            textSetor.setEditable(false);
-            textCPF.setEditable(false);
-            textData_nascimento.setEditable(false);
+            resetTela();
             limparCampos();
 
             FuncionarioController.excluir(funcionario);
@@ -444,24 +448,17 @@ public class FuncionarioView extends javax.swing.JInternalFrame {
         } else if (JOptionPane.CLOSED_OPTION == JOptionPane.CLOSED_OPTION) {
             JOptionPane.showMessageDialog(this, "Operação cancelada.");
             limparCampos();
+            resetTela();
 
-            textNome.setEnabled(false);
-            textCPF.setEnabled(false);
-            textData_nascimento.setEnabled(false);
-            textSetor.setEnabled(false);
         }
 
-        jbSalvar.setEnabled(true);
-        jbEditar.setEnabled(true);
-        jbExcluir.setEnabled(true);
         carregarTabela();
     }//GEN-LAST:event_jbExcluirActionPerformed
 
 
     private void jbPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbPesquisarActionPerformed
-
-        
- String[] opcoesBusca = {"ID", "Nome", "Setor", "Data de Nascimento", "CPF"};
+        FuncionarioModel funcionario = new FuncionarioModel();
+        String[] opcoesBusca = {"ID", "Nome", "Setor", "Data de Nascimento", "CPF"};
         int escolha = JOptionPane.showOptionDialog(this, "Escolha o tipo de busca", "Busca por",
                 JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null,
                 opcoesBusca, opcoesBusca[0]);
@@ -473,67 +470,57 @@ public class FuncionarioView extends javax.swing.JInternalFrame {
             switch (opcaoBusca) {
                 case "ID":
                     String inputValue = JOptionPane.showInputDialog(this, " Por favor insira o ID").trim();
-                    
-                    
-                    if (inputValue == null) {
-                        // o usuario apertou o X ou o botao de cancelar
-                        JOptionPane.showMessageDialog(this, "Operação cancelada pelo usuario.");
-                    } else {
 
-                           FuncionarioModel funcionario = new FuncionarioModel();
-                        
+                    if (inputValue.isEmpty()) {// o campo que o usuario digitou esta vazio ou tem algo escrito nele ?
+                        JOptionPane.showMessageDialog(this, "Por Favor preencher o campo ID.");
 
-                        if (inputValue.isEmpty()) {// o campo que o usuario digitou e vazio 
-                            JOptionPane.showMessageDialog(this, "Por Favor preencher o campo ID.");
+                    } else 
+                        try {
+                        int id = Integer.parseInt(inputValue);
+                        int numero = Integer.parseInt(inputValue.trim()); // tenta converter o texto em um número inteiro positivo
 
-                        } else {
-                            try {
-                                int numero = Integer.parseInt(inputValue.trim()); // tenta converter o texto em um número inteiro positivo
+                        if (numero > 0) {
+                            funcionario.setId(id);// passa o numero coletado para o bd 
+                            FuncionarioModel funcionario_encontrado = FuncionarioController.selecionar(funcionario);
+                            if (funcionario_encontrado == null) {
+                                limparCampos();
+                                JOptionPane.showMessageDialog(this, "Funcionario não encontrado no banco de dados");
+                            } else {
+                                textNome.setText(funcionario_encontrado.getNome());
+                                textCPF.setText(funcionario_encontrado.getCPF());
+                                textData_nascimento.setText(funcionario_encontrado.getData_nascimento());
+                                textSetor.setSelectedItem(funcionario_encontrado.getSetor());
 
-                                if (numero > 0) {
-                                    funcionario.setId(Integer.parseInt(textID.getText()));
-                                    FuncionarioModel funcionario_encontrado = FuncionarioController.selecionar(funcionario);
-                                    if (funcionario_encontrado == null) {
-                                        limparCampos();
-                                        JOptionPane.showMessageDialog(this, "Funcionario não encontrado no banco de dados");
-                                    } else {
-                                        textNome.setText(funcionario_encontrado.getNome());
-                                        textCPF.setText(funcionario_encontrado.getCPF());
-                                        textData_nascimento.setText(funcionario_encontrado.getData_nascimento());
-                                        textSetor.setText(funcionario_encontrado.getSetor());
+                                //Habilita os botões Editar e Excluir
+                                jbEditar.setEnabled(true);
+                                jbExcluir.setEnabled(true);
+                                jbSalvar.setEnabled(false);
+                                jbLimpar.setEnabled(false);
+                                jbNovo.setEnabled(false);
 
-                                        //Habilita os botões Editar e Excluir
-                                        jbEditar.setEnabled(true);
-                                        jbExcluir.setEnabled(true);
-                                        jbSalvar.setEnabled(false);
-                                        jbLimpar.setEnabled(false);
-                                        jbNovo.setEnabled(false);
+                                textID.setEnabled(true);
+                                jbCancelar.setEnabled(true);
 
-                                        textID.setEnabled(true);
-                                        jbCancelar.setEnabled(true);
+                                textNome.setEnabled(true);
+                                textSetor.setEnabled(true);
+                                textData_nascimento.setEnabled(true);
+                                textCPF.setEnabled(true);
 
-                                        textNome.setEnabled(true);
-                                        textSetor.setEnabled(true);
-                                        textData_nascimento.setEnabled(true);
-                                        textCPF.setEnabled(true);
-
-                                        textCPF.setEditable(false);
-                                        textData_nascimento.setEditable(false);
-                                        textNome.setEditable(false);
-                                        textSetor.setEditable(false);
-                                    }
-                                } else {
-                                    JOptionPane.showMessageDialog(this, "O numero digitado não é valido.");
-                                }
-                            } catch (NumberFormatException e) {
-                                JOptionPane.showMessageDialog(this, "O campo ID deve conter apenas numeros.");
+                                textCPF.setEditable(false);
+                                textData_nascimento.setEditable(false);
+                                textNome.setEditable(false);
+                                textSetor.setEditable(false);
                             }
-
+                        } else {
+                            JOptionPane.showMessageDialog(this, "O numero digitado não é valido.");
                         }
 
+                    } catch (NumberFormatException e) {
+                        JOptionPane.showMessageDialog(this, "O campo ID deve conter apenas numeros.");
                     }
 
                     break;
+
                 case "CPF":
                     // implemente a lógica para buscar pelo CPF
                     break;
@@ -549,9 +536,8 @@ public class FuncionarioView extends javax.swing.JInternalFrame {
             }
 
         }
-        
-        
-        
+
+
     }//GEN-LAST:event_jbPesquisarActionPerformed
 
     private void jbLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbLimparActionPerformed
@@ -576,10 +562,12 @@ public class FuncionarioView extends javax.swing.JInternalFrame {
             textNome.setText((modelo.getValueAt(linha, 1)).toString());
             textCPF.setText((modelo.getValueAt(linha, 2)).toString());
             textData_nascimento.setText((modelo.getValueAt(linha, 3)).toString());
-            textSetor.setText((modelo.getValueAt(linha, 4)).toString());
+            textSetor.setSelectedItem((modelo.getValueAt(linha, 4)).toString());
 
             jbEditar.setEnabled(true);
             jbExcluir.setEnabled(true);
+            jbLimpar.setEnabled(false);
+            jbCancelar.setEnabled(true);
         }
 
 
@@ -590,7 +578,7 @@ public class FuncionarioView extends javax.swing.JInternalFrame {
         textCPF.setText("");
         textData_nascimento.setText("");
         textNome.setText("");
-        textSetor.setText("");
+        textSetor.setSelectedItem("");
     }
 
 
@@ -613,6 +601,6 @@ public class FuncionarioView extends javax.swing.JInternalFrame {
     private javax.swing.JFormattedTextField textData_nascimento;
     private javax.swing.JTextField textID;
     private javax.swing.JFormattedTextField textNome;
-    private javax.swing.JFormattedTextField textSetor;
+    private javax.swing.JComboBox<String> textSetor;
     // End of variables declaration//GEN-END:variables
 }

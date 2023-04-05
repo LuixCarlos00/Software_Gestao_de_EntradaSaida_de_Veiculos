@@ -32,11 +32,11 @@
                           <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                           <Component id="textCPF" min="-2" pref="158" max="-2" attributes="0"/>
                           <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
-                          <Component id="textData_nascimento" min="-2" pref="157" max="-2" attributes="0"/>
-                          <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
-                          <Component id="textSetor" min="-2" pref="157" max="-2" attributes="0"/>
                           <Component id="ID" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="textID" alignment="1" min="-2" pref="158" max="-2" attributes="0"/>
+                          <Component id="textData_nascimento" alignment="0" min="-2" pref="157" max="-2" attributes="0"/>
+                          <Component id="jLabel4" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="textSetor" alignment="0" min="-2" pref="153" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <Group type="103" alignment="1" groupAlignment="0" attributes="0">
@@ -71,7 +71,7 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" attributes="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
+                  <Group type="102" attributes="0">
                       <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
                       <Component id="jScrollPane1" pref="0" max="32767" attributes="0"/>
                   </Group>
@@ -109,11 +109,11 @@
                       <Component id="jLabel3" min="-2" pref="20" max="-2" attributes="0"/>
                       <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                       <Component id="textData_nascimento" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="18" pref="18" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                       <Component id="jLabel4" min="-2" pref="20" max="-2" attributes="0"/>
-                      <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                       <Component id="textSetor" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                      <EmptySpace min="0" pref="12" max="32767" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
@@ -240,8 +240,6 @@
         </Component>
       </SubComponents>
     </Container>
-    <Component class="javax.swing.JFormattedTextField" name="textSetor">
-    </Component>
     <Component class="javax.swing.JFormattedTextField" name="textNome">
     </Component>
     <Component class="javax.swing.JLabel" name="ID">
@@ -303,6 +301,25 @@
       </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="textID">
+    </Component>
+    <Component class="javax.swing.JComboBox" name="textSetor">
+      <Properties>
+        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+          <StringArray count="8">
+            <StringItem index="0" value="Adiministra&#xe7;&#xe3;o"/>
+            <StringItem index="1" value="Almoxarifado"/>
+            <StringItem index="2" value="Contabilidade"/>
+            <StringItem index="3" value="Seguran&#xe7;a do Trabalho"/>
+            <StringItem index="4" value="Oficina de Auto"/>
+            <StringItem index="5" value="Moagem"/>
+            <StringItem index="6" value="Britagem"/>
+            <StringItem index="7" value="Forno"/>
+          </StringArray>
+        </Property>
+      </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+      </AuxValues>
     </Component>
   </SubComponents>
 </Form>
