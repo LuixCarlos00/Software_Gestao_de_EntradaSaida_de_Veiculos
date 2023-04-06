@@ -5,9 +5,14 @@
 package view;
 
 import controller.FuncionarioController;
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.text.MaskFormatter;
 import model.FuncionarioModel;
 
 /**
@@ -415,7 +420,7 @@ public class FuncionarioView extends javax.swing.JInternalFrame {
         } else {
             carregarTabela();
             ativarEdicao();
-            
+
         }
 
 
@@ -481,7 +486,7 @@ public class FuncionarioView extends javax.swing.JInternalFrame {
 
                         if (numero > 0) {
                             funcionario.setId(id);// passa o numero coletado para o bd 
-                            FuncionarioModel funcionario_encontrado = FuncionarioController.selecionar(funcionario);
+                            FuncionarioModel funcionario_encontrado = FuncionarioController.selecionarID(funcionario);
                             if (funcionario_encontrado == null) {
                                 limparCampos();
                                 JOptionPane.showMessageDialog(this, "Funcionario não encontrado no banco de dados");
@@ -521,9 +526,67 @@ public class FuncionarioView extends javax.swing.JInternalFrame {
 
                     break;
 
-                case "CPF":
-                    // implemente a lógica para buscar pelo CPF
-                    break;
+                case "CPF": {
+                    
+                    String CpfBusca = JOptionPane.showInputDialog(null, "Campo CPF", " Por favor insira o CPF").trim();
+
+                    if (CpfBusca.isEmpty()) {// o campo que o usuario digitou esta vazio ou tem algo escrito nele ?
+                        JOptionPane.showMessageDialog(this, "Por Favor preencher o campo de CPF.");
+
+                    } else if (CpfBusca != null) {
+                        char c = CpfBusca.charAt(0);
+
+                        if (Character.isDigit(c)) {//o usuari digitou um numero 
+
+                           
+                            int pw = Integer.parseInt(CpfBusca.trim()); // tenta converter o texto em um número inteiro positivo
+
+                            if (pw > 0) {
+                                funcionario.setCPF(CpfBusca);// passa o numero coletado para o bd 
+                                FuncionarioModel funcionario_encontrado = FuncionarioController.selecionarCPF(funcionario);
+                                if (funcionario_encontrado == null) {
+                                    limparCampos();
+                                    JOptionPane.showMessageDialog(this, "Funcionario não encontrado no banco de dados");
+                                } else {
+                                    textNome.setText(funcionario_encontrado.getNome());
+                                    textCPF.setText(funcionario_encontrado.getCPF());
+                                    textData_nascimento.setText(funcionario_encontrado.getData_nascimento());
+                                    textSetor.setSelectedItem(funcionario_encontrado.getSetor());
+
+                                    //Habilita os botões Editar e Excluir
+                                    jbEditar.setEnabled(true);
+                                    jbExcluir.setEnabled(true);
+                                    jbSalvar.setEnabled(false);
+                                    jbLimpar.setEnabled(false);
+                                    jbNovo.setEnabled(false);
+
+                                    textID.setEnabled(true);
+                                    jbCancelar.setEnabled(true);
+
+                                    textNome.setEnabled(true);
+                                    textSetor.setEnabled(true);
+                                    textData_nascimento.setEnabled(true);
+                                    textCPF.setEnabled(true);
+
+                                    textCPF.setEditable(false);
+                                    textData_nascimento.setEditable(false);
+                                    textNome.setEditable(false);
+                                    textSetor.setEditable(false);
+                                }
+                            } else {
+                                JOptionPane.showMessageDialog(this, "O numero digitado não é valido.");
+                            }
+
+                        } else if (Character.isLetter(c)) {// o usuario digitou uma letra
+                            JOptionPane.showMessageDialog(this, "O campo CPF deve ser inserio apenas numeros ");
+                        } else {// o usuario digitou um caracter que nao e letra nem numero
+                            JOptionPane.showMessageDialog(this, "O campo CPF não pode ser \n inserido caracters especiais ");
+                        }
+
+                    }
+                }
+                break;
+
                 case "Nome":
                     // implemente a lógica para buscar pelo nome
                     break;

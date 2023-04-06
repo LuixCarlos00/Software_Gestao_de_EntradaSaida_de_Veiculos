@@ -61,7 +61,7 @@ public class FuncionarioController {
         return retorno;
     }
     
-    public static FuncionarioModel selecionar(FuncionarioModel funcionario){
+    public static FuncionarioModel selecionarID(FuncionarioModel funcionario){
         String sql = "SELECT * FROM funcionarios where ID = ?;";
         FuncionarioModel idencontrado = null;
         Conexao.conectar();
@@ -89,6 +89,37 @@ public class FuncionarioController {
         Conexao.desconectar();
         return idencontrado;
     } 
+    
+    
+    public static FuncionarioModel selecionarCPF(FuncionarioModel funcionario){
+        String sql = "SELECT * FROM funcionarios where CPF = ?;";
+        FuncionarioModel idencontrado = null;
+        Conexao.conectar();
+        
+        try{
+            PreparedStatement sentenca = Conexao.con.prepareStatement(sql);
+            sentenca.setInt(1, Integer.parseInt(funcionario.getCPF()));
+            ResultSet resultado = sentenca.executeQuery();
+            
+            if(resultado.next()) {
+                idencontrado = new FuncionarioModel();
+                idencontrado.setId(resultado.getInt("id"));
+                idencontrado.setNome(resultado.getString("nome"));
+                idencontrado.setCPF(resultado.getString("cpf"));
+                idencontrado.setData_nascimento(resultado.getString("data_nascimento"));
+                idencontrado.setSetor(resultado.getString("setor"));
+            }
+            
+        }
+        
+        catch(SQLException e){
+            System.out.println("Erro na sentença SQL de seleção: "+ e.getMessage());
+        }
+        
+        Conexao.desconectar();
+        return idencontrado;
+    } 
+    
     
      public static boolean excluir(FuncionarioModel funcionario) {
         String sql = "DELETE FROM funcionarios WHERE id = ?;";
