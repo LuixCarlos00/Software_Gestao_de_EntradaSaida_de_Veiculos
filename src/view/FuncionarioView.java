@@ -5,12 +5,18 @@
 package view;
 
 import controller.FuncionarioController;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JButton;
 import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.MaskFormatter;
@@ -196,7 +202,12 @@ public class FuncionarioView extends javax.swing.JInternalFrame {
             }
         });
 
-        textSetor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Adiministração", "Almoxarifado", "Contabilidade", "Segurança do Trabalho", "Oficina de Auto", "Moagem", "Britagem", "Forno" }));
+        textSetor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Administracao", "Almoxarifado", "Contabilidade", "Segurança do Trabalho", "Oficina de Auto", "Moagem", "Britagem", "Forno", "Laboratorio", "Faxina", "Terceirizado", "Diretoria" }));
+        textSetor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                textSetorActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -595,7 +606,7 @@ public class FuncionarioView extends javax.swing.JInternalFrame {
 
                     } else if (BuscarNome.matches("[a-zA-Z]+")) {//verificar se tem apenas letra no campo
                         funcionario.setNome(BuscarNome);// passa o nome coletado para o bd 
-                        FuncionarioModel funcionario_encontrado = FuncionarioController.selecionarNome(funcionario);
+                        List<FuncionarioModel> funcionario_encontrado = FuncionarioController.selecionarNome(funcionario);
                         if (funcionario_encontrado == null) {
                             limparCampos();
                             JOptionPane.showMessageDialog(this, "Funcionario não encontrado no banco de dados");
@@ -603,9 +614,16 @@ public class FuncionarioView extends javax.swing.JInternalFrame {
 
                             DefaultTableModel model = (DefaultTableModel) Tabela_funcionarios.getModel();
                             model.setRowCount(0);
-
-                            model.addRow(new Object[]{funcionario_encontrado.getId(), funcionario_encontrado.getNome(), funcionario_encontrado.getCPF(),funcionario_encontrado.getData_nascimento(), funcionario_encontrado.getSetor()});
-
+                            List<FuncionarioModel> funcionariosEncontrados = FuncionarioController.selecionarNome(funcionario);
+                            for (FuncionarioModel funcionarioEncontrado : funcionariosEncontrados) {
+                                model.addRow(new Object[]{
+                                    funcionarioEncontrado.getId(),
+                                    funcionarioEncontrado.getNome(),
+                                    funcionarioEncontrado.getCPF(),
+                                    funcionarioEncontrado.getData_nascimento(),
+                                    funcionarioEncontrado.getSetor()
+                                });
+                            }
                             //Habilita os botões Editar e Excluir
                             jbEditar.setEnabled(true);
                             jbExcluir.setEnabled(true);
@@ -633,16 +651,63 @@ public class FuncionarioView extends javax.swing.JInternalFrame {
                     break;
 
                 case "Setor":
-                    // implemente a lógica para buscar pelo setor
+
+                    String BuscarSetor = JOptionPane.showInputDialog(this, " Por favor informe o Setor.").trim();
+
+                    if (BuscarSetor.isEmpty()) {// o campo que o usuario digitou esta vazio ou tem algo escrito nele ?
+                        JOptionPane.showMessageDialog(this, "Por Favor preencher o campo Setor.");
+
+                    } else if (BuscarSetor.matches("[a-zA-Z]+")) {//verificar se tem apenas letra no campo
+                        funcionario.setSetor(BuscarSetor);// passa o nome coletado para o bd 
+                        List<FuncionarioModel> funcionario_encontrado = FuncionarioController.selecionarSetor(funcionario);
+                        if (funcionario_encontrado == null) {//se ele voltar vazio 
+                            limparCampos();
+                            JOptionPane.showMessageDialog(this, "Não existe nenhum funcionario cadastrado nesse Setor");
+                        } else {
+
+                            DefaultTableModel model = (DefaultTableModel) Tabela_funcionarios.getModel();
+                            model.setRowCount(0);
+                            List<FuncionarioModel> funcionariosEncontrados = FuncionarioController.selecionarSetor(funcionario);
+                            for (FuncionarioModel funcionarioEncontrado : funcionariosEncontrados) {
+                                model.addRow(new Object[]{
+                                    funcionarioEncontrado.getId(),
+                                    funcionarioEncontrado.getNome(),
+                                    funcionarioEncontrado.getCPF(),
+                                    funcionarioEncontrado.getData_nascimento(),
+                                    funcionarioEncontrado.getSetor()
+                                });
+                            }
+                            //Habilita os botões Editar e Excluir
+                            jbEditar.setEnabled(true);
+                            jbExcluir.setEnabled(true);
+                            jbSalvar.setEnabled(false);
+                            jbLimpar.setEnabled(false);
+                            jbNovo.setEnabled(false);
+
+                            textID.setEnabled(true);
+                            jbCancelar.setEnabled(true);
+
+                            textNome.setEnabled(true);
+                            textSetor.setEnabled(true);
+                            textData_nascimento.setEnabled(true);
+                            textCPF.setEnabled(true);
+
+                            textCPF.setEditable(false);
+                            textData_nascimento.setEditable(false);
+                            textNome.setEditable(false);
+                            textSetor.setEditable(false);
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(this, "O Setor digitado não é valido.");
+                    }
+
                     break;
+
                 case "Data de Nascimento":
                     // implemente a lógica para buscar pela data de nascimento
                     break;
             }
-
         }
-
-
     }//GEN-LAST:event_jbPesquisarActionPerformed
 
     private void jbLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbLimparActionPerformed
@@ -677,6 +742,10 @@ public class FuncionarioView extends javax.swing.JInternalFrame {
 
 
     }//GEN-LAST:event_Tabela_funcionariosMouseClicked
+
+    private void textSetorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textSetorActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_textSetorActionPerformed
 
     private void limparCampos() {
         textID.setText("");

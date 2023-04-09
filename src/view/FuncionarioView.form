@@ -301,8 +301,8 @@
     <Component class="javax.swing.JComboBox" name="textSetor">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="8">
-            <StringItem index="0" value="Adiministra&#xe7;&#xe3;o"/>
+          <StringArray count="12">
+            <StringItem index="0" value="Administracao"/>
             <StringItem index="1" value="Almoxarifado"/>
             <StringItem index="2" value="Contabilidade"/>
             <StringItem index="3" value="Seguran&#xe7;a do Trabalho"/>
@@ -310,9 +310,16 @@
             <StringItem index="5" value="Moagem"/>
             <StringItem index="6" value="Britagem"/>
             <StringItem index="7" value="Forno"/>
+            <StringItem index="8" value="Laboratorio"/>
+            <StringItem index="9" value="Faxina"/>
+            <StringItem index="10" value="Terceirizado"/>
+            <StringItem index="11" value="Diretoria"/>
           </StringArray>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="textSetorActionPerformed"/>
+      </Events>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
       </AuxValues>

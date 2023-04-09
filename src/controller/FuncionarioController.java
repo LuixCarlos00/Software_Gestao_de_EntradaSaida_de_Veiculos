@@ -4,6 +4,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 import model.FuncionarioModel;
 import model.VeiculoModel;
 import util.Conexao;
@@ -86,9 +87,9 @@ public class FuncionarioController {
         return idencontrado;
     }
 
-    public static FuncionarioModel selecionarNome(FuncionarioModel funcionario) {
+    public static List<FuncionarioModel> selecionarNome(FuncionarioModel funcionario) {
         String sql = "select * from funcionarios where nome like ?;";
-        FuncionarioModel NomeEncontrado = null;
+        List<FuncionarioModel> nomesEncontrado = new ArrayList<>();
         Conexao.conectar();
 
         try {
@@ -96,13 +97,14 @@ public class FuncionarioController {
             sentenca.setString(1, "%" + funcionario.getNome() + "%"); // adicionando % no início e fim do nome para pesquisar substrings
             ResultSet resultado = sentenca.executeQuery();
 
-            if (resultado.next()) {
-                NomeEncontrado = new FuncionarioModel();
-                NomeEncontrado.setId(resultado.getInt("id"));
-                NomeEncontrado.setNome(resultado.getString("nome"));
-                NomeEncontrado.setCPF(resultado.getString("cpf"));
-                NomeEncontrado.setData_nascimento(resultado.getString("data_nascimento"));
-                NomeEncontrado.setSetor(resultado.getString("setor"));
+            while (resultado.next()) {
+                FuncionarioModel nomeEncontrado = new FuncionarioModel();
+                nomeEncontrado.setId(resultado.getInt("id"));
+                nomeEncontrado.setNome(resultado.getString("nome"));
+                nomeEncontrado.setCPF(resultado.getString("cpf"));
+                nomeEncontrado.setData_nascimento(resultado.getString("data_nascimento"));
+                nomeEncontrado.setSetor(resultado.getString("setor"));
+                nomesEncontrado.add(nomeEncontrado);
             }
 
         } catch (SQLException e) {
@@ -110,7 +112,35 @@ public class FuncionarioController {
         }
 
         Conexao.desconectar();
-        return NomeEncontrado;
+        return nomesEncontrado;
+    }
+
+    public static List<FuncionarioModel> selecionarSetor(FuncionarioModel funcionario) {
+        String sql = "select * from funcionarios where setor like ?;";
+        List<FuncionarioModel> Setor = new ArrayList<>();
+        Conexao.conectar();
+
+        try {
+            PreparedStatement sentenca = Conexao.con.prepareStatement(sql);
+            sentenca.setString(1, funcionario.getNome()); 
+            ResultSet resultado = sentenca.executeQuery();
+
+            while (resultado.next()) {
+                FuncionarioModel SetorEncontrado = new FuncionarioModel();
+                SetorEncontrado.setId(resultado.getInt("id"));
+                SetorEncontrado.setNome(resultado.getString("nome"));
+                SetorEncontrado.setCPF(resultado.getString("cpf"));
+                SetorEncontrado.setData_nascimento(resultado.getString("data_nascimento"));
+                SetorEncontrado.setSetor(resultado.getString("setor"));
+                Setor.add(SetorEncontrado);
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Erro na sentença SQL de seleção: " + e.getMessage());
+        }
+
+        Conexao.desconectar();
+        return Setor;
     }
 
     public static FuncionarioModel selecionarCPF(FuncionarioModel funcionario) {
