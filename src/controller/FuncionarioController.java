@@ -117,22 +117,22 @@ public class FuncionarioController {
 
     public static List<FuncionarioModel> selecionarSetor(FuncionarioModel funcionario) {
         String sql = "select * from funcionarios where setor like ?;";
-        List<FuncionarioModel> Setor = new ArrayList<>();
+        List<FuncionarioModel> SetorEncontrado = new ArrayList<>();
         Conexao.conectar();
 
         try {
             PreparedStatement sentenca = Conexao.con.prepareStatement(sql);
-            sentenca.setString(1, funcionario.getNome()); 
+            sentenca.setString(1, "%" + funcionario.getSetor()+ "%"); // adicionando % no início e fim do nome para pesquisar substrings
             ResultSet resultado = sentenca.executeQuery();
 
             while (resultado.next()) {
-                FuncionarioModel SetorEncontrado = new FuncionarioModel();
-                SetorEncontrado.setId(resultado.getInt("id"));
-                SetorEncontrado.setNome(resultado.getString("nome"));
-                SetorEncontrado.setCPF(resultado.getString("cpf"));
-                SetorEncontrado.setData_nascimento(resultado.getString("data_nascimento"));
-                SetorEncontrado.setSetor(resultado.getString("setor"));
-                Setor.add(SetorEncontrado);
+                FuncionarioModel nomeEncontrado = new FuncionarioModel();
+                nomeEncontrado.setId(resultado.getInt("id"));
+                nomeEncontrado.setNome(resultado.getString("nome"));
+                nomeEncontrado.setCPF(resultado.getString("cpf"));
+                nomeEncontrado.setData_nascimento(resultado.getString("data_nascimento"));
+                nomeEncontrado.setSetor(resultado.getString("setor"));
+                SetorEncontrado.add(nomeEncontrado);
             }
 
         } catch (SQLException e) {
@@ -140,7 +140,7 @@ public class FuncionarioController {
         }
 
         Conexao.desconectar();
-        return Setor;
+        return SetorEncontrado;
     }
 
     public static FuncionarioModel selecionarCPF(FuncionarioModel funcionario) {

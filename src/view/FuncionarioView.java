@@ -202,7 +202,7 @@ public class FuncionarioView extends javax.swing.JInternalFrame {
             }
         });
 
-        textSetor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Administracao", "Almoxarifado", "Contabilidade", "Segurança do Trabalho", "Oficina de Auto", "Moagem", "Britagem", "Forno", "Laboratorio", "Faxina", "Terceirizado", "Diretoria" }));
+        textSetor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Administraçâo", "Almoxarifado", "Contabilidade", "Segurança do Trabalho", "Oficina de Auto", "Moagem", "Britagem", "Forno", "Laboratorio", "Faxina", "Terceirizado", "Diretoria" }));
         textSetor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 textSetorActionPerformed(evt);
@@ -539,7 +539,12 @@ public class FuncionarioView extends javax.swing.JInternalFrame {
 
                 case "CPF": {
 
-                    String CpfBusca = JOptionPane.showInputDialog(null, "Campo CPF", " Por favor insira o CPF").trim();
+                    String CpfBusca = JOptionPane.showInputDialog(null, "Por favor insira o CPF").trim();
+                    if (CpfBusca.length() != 11) {
+                        JOptionPane.showMessageDialog(null, "O CPF deve conter exatamente 11 caracteres.");
+                        // Aqui você pode chamar uma função para lidar com a entrada inválida ou simplesmente encerrar a execução do código.
+                        return;
+                    }
 
                     if (CpfBusca.isEmpty()) {// o campo que o usuario digitou esta vazio ou tem algo escrito nele ?
                         JOptionPane.showMessageDialog(this, "Por Favor preencher o campo de CPF.");
@@ -607,7 +612,7 @@ public class FuncionarioView extends javax.swing.JInternalFrame {
                     } else if (BuscarNome.matches("[a-zA-Z]+")) {//verificar se tem apenas letra no campo
                         funcionario.setNome(BuscarNome);// passa o nome coletado para o bd 
                         List<FuncionarioModel> funcionario_encontrado = FuncionarioController.selecionarNome(funcionario);
-                        if (funcionario_encontrado == null) {
+                        if (funcionario_encontrado.isEmpty()) {
                             limparCampos();
                             JOptionPane.showMessageDialog(this, "Funcionario não encontrado no banco de dados");
                         } else {
@@ -652,17 +657,16 @@ public class FuncionarioView extends javax.swing.JInternalFrame {
 
                 case "Setor":
 
-                    String BuscarSetor = JOptionPane.showInputDialog(this, " Por favor informe o Setor.").trim();
+                    String BuscarSetor = JOptionPane.showInputDialog(this, "Por favor informe o Setor.").trim();
 
                     if (BuscarSetor.isEmpty()) {// o campo que o usuario digitou esta vazio ou tem algo escrito nele ?
-                        JOptionPane.showMessageDialog(this, "Por Favor preencher o campo Setor.");
-
-                    } else if (BuscarSetor.matches("[a-zA-Z]+")) {//verificar se tem apenas letra no campo
+                        JOptionPane.showMessageDialog(this, "Por favor preencher o campo Nome.");
+                    } else if (BuscarSetor.matches("[a-zA-ZçÇáÁéÉíÍóÓúÚâÂêÊôÔûÛãÃõÕàÀèÈìÌòÒùÙ]+")) {//verificar se tem apenas letras e caracteres especiais no campo
                         funcionario.setSetor(BuscarSetor);// passa o nome coletado para o bd 
                         List<FuncionarioModel> funcionario_encontrado = FuncionarioController.selecionarSetor(funcionario);
-                        if (funcionario_encontrado == null) {//se ele voltar vazio 
+                        if (funcionario_encontrado.isEmpty()) {
                             limparCampos();
-                            JOptionPane.showMessageDialog(this, "Não existe nenhum funcionario cadastrado nesse Setor");
+                            JOptionPane.showMessageDialog(this, "Não existe cadastro nesse Setor.");
                         } else {
 
                             DefaultTableModel model = (DefaultTableModel) Tabela_funcionarios.getModel();
@@ -677,7 +681,8 @@ public class FuncionarioView extends javax.swing.JInternalFrame {
                                     funcionarioEncontrado.getSetor()
                                 });
                             }
-                            //Habilita os botões Editar e Excluir
+                            JOptionPane.showMessageDialog(this, "Cadastros Encontrados");
+                            // Habilita os botões Editar e Excluir
                             jbEditar.setEnabled(true);
                             jbExcluir.setEnabled(true);
                             jbSalvar.setEnabled(false);
@@ -696,9 +701,11 @@ public class FuncionarioView extends javax.swing.JInternalFrame {
                             textData_nascimento.setEditable(false);
                             textNome.setEditable(false);
                             textSetor.setEditable(false);
+
                         }
+
                     } else {
-                        JOptionPane.showMessageDialog(this, "O Setor digitado não é valido.");
+                        JOptionPane.showMessageDialog(this, "O Nome digitado não é válido.");
                     }
 
                     break;
