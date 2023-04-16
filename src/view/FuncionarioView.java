@@ -1,31 +1,12 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JInternalFrame.java to edit this template
- */
 package view;
 
 import controller.FuncionarioController;
-import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JButton;
-import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.text.MaskFormatter;
 import model.FuncionarioModel;
 
-/**
- *
- * @author luixc
- */
 public class FuncionarioView extends javax.swing.JInternalFrame {
 
     FuncionarioController f = new FuncionarioController();
@@ -299,9 +280,9 @@ public class FuncionarioView extends javax.swing.JInternalFrame {
         limparCampos();
         carregarTabela();
         ativarEdicao();
-        jbLimpar.setEnabled(true);
-        textID.setEditable(false);//e necessario deixa o Id desabilitado poque quando ele chama ativarEdicao ele vem com ele ativado por padrao. 
-        jbPesquisar.setEnabled(false);//e necessario deixa desabilitado porue ele fica abilitado quando esta fazendo o cadastro e se voce  se clicar nele enquanto faz o cadastro ele da erro .
+        //jbLimpar.setEnabled(true);
+        //textID.setEditable(false);//e necessario deixa o Id desabilitado poque quando ele chama ativarEdicao ele vem com ele ativado por padrao. 
+        //jbPesquisar.setEnabled(false);//e necessario deixa desabilitado porue ele fica abilitado quando esta fazendo o cadastro e se voce  se clicar nele enquanto faz o cadastro ele da erro .
     }//GEN-LAST:event_jbNovoActionPerformed
 
     private void jbSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSalvarActionPerformed
@@ -351,11 +332,12 @@ public class FuncionarioView extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jbSalvarActionPerformed
 
     public void ativarEdicao() {
-        //Desabilita os botões Novo, Editar, Excluir e Limpar
+        //Desabilita os botões Novo, Editar, Excluir, Limpar e Pesquisar
         jbNovo.setEnabled(false);
         jbEditar.setEnabled(false);
         jbExcluir.setEnabled(false);
         jbLimpar.setEnabled(false);
+        jbPesquisar.setEnabled(false);
 
         //Habilita o botão Salvar e Cancelar e os campos de texto
         jbSalvar.setEnabled(true);
@@ -372,7 +354,6 @@ public class FuncionarioView extends javax.swing.JInternalFrame {
 
     public void resetTela() {
         //Ativa os botões Novo e Limpar e o campo Id para poder pesquisar quando quiser 
-        textID.setEditable(false);
         jbNovo.setEnabled(true);
         jbLimpar.setEnabled(true);
         jbPesquisar.setEnabled(true);
@@ -415,7 +396,6 @@ public class FuncionarioView extends javax.swing.JInternalFrame {
         }
     }
 
-
     private void jbEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEditarActionPerformed
 
         String nome = textNome.getText();
@@ -432,7 +412,6 @@ public class FuncionarioView extends javax.swing.JInternalFrame {
             ativarEdicao();
 
         }
-
 
     }//GEN-LAST:event_jbEditarActionPerformed
 
@@ -470,11 +449,11 @@ public class FuncionarioView extends javax.swing.JInternalFrame {
         carregarTabela();
     }//GEN-LAST:event_jbExcluirActionPerformed
 
-
     private void jbPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbPesquisarActionPerformed
         FuncionarioModel funcionario = new FuncionarioModel();
-        String[] opcoesBusca = {"ID", "Nome", "Setor", "Data de Nascimento", "CPF"};
-        int escolha = JOptionPane.showOptionDialog(this, "Escolha o tipo de busca", "Busca por",
+        String[] opcoesBusca = {"ID","Nome","CPF","Setor"};
+        
+        int escolha = JOptionPane.showOptionDialog(this, "Escolha o tipo de pesquisa", "Pesquisa por",
                 JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null,
                 opcoesBusca, opcoesBusca[0]);
 
@@ -483,102 +462,52 @@ public class FuncionarioView extends javax.swing.JInternalFrame {
             String valorBusca = textID.getText();
 
             switch (opcaoBusca) {
-                case "ID":
-                    String inputValue = JOptionPane.showInputDialog(this, " Por favor insira o ID").trim();
+                case "ID": {
+                    String inputValue = JOptionPane.showInputDialog(this, "Por favor insira o ID:").trim();
 
                     if (inputValue.isEmpty()) {// o campo que o usuario digitou esta vazio ou tem algo escrito nele ?
                         JOptionPane.showMessageDialog(this, "Por Favor preencher o campo ID.");
-
-                    } else 
+                    }
+                    
+                    else {
                         try {
-                        int id = Integer.parseInt(inputValue);
-                        int numero = Integer.parseInt(inputValue.trim()); // tenta converter o texto em um número inteiro positivo
+                            int id = Integer.parseInt(inputValue);
+                            int numero = Integer.parseInt(inputValue.trim()); // tenta converter o texto em um número inteiro positivo
 
-                        if (numero > 0) {
-                            funcionario.setId(id);// passa o numero coletado para o bd 
-                            FuncionarioModel funcionario_encontrado = FuncionarioController.selecionarID(funcionario);
-                            if (funcionario_encontrado == null) {
-                                limparCampos();
-                                JOptionPane.showMessageDialog(this, "Funcionario não encontrado no banco de dados");
-                            } else {
-                                textID.setText(Integer.toString(funcionario_encontrado.getId()));
-                                textNome.setText(funcionario_encontrado.getNome());
-                                textCPF.setText(funcionario_encontrado.getCPF());
-                                textData_nascimento.setText(funcionario_encontrado.getData_nascimento());
-                                textSetor.setSelectedItem(funcionario_encontrado.getSetor());
+                            if (numero > 0) {
+                                funcionario.setId(id);// passa o numero coletado para o bd 
+                                FuncionarioModel funcionario_encontrado = FuncionarioController.selecionarID(funcionario);
 
-                                //Habilita os botões Editar e Excluir
-                                jbEditar.setEnabled(true);
-                                jbExcluir.setEnabled(true);
-                                jbSalvar.setEnabled(false);
-                                jbLimpar.setEnabled(false);
-                                jbNovo.setEnabled(false);
-
-                                textID.setEnabled(true);
-                                jbCancelar.setEnabled(true);
-
-                                textNome.setEnabled(true);
-                                textSetor.setEnabled(true);
-                                textData_nascimento.setEnabled(true);
-                                textCPF.setEnabled(true);
-
-                                textCPF.setEditable(false);
-                                textData_nascimento.setEditable(false);
-                                textNome.setEditable(false);
-                                textSetor.setEditable(false);
-                            }
-                        } else {
-                            JOptionPane.showMessageDialog(this, "O numero digitado não é valido.");
-                        }
-
-                    } catch (NumberFormatException e) {
-                        JOptionPane.showMessageDialog(this, "O campo ID deve conter apenas numeros.");
-                    }
-
-                    break;
-
-                case "CPF": {
-
-                    String CpfBusca = JOptionPane.showInputDialog(null, "Por favor insira o CPF").trim();
-                    if (CpfBusca.length() != 11) {
-                        JOptionPane.showMessageDialog(null, "O CPF deve conter exatamente 11 caracteres.");
-                        // Aqui você pode chamar uma função para lidar com a entrada inválida ou simplesmente encerrar a execução do código.
-                        return;
-                    }
-
-                    if (CpfBusca.isEmpty()) {// o campo que o usuario digitou esta vazio ou tem algo escrito nele ?
-                        JOptionPane.showMessageDialog(this, "Por Favor preencher o campo de CPF.");
-
-                    } else if (CpfBusca != null) {
-                        char c = CpfBusca.charAt(0);
-
-                        if (Character.isDigit(c)) {//o usuari digitou um numero 
-
-                            int pw = Integer.parseInt(CpfBusca.trim()); // tenta converter o texto em um número inteiro positivo
-
-                            if (pw > 0) {
-                                funcionario.setCPF(CpfBusca);// passa o numero coletado para o bd 
-                                FuncionarioModel funcionario_encontrado = FuncionarioController.selecionarCPF(funcionario);
                                 if (funcionario_encontrado == null) {
                                     limparCampos();
                                     JOptionPane.showMessageDialog(this, "Funcionario não encontrado no banco de dados");
-                                } else {
+                                } 
+
+                                else {
                                     textID.setText(Integer.toString(funcionario_encontrado.getId()));
                                     textNome.setText(funcionario_encontrado.getNome());
                                     textCPF.setText(funcionario_encontrado.getCPF());
                                     textData_nascimento.setText(funcionario_encontrado.getData_nascimento());
                                     textSetor.setSelectedItem(funcionario_encontrado.getSetor());
 
-                                    //Habilita os botões Editar e Excluir
+                                    // Habilita os botões Editar e Excluir e Limpar (Acho que o limpar faz mais sentido que o cancelar porque o botão Pesquisar dá o mesmo resultado
+                                    // que se o usuário clicar na tabela, e nesse caso só habilita o botão Limpar também, o cancelar é só se clicar em Novo ou Editar)
                                     jbEditar.setEnabled(true);
                                     jbExcluir.setEnabled(true);
-                                    jbSalvar.setEnabled(false);
-                                    jbLimpar.setEnabled(false);
-                                    jbNovo.setEnabled(false);
+                                    jbLimpar.setEnabled(true);
 
-                                    textID.setEnabled(true);
+                                    /*
+                                    // Não precisa desativar o botão Salvar, porque sempre que o botão Pesquisar está ativo, o Salvar tá inativo
+                                    // Também não precisa desativar o botão Novo, não tem problema se o usuário quiser inserir um funcionário novo depois de pesquisar
+                                    // Não precisa ativar o botão Cancelar porque ainda não iniciou nenhum processo (tipo quando clica em Novo ou Editar), só o de Limpar os campos
+
+                                    jbSalvar.setEnabled(false);
+                                    jbNovo.setEnabled(false);
                                     jbCancelar.setEnabled(true);
 
+                                    // Também não precisa ativar os campos  de texto e desativar a edição pois eles sempre vão estar nesse estado antes de iniciar a pesquisa
+
+                                    textID.setEnabled(true);
                                     textNome.setEnabled(true);
                                     textSetor.setEnabled(true);
                                     textData_nascimento.setEnabled(true);
@@ -588,17 +517,83 @@ public class FuncionarioView extends javax.swing.JInternalFrame {
                                     textData_nascimento.setEditable(false);
                                     textNome.setEditable(false);
                                     textSetor.setEditable(false);
+                                    */
+                                } 
+                            } 
+
+                            else {
+                                JOptionPane.showMessageDialog(this, "O numero digitado não é valido.");
+                            }
+                        }
+                        
+                        catch (NumberFormatException e) {
+                            JOptionPane.showMessageDialog(this, "O campo ID deve conter apenas numeros.");
+                        } 
+                    }
+                }
+                break;
+
+                case "CPF": {
+
+                    String CpfBusca = JOptionPane.showInputDialog(null, "Por favor insira o CPF").trim();
+                    
+                    // Tanto no Java quanto no SQL o campo CPF sempre tá salvo com os pontos e os traços, então o usuário tem que inserir 14 caracteres (11 números, 2 pontos e 1 traço)
+                    if (CpfBusca.length() != 14) {
+                        JOptionPane.showMessageDialog(null, "O CPF deve conter exatamente 14 caracteres (inclua os pontos e traços na busca).");
+                        // Aqui você pode chamar uma função para lidar com a entrada inválida ou simplesmente encerrar a execução do código.
+                        return;
+                    }
+
+                    if (CpfBusca.isEmpty()) {// o campo que o usuario digitou esta vazio ou tem algo escrito nele ?
+                        JOptionPane.showMessageDialog(this, "Por Favor preencher o campo de CPF.");
+
+                    } else if (CpfBusca != null) {
+                        
+                        // Desativei todas as verificações de número já que agora tá pesquisando uma String (que já é o tipo do campo CPF tanto no Java quanto no SQL)
+                        
+                        /*
+                        char c = CpfBusca.charAt(0);
+
+                        if (Character.isDigit(c)) {//o usuari digitou um numero 
+
+                            int pw = Integer.parseInt(CpfBusca.trim()); // tenta converter o texto em um número inteiro positivo
+
+                            if (pw > 0) { 
+                        */      
+                                // Busca o CPF digitado no banco
+                                funcionario.setCPF(CpfBusca); 
+                                FuncionarioModel funcionario_encontrado = FuncionarioController.selecionarCPF(funcionario);
+                                
+                                if (funcionario_encontrado == null) {
+                                    limparCampos();
+                                    JOptionPane.showMessageDialog(this, "Funcionario não encontrado no banco de dados");
+                                } 
+                                
+                                else {
+                                    textID.setText(Integer.toString(funcionario_encontrado.getId()));
+                                    textNome.setText(funcionario_encontrado.getNome());
+                                    textCPF.setText(funcionario_encontrado.getCPF());
+                                    textData_nascimento.setText(funcionario_encontrado.getData_nascimento());
+                                    textSetor.setSelectedItem(funcionario_encontrado.getSetor());
+
+                                    // Habilita os botões Editar e Excluir e Limpar (Acho que o limpar faz mais sentido que o cancelar porque o botão Pesquisar dá o mesmo resultado
+                                    // que se o usuário clicar na tabela, e nesse caso só habilita o botão Limpar também, o cancelar é só se clicar em Novo ou Editar)
+                                    jbEditar.setEnabled(true);
+                                    jbExcluir.setEnabled(true);
+                                    jbLimpar.setEnabled(true);
+                                    
                                 }
+                        /*
                             } else {
                                 JOptionPane.showMessageDialog(this, "O numero digitado não é valido.");
                             }
-
+                            
+                        
                         } else if (Character.isLetter(c)) {// o usuario digitou uma letra
                             JOptionPane.showMessageDialog(this, "O campo CPF deve ser inserio apenas numeros ");
                         } else {// o usuario digitou um caracter que nao e letra nem numero
                             JOptionPane.showMessageDialog(this, "O campo CPF não pode ser \n inserido caracters especiais ");
-                        }
-
+                        } */
                     }
                 }
                 break;
@@ -608,14 +603,18 @@ public class FuncionarioView extends javax.swing.JInternalFrame {
 
                     if (BuscarNome.isEmpty()) {// o campo que o usuario digitou esta vazio ou tem algo escrito nele ?
                         JOptionPane.showMessageDialog(this, "Por Favor preencher o campo Nome.");
-
-                    } else if (BuscarNome.matches("[a-zA-Z]+")) {//verificar se tem apenas letra no campo
+                    } 
+                    
+                    else if (BuscarNome.matches("[a-zA-Z]+")) {//verificar se tem apenas letra no campo
                         funcionario.setNome(BuscarNome);// passa o nome coletado para o bd 
                         List<FuncionarioModel> funcionario_encontrado = FuncionarioController.selecionarNome(funcionario);
+                        
                         if (funcionario_encontrado.isEmpty()) {
                             limparCampos();
                             JOptionPane.showMessageDialog(this, "Funcionario não encontrado no banco de dados");
-                        } else {
+                        } 
+                        
+                        else {
 
                             DefaultTableModel model = (DefaultTableModel) Tabela_funcionarios.getModel();
                             model.setRowCount(0);
@@ -629,27 +628,17 @@ public class FuncionarioView extends javax.swing.JInternalFrame {
                                     funcionarioEncontrado.getSetor()
                                 });
                             }
-                            //Habilita os botões Editar e Excluir
+                            
+                            // Habilita os botões Editar e Excluir e Limpar (Acho que o limpar faz mais sentido que o cancelar porque o botão Pesquisar dá o mesmo resultado
+                            // que se o usuário clicar na tabela, e nesse caso só habilita o botão Limpar também, o cancelar é só se clicar em Novo ou Editar)
                             jbEditar.setEnabled(true);
                             jbExcluir.setEnabled(true);
-                            jbSalvar.setEnabled(false);
-                            jbLimpar.setEnabled(false);
-                            jbNovo.setEnabled(false);
-
-                            textID.setEnabled(true);
-                            jbCancelar.setEnabled(true);
-
-                            textNome.setEnabled(true);
-                            textSetor.setEnabled(true);
-                            textData_nascimento.setEnabled(true);
-                            textCPF.setEnabled(true);
-
-                            textCPF.setEditable(false);
-                            textData_nascimento.setEditable(false);
-                            textNome.setEditable(false);
-                            textSetor.setEditable(false);
+                            jbLimpar.setEnabled(true);
+                            
                         }
-                    } else {
+                    } 
+                    
+                    else {
                         JOptionPane.showMessageDialog(this, "O Nome digitado não é valido.");
                     }
 
@@ -682,26 +671,13 @@ public class FuncionarioView extends javax.swing.JInternalFrame {
                                 });
                             }
                             JOptionPane.showMessageDialog(this, "Cadastros Encontrados");
-                            // Habilita os botões Editar e Excluir
+                            
+                            // Habilita os botões Editar e Excluir e Limpar (Acho que o limpar faz mais sentido que o cancelar porque o botão Pesquisar dá o mesmo resultado
+                            // que se o usuário clicar na tabela, e nesse caso só habilita o botão Limpar também, o cancelar é só se clicar em Novo ou Editar)
                             jbEditar.setEnabled(true);
                             jbExcluir.setEnabled(true);
-                            jbSalvar.setEnabled(false);
-                            jbLimpar.setEnabled(false);
-                            jbNovo.setEnabled(false);
-
-                            textID.setEnabled(true);
-                            jbCancelar.setEnabled(true);
-
-                            textNome.setEnabled(true);
-                            textSetor.setEnabled(true);
-                            textData_nascimento.setEnabled(true);
-                            textCPF.setEnabled(true);
-
-                            textCPF.setEditable(false);
-                            textData_nascimento.setEditable(false);
-                            textNome.setEditable(false);
-                            textSetor.setEditable(false);
-
+                            jbLimpar.setEnabled(true);
+                           
                         }
 
                     } else {
@@ -709,16 +685,12 @@ public class FuncionarioView extends javax.swing.JInternalFrame {
                     }
 
                     break;
-
-                case "Data de Nascimento":
-                    // implemente a lógica para buscar pela data de nascimento
-                    break;
             }
         }
     }//GEN-LAST:event_jbPesquisarActionPerformed
 
     private void jbLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbLimparActionPerformed
-        limparCampos();
+        resetTela();
     }//GEN-LAST:event_jbLimparActionPerformed
 
     private void jbCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCancelarActionPerformed
@@ -743,8 +715,8 @@ public class FuncionarioView extends javax.swing.JInternalFrame {
 
             jbEditar.setEnabled(true);
             jbExcluir.setEnabled(true);
-            jbLimpar.setEnabled(false);
-            jbCancelar.setEnabled(true);
+            jbLimpar.setEnabled(true);
+            jbCancelar.setEnabled(false);
         }
 
 

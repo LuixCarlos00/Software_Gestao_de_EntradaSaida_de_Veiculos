@@ -227,6 +227,11 @@ public class VeiculoView extends javax.swing.JInternalFrame {
         });
 
         jbPesquisar.setText("Pesquisar");
+        jbPesquisar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbPesquisarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -408,6 +413,10 @@ jtfID.setText("");
     private void jbCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCancelarActionPerformed
         resetTela();
     }//GEN-LAST:event_jbCancelarActionPerformed
+
+    private void jbPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbPesquisarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jbPesquisarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

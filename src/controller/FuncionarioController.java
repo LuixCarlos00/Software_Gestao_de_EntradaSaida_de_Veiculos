@@ -6,7 +6,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import model.FuncionarioModel;
-import model.VeiculoModel;
 import util.Conexao;
 
 public class FuncionarioController {
@@ -150,7 +149,7 @@ public class FuncionarioController {
 
         try {
             PreparedStatement sentenca = Conexao.con.prepareStatement(sql);
-            sentenca.setNString(1, funcionario.getCPF());
+            sentenca.setString(1, funcionario.getCPF());
             ResultSet resultado = sentenca.executeQuery();
 
             if (resultado.next()) {
