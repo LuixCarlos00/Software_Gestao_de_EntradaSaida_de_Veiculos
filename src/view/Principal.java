@@ -1,13 +1,5 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package view;
 
-/**
- *
- * @author luixc
- */
 public class Principal extends javax.swing.JFrame {
 
     public Principal() {
@@ -25,16 +17,16 @@ public class Principal extends javax.swing.JFrame {
 
         jMenuItem3 = new javax.swing.JMenuItem();
         Area_trabalho = new javax.swing.JPanel();
-        jMenuBar1 = new javax.swing.JMenuBar();
+        jmbMenuPrincipal = new javax.swing.JMenuBar();
         Cadastro = new javax.swing.JMenu();
         Cadastro_Funcionario = new javax.swing.JMenuItem();
         Cadastro_veiculo = new javax.swing.JMenuItem();
-        jMenuItem1 = new javax.swing.JMenuItem();
         Controle_Entrada_Saida = new javax.swing.JMenu();
         Nova_Entrada_Saida = new javax.swing.JMenuItem();
-        Visualizar_Entrada_Saida = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
-        SOBRE = new javax.swing.JMenu();
+        jmOutros = new javax.swing.JMenu();
+        Sobre = new javax.swing.JMenuItem();
+        jmiLogout = new javax.swing.JMenuItem();
 
         jMenuItem3.setText("jMenuItem3");
 
@@ -47,14 +39,14 @@ public class Principal extends javax.swing.JFrame {
         Area_trabalho.setLayout(Area_trabalhoLayout);
         Area_trabalhoLayout.setHorizontalGroup(
             Area_trabalhoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 809, Short.MAX_VALUE)
+            .addGap(0, 1280, Short.MAX_VALUE)
         );
         Area_trabalhoLayout.setVerticalGroup(
             Area_trabalhoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 606, Short.MAX_VALUE)
+            .addGap(0, 697, Short.MAX_VALUE)
         );
 
-        Cadastro.setText("CADASTRO");
+        Cadastro.setText("Cadastros");
 
         Cadastro_Funcionario.setText("Cadastro Funcionario");
         Cadastro_Funcionario.addActionListener(new java.awt.event.ActionListener() {
@@ -72,19 +64,11 @@ public class Principal extends javax.swing.JFrame {
         });
         Cadastro.add(Cadastro_veiculo);
 
-        jMenuItem1.setText("Trocar Usuario");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
-            }
-        });
-        Cadastro.add(jMenuItem1);
+        jmbMenuPrincipal.add(Cadastro);
 
-        jMenuBar1.add(Cadastro);
+        Controle_Entrada_Saida.setText("Entradas e Saídas de Veículos");
 
-        Controle_Entrada_Saida.setText("CONTROLE ENTRADA/SAIDA ");
-
-        Nova_Entrada_Saida.setText("Nova Entrada/Saida");
+        Nova_Entrada_Saida.setText("Controle de Entradas/Saídas");
         Nova_Entrada_Saida.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 Nova_Entrada_SaidaActionPerformed(evt);
@@ -92,37 +76,42 @@ public class Principal extends javax.swing.JFrame {
         });
         Controle_Entrada_Saida.add(Nova_Entrada_Saida);
 
-        Visualizar_Entrada_Saida.setText("Visualizar Entrada/Saida");
-        Visualizar_Entrada_Saida.addActionListener(new java.awt.event.ActionListener() {
+        jmbMenuPrincipal.add(Controle_Entrada_Saida);
+
+        jMenu3.setText("Controle de Gastos");
+        jmbMenuPrincipal.add(jMenu3);
+
+        jmOutros.setText("Outros");
+
+        Sobre.setText("Sobre");
+        Sobre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Visualizar_Entrada_SaidaActionPerformed(evt);
+                SobreActionPerformed(evt);
             }
         });
-        Controle_Entrada_Saida.add(Visualizar_Entrada_Saida);
+        jmOutros.add(Sobre);
 
-        jMenuBar1.add(Controle_Entrada_Saida);
+        jmiLogout.setText("Logout");
+        jmiLogout.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiLogoutActionPerformed(evt);
+            }
+        });
+        jmOutros.add(jmiLogout);
 
-        jMenu3.setText("CONTROLE DE GASTOS");
-        jMenuBar1.add(jMenu3);
+        jmbMenuPrincipal.add(jmOutros);
 
-        SOBRE.setText("Sobre");
-        jMenuBar1.add(SOBRE);
-
-        setJMenuBar(jMenuBar1);
+        setJMenuBar(jmbMenuPrincipal);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(Area_trabalho, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(Area_trabalho, javax.swing.GroupLayout.DEFAULT_SIZE, 1280, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(Area_trabalho, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(Area_trabalho, javax.swing.GroupLayout.DEFAULT_SIZE, 697, Short.MAX_VALUE)
         );
 
         pack();
@@ -142,26 +131,22 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_Cadastro_veiculoActionPerformed
 
     private void Nova_Entrada_SaidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Nova_Entrada_SaidaActionPerformed
-        EntradaeSaidaView entrada = new EntradaeSaidaView();
+        EntradaSaidaView entrada = new EntradaSaidaView();
         Area_trabalho.add(entrada);
         entrada.setVisible(true);
     }//GEN-LAST:event_Nova_Entrada_SaidaActionPerformed
 
-    private void Visualizar_Entrada_SaidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Visualizar_Entrada_SaidaActionPerformed
-        VisualizarEntradaeSaidaView visualizar = new  VisualizarEntradaeSaidaView();
-        Area_trabalho.add(visualizar);
-        visualizar.setVisible(true);
-    }//GEN-LAST:event_Visualizar_Entrada_SaidaActionPerformed
-
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+    private void jmiLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiLogoutActionPerformed
         setVisible(false);
         LoginView login = new LoginView();
         login.setVisible(true);
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
+    }//GEN-LAST:event_jmiLogoutActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
+    private void SobreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SobreActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_SobreActionPerformed
+
+    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -202,11 +187,11 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem Cadastro_veiculo;
     private javax.swing.JMenu Controle_Entrada_Saida;
     private javax.swing.JMenuItem Nova_Entrada_Saida;
-    private javax.swing.JMenu SOBRE;
-    private javax.swing.JMenuItem Visualizar_Entrada_Saida;
+    private javax.swing.JMenuItem Sobre;
     private javax.swing.JMenu jMenu3;
-    private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenu jmOutros;
+    private javax.swing.JMenuBar jmbMenuPrincipal;
+    private javax.swing.JMenuItem jmiLogout;
     // End of variables declaration//GEN-END:variables
 }
