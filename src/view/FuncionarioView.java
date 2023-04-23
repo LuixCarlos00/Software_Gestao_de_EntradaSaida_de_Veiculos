@@ -66,6 +66,7 @@ public class FuncionarioView extends javax.swing.JInternalFrame {
         textSetor = new javax.swing.JComboBox<>();
 
         setClosable(true);
+        setTitle("Cadastro de Funcionários");
 
         jbNovo.setText("Novo");
         jbNovo.setMinimumSize(null);
@@ -304,7 +305,7 @@ public class FuncionarioView extends javax.swing.JInternalFrame {
             funcionario.setCPF(textCPF.getText());
             funcionario.setData_nascimento(textData_nascimento.getText());
 
-            if (FuncionarioController.inserir(funcionario)) {
+            if (f.inserir(funcionario)) {
                 JOptionPane.showMessageDialog(this, "Cadastro realizado com sucesso.");
                 carregarTabela();
 
@@ -320,7 +321,7 @@ public class FuncionarioView extends javax.swing.JInternalFrame {
             funcionario.setCPF(textCPF.getText());
             funcionario.setData_nascimento(textData_nascimento.getText());
 
-            if (FuncionarioController.editar(funcionario)) {
+            if (f.editar(funcionario)) {
                 JOptionPane.showMessageDialog(this, "O cadastro do funcionario foi atualizado com sucesso.");
             } else {
                 JOptionPane.showMessageDialog(this, "Erro ao atualizar o Cadastro.");
@@ -438,7 +439,7 @@ public class FuncionarioView extends javax.swing.JInternalFrame {
             resetTela();
             limparCampos();
 
-            FuncionarioController.excluir(funcionario);
+            f.excluir(funcionario);
 
         } else if (JOptionPane.CLOSED_OPTION == JOptionPane.CLOSED_OPTION) {
             JOptionPane.showMessageDialog(this, "Operação cancelada.");
@@ -472,7 +473,7 @@ public class FuncionarioView extends javax.swing.JInternalFrame {
                         int id = Integer.parseInt(idBusca);
                         if (id > 0) {
                             funcionario.setId(id);
-                            FuncionarioModel funcionario_encontrado = FuncionarioController.selecionarID(funcionario);
+                            FuncionarioModel funcionario_encontrado = f.selecionarID(funcionario);
 
                             if (funcionario_encontrado == null) {
                                 limparCampos();
@@ -521,7 +522,7 @@ public class FuncionarioView extends javax.swing.JInternalFrame {
                     else {
                         
                         funcionario.setCPF(cpfBusca);
-                        FuncionarioModel funcionario_encontrado = FuncionarioController.selecionarCPF(funcionario);
+                        FuncionarioModel funcionario_encontrado = f.selecionarCPF(funcionario);
 
                         if (funcionario_encontrado == null) {
                             limparCampos();
@@ -550,7 +551,7 @@ public class FuncionarioView extends javax.swing.JInternalFrame {
                     
                     else if (nomeBusca.matches("[a-zA-Z]+")) {//verificar se tem apenas letras no campo
                         funcionario.setNome(nomeBusca);
-                        List<FuncionarioModel> funcionario_encontrado = FuncionarioController.selecionarNome(funcionario);
+                        List<FuncionarioModel> funcionario_encontrado = f.selecionarNome(funcionario);
                         
                         if (funcionario_encontrado.isEmpty()) {
                             limparCampos();
@@ -562,7 +563,7 @@ public class FuncionarioView extends javax.swing.JInternalFrame {
                             JOptionPane.showMessageDialog(this, "Funcionários encontrados. \nExibindo resultados na tabela.");
                             DefaultTableModel model = (DefaultTableModel) Tabela_funcionarios.getModel();
                             model.setRowCount(0);
-                            List<FuncionarioModel> funcionariosEncontrados = FuncionarioController.selecionarNome(funcionario);
+                            List<FuncionarioModel> funcionariosEncontrados = f.selecionarNome(funcionario);
                             for (FuncionarioModel funcionarioEncontrado : funcionariosEncontrados) {
                                 model.addRow(new Object[]{
                                     funcionarioEncontrado.getId(),
@@ -595,7 +596,7 @@ public class FuncionarioView extends javax.swing.JInternalFrame {
                     else if (setorBusca.matches("[a-zA-ZçÇáÁéÉíÍóÓúÚâÂêÊôÔûÛãÃõÕàÀèÈìÌòÒùÙ]+")) {//verificar se tem apenas letras e caracteres especiais no campo
                         
                         funcionario.setSetor(setorBusca);
-                        List<FuncionarioModel> funcionario_encontrado = FuncionarioController.selecionarSetor(funcionario);
+                        List<FuncionarioModel> funcionario_encontrado = f.selecionarSetor(funcionario);
                         
                         if (funcionario_encontrado.isEmpty()) {
                             limparCampos();
@@ -607,7 +608,7 @@ public class FuncionarioView extends javax.swing.JInternalFrame {
                             JOptionPane.showMessageDialog(this, "Funcionários encontrados. \nExibindo resultados na tabela.");
                             DefaultTableModel model = (DefaultTableModel) Tabela_funcionarios.getModel();
                             model.setRowCount(0);
-                            List<FuncionarioModel> funcionariosEncontrados = FuncionarioController.selecionarSetor(funcionario);
+                            List<FuncionarioModel> funcionariosEncontrados = f.selecionarSetor(funcionario);
                             for (FuncionarioModel funcionarioEncontrado : funcionariosEncontrados) {
                                 model.addRow(new Object[]{
                                     funcionarioEncontrado.getId(),

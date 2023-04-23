@@ -10,7 +10,7 @@ import util.Conexao;
 
 public class FuncionarioController {
 
-    public static boolean inserir(FuncionarioModel funcionario) {
+    public boolean inserir(FuncionarioModel funcionario) {
 
         String sql = "INSERT INTO funcionarios(nome,cpf,data_nascimento,setor) VALUES (?,?,?,?);";
         boolean retorno = false;
@@ -35,7 +35,7 @@ public class FuncionarioController {
 
     }
 
-    public static boolean editar(FuncionarioModel funcionario) {
+    public boolean editar(FuncionarioModel funcionario) {
         String sql = "UPDATE funcionarios SET nome = ?, cpf = ?, data_nascimento = ? , setor = ?  WHERE id = ?;";
         boolean retorno = false;
         Conexao.conectar();
@@ -59,7 +59,7 @@ public class FuncionarioController {
         return retorno;
     }
 
-    public static FuncionarioModel selecionarID(FuncionarioModel funcionario) {
+    public FuncionarioModel selecionarID(FuncionarioModel funcionario) {
         String sql = "SELECT * FROM funcionarios where ID = ?;";
         FuncionarioModel idencontrado = null;
         Conexao.conectar();
@@ -86,7 +86,7 @@ public class FuncionarioController {
         return idencontrado;
     }
 
-    public static List<FuncionarioModel> selecionarNome(FuncionarioModel funcionario) {
+    public List<FuncionarioModel> selecionarNome(FuncionarioModel funcionario) {
         String sql = "select * from funcionarios where nome like ?;";
         List<FuncionarioModel> nomesEncontrado = new ArrayList<>();
         Conexao.conectar();
@@ -114,7 +114,7 @@ public class FuncionarioController {
         return nomesEncontrado;
     }
 
-    public static List<FuncionarioModel> selecionarSetor(FuncionarioModel funcionario) {
+    public List<FuncionarioModel> selecionarSetor(FuncionarioModel funcionario) {
         String sql = "select * from funcionarios where setor like ?;";
         List<FuncionarioModel> SetorEncontrado = new ArrayList<>();
         Conexao.conectar();
@@ -142,7 +142,7 @@ public class FuncionarioController {
         return SetorEncontrado;
     }
 
-    public static FuncionarioModel selecionarCPF(FuncionarioModel funcionario) {
+    public FuncionarioModel selecionarCPF(FuncionarioModel funcionario) {
         String sql = "SELECT * FROM funcionarios where CPF = ?;";
         FuncionarioModel idencontrado = null;
         Conexao.conectar();
@@ -169,7 +169,7 @@ public class FuncionarioController {
         return idencontrado;
     }
 
-    public static boolean excluir(FuncionarioModel funcionario) {
+    public boolean excluir(FuncionarioModel funcionario) {
         String sql = "DELETE FROM funcionarios WHERE id = ?;";
         boolean retorno = false;
         Conexao.conectar();
