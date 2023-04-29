@@ -58,6 +58,13 @@ public class FuncionarioController {
         Conexao.desconectar();
         return retorno;
     }
+    
+    
+    
+    
+    
+    
+    
 
     public FuncionarioModel selecionarID(FuncionarioModel funcionario) {
         String sql = "SELECT * FROM funcionarios where ID = ?;";
@@ -85,6 +92,11 @@ public class FuncionarioController {
         Conexao.desconectar();
         return idencontrado;
     }
+
+    
+
+
+
 
     public List<FuncionarioModel> selecionarNome(FuncionarioModel funcionario) {
         String sql = "select * from funcionarios where nome like ?;";
@@ -114,6 +126,7 @@ public class FuncionarioController {
         return nomesEncontrado;
     }
 
+
     public List<FuncionarioModel> selecionarSetor(FuncionarioModel funcionario) {
         String sql = "select * from funcionarios where setor like ?;";
         List<FuncionarioModel> SetorEncontrado = new ArrayList<>();
@@ -142,6 +155,16 @@ public class FuncionarioController {
         return SetorEncontrado;
     }
 
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     public FuncionarioModel selecionarCPF(FuncionarioModel funcionario) {
         String sql = "SELECT * FROM funcionarios where CPF = ?;";
         FuncionarioModel idencontrado = null;
@@ -169,6 +192,14 @@ public class FuncionarioController {
         return idencontrado;
     }
 
+    
+    
+    
+    
+    
+    
+    
+    
     public boolean excluir(FuncionarioModel funcionario) {
         String sql = "DELETE FROM funcionarios WHERE id = ?;";
         boolean retorno = false;
