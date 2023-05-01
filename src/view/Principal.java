@@ -66,7 +66,7 @@ public class Principal extends javax.swing.JFrame {
 
         jmbMenuPrincipal.add(Cadastro);
 
-        Controle_Entrada_Saida.setText("Entradas e Saídas de Veículos");
+        Controle_Entrada_Saida.setText("Movimentações de Veículos");
 
         Nova_Entrada_Saida.setText("Controle de Entradas/Saídas");
         Nova_Entrada_Saida.addActionListener(new java.awt.event.ActionListener() {
@@ -131,7 +131,7 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_Cadastro_veiculoActionPerformed
 
     private void Nova_Entrada_SaidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Nova_Entrada_SaidaActionPerformed
-        EntradaSaidaView entrada = new EntradaSaidaView();
+        MovimentacaoView entrada = new MovimentacaoView();
         Area_trabalho.add(entrada);
         entrada.setVisible(true);
     }//GEN-LAST:event_Nova_Entrada_SaidaActionPerformed

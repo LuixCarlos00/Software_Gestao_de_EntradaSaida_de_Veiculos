@@ -34,7 +34,7 @@
         </Menu>
         <Menu class="javax.swing.JMenu" name="Controle_Entrada_Saida">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Entradas e Sa&#xed;das de Ve&#xed;culos"/>
+            <Property name="text" type="java.lang.String" value="Movimenta&#xe7;&#xf5;es de Ve&#xed;culos"/>
           </Properties>
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="Nova_Entrada_Saida">
