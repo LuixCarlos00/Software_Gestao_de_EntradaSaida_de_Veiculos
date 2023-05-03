@@ -5,8 +5,9 @@ import javax.swing.JOptionPane;
 import model.UsuarioModel;
 
 public class CriarContaView extends javax.swing.JFrame {
-    UsuarioController u = new UsuarioController();
-    
+
+    UsuarioController usuario = new UsuarioController();
+
     public CriarContaView() {
         initComponents();
     }
@@ -125,28 +126,30 @@ public class CriarContaView extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbCriarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCriarUsuarioActionPerformed
-       String senha = jtfSenha.getText();
-       String repetirSenha = jtfRepetirSenha.getText();
-       
-        if (senha.equals(repetirSenha)) {
-            UsuarioModel usuario  = new UsuarioModel();
+        String senha = jtfSenha.getText().trim();
+        String repetirSenha = jtfRepetirSenha.getText().trim();
+
+        if (senha.contains(" ") || repetirSenha.contains(" ")) {
+            JOptionPane.showMessageDialog(this, "Não é possivel cadastra as senhas ");
+        } else if (senha.equals(repetirSenha)) {
+            UsuarioModel usuario = new UsuarioModel();
             usuario.setNome(jtfUsuario.getText());
             usuario.setSenha(jtfSenha.getText());
             usuario.setAdmin("N");
-            
-            if (u.inserir(usuario)) {
+
+            if (this.usuario.inserir(usuario)) {
                 JOptionPane.showMessageDialog(this, "Usuário cadastrado com sucesso.");
                 LoginView login = new LoginView();
                 login.setVisible(true);
                 setVisible(false);
-            }
-            else
+            } else {
                 JOptionPane.showMessageDialog(this, "Erro ao cadastrar novo usuário.");
-            
-        }else {
-            JOptionPane.showMessageDialog(this, "As senhas não são iguais. Tente novamente.");
-        limparCampos();
-        jtfUsuario.requestFocus();
+            }
+
+        } else {
+            JOptionPane.showMessageDialog(this, "As senhas correspondem .");
+            limparCampos();
+            jtfUsuario.requestFocus();
         }
     }//GEN-LAST:event_jbCriarUsuarioActionPerformed
 
@@ -154,11 +157,11 @@ public class CriarContaView extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jtfUsuarioActionPerformed
 
-    private void limparCampos(){
-    jtfRepetirSenha.setText("");
-    jtfSenha.setText("");
-    jtfUsuario.setText("");
-    
+    private void limparCampos() {
+        jtfRepetirSenha.setText("");
+        jtfSenha.setText("");
+        jtfUsuario.setText("");
+
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jbCriarUsuario;
