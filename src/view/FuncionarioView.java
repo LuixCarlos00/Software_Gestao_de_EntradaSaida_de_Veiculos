@@ -9,7 +9,7 @@ import model.FuncionarioModel;
 
 public class FuncionarioView extends javax.swing.JInternalFrame {
 
-    FuncionarioController f = new FuncionarioController();
+    FuncionarioController funcionarioController = new FuncionarioController();
     boolean tabelaAtiva = true;
 
     /**
@@ -69,7 +69,6 @@ public class FuncionarioView extends javax.swing.JInternalFrame {
         setTitle("Cadastro de Funcionários");
 
         jbNovo.setText("Novo");
-        jbNovo.setMinimumSize(null);
         jbNovo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbNovoActionPerformed(evt);
@@ -210,7 +209,7 @@ public class FuncionarioView extends javax.swing.JInternalFrame {
                             .addComponent(jLabel4)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                 .addComponent(textSetor, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(textData_nascimento, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 157, Short.MAX_VALUE))))
+                                .addComponent(textData_nascimento, javax.swing.GroupLayout.Alignment.LEADING))))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
                             .addComponent(jbNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -236,7 +235,7 @@ public class FuncionarioView extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jbNovo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jbNovo)
                     .addComponent(jbLimpar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(6, 6, 6)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -305,7 +304,7 @@ public class FuncionarioView extends javax.swing.JInternalFrame {
             funcionario.setCPF(textCPF.getText());
             funcionario.setData_nascimento(textData_nascimento.getText());
 
-            if (f.inserir(funcionario)) {
+            if (funcionarioController.inserir(funcionario)) {
                 JOptionPane.showMessageDialog(this, "Cadastro realizado com sucesso.");
                 carregarTabela();
 
@@ -321,7 +320,7 @@ public class FuncionarioView extends javax.swing.JInternalFrame {
             funcionario.setCPF(textCPF.getText());
             funcionario.setData_nascimento(textData_nascimento.getText());
 
-            if (f.editar(funcionario)) {
+            if (funcionarioController.editar(funcionario)) {
                 JOptionPane.showMessageDialog(this, "O cadastro do funcionario foi atualizado com sucesso.");
             } else {
                 JOptionPane.showMessageDialog(this, "Erro ao atualizar o Cadastro.");
@@ -383,7 +382,7 @@ public class FuncionarioView extends javax.swing.JInternalFrame {
 
     public void carregarTabela() {
 
-        ArrayList<FuncionarioModel> funcionarios = f.selecionarTodos();
+        ArrayList<FuncionarioModel> funcionarios = funcionarioController.selecionarTodos();
         DefaultTableModel modelo = (DefaultTableModel) Tabela_funcionarios.getModel();
         modelo.setRowCount(0);
 
@@ -439,7 +438,7 @@ public class FuncionarioView extends javax.swing.JInternalFrame {
             resetTela();
             limparCampos();
 
-            f.excluir(funcionario);
+            funcionarioController.excluir(funcionario);
 
         } else if (JOptionPane.CLOSED_OPTION == JOptionPane.CLOSED_OPTION) {
             JOptionPane.showMessageDialog(this, "Operação cancelada.");
@@ -473,7 +472,7 @@ public class FuncionarioView extends javax.swing.JInternalFrame {
                         int id = Integer.parseInt(idBusca);
                         if (id > 0) {
                             funcionario.setId(id);
-                            FuncionarioModel funcionario_encontrado = f.selecionarID(funcionario);
+                            FuncionarioModel funcionario_encontrado = funcionarioController.selecionarID(funcionario);
 
                             if (funcionario_encontrado == null) {
                                 limparCampos();
@@ -522,7 +521,7 @@ public class FuncionarioView extends javax.swing.JInternalFrame {
                     else {
                         
                         funcionario.setCPF(cpfBusca);
-                        FuncionarioModel funcionario_encontrado = f.selecionarCPF(funcionario);
+                        FuncionarioModel funcionario_encontrado = funcionarioController.selecionarCPF(funcionario);
 
                         if (funcionario_encontrado == null) {
                             limparCampos();
@@ -551,7 +550,7 @@ public class FuncionarioView extends javax.swing.JInternalFrame {
                     
                     else if (nomeBusca.matches("[a-zA-Z]+")) {//verificar se tem apenas letras no campo
                         funcionario.setNome(nomeBusca);
-                        List<FuncionarioModel> funcionario_encontrado = f.selecionarNome(funcionario);
+                        List<FuncionarioModel> funcionario_encontrado = funcionarioController.selecionarNome(funcionario);
                         
                         if (funcionario_encontrado.isEmpty()) {
                             limparCampos();
@@ -563,7 +562,7 @@ public class FuncionarioView extends javax.swing.JInternalFrame {
                             JOptionPane.showMessageDialog(this, "Funcionários encontrados. \nExibindo resultados na tabela.");
                             DefaultTableModel model = (DefaultTableModel) Tabela_funcionarios.getModel();
                             model.setRowCount(0);
-                            List<FuncionarioModel> funcionariosEncontrados = f.selecionarNome(funcionario);
+                            List<FuncionarioModel> funcionariosEncontrados = funcionarioController.selecionarNome(funcionario);
                             for (FuncionarioModel funcionarioEncontrado : funcionariosEncontrados) {
                                 model.addRow(new Object[]{
                                     funcionarioEncontrado.getId(),
@@ -596,7 +595,7 @@ public class FuncionarioView extends javax.swing.JInternalFrame {
                     else if (setorBusca.matches("[a-zA-ZçÇáÁéÉíÍóÓúÚâÂêÊôÔûÛãÃõÕàÀèÈìÌòÒùÙ]+")) {//verificar se tem apenas letras e caracteres especiais no campo
                         
                         funcionario.setSetor(setorBusca);
-                        List<FuncionarioModel> funcionario_encontrado = f.selecionarSetor(funcionario);
+                        List<FuncionarioModel> funcionario_encontrado = funcionarioController.selecionarSetor(funcionario);
                         
                         if (funcionario_encontrado.isEmpty()) {
                             limparCampos();
@@ -608,7 +607,7 @@ public class FuncionarioView extends javax.swing.JInternalFrame {
                             JOptionPane.showMessageDialog(this, "Funcionários encontrados. \nExibindo resultados na tabela.");
                             DefaultTableModel model = (DefaultTableModel) Tabela_funcionarios.getModel();
                             model.setRowCount(0);
-                            List<FuncionarioModel> funcionariosEncontrados = f.selecionarSetor(funcionario);
+                            List<FuncionarioModel> funcionariosEncontrados = funcionarioController.selecionarSetor(funcionario);
                             for (FuncionarioModel funcionarioEncontrado : funcionariosEncontrados) {
                                 model.addRow(new Object[]{
                                     funcionarioEncontrado.getId(),

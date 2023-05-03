@@ -11,7 +11,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 import model.UsuarioModel;
 
 public class LoginView extends javax.swing.JFrame {
-    UsuarioController u = new UsuarioController();
+    UsuarioController usuario = new UsuarioController();
 
     public LoginView() {
         try {
@@ -29,7 +29,7 @@ public class LoginView extends javax.swing.JFrame {
         usuario.setNome(jtfUsuario.getText());
         usuario.setSenha(jpfSenha.getText());
         
-        UsuarioModel modeloEncontrado = u.selecionar(usuario) ;
+        UsuarioModel modeloEncontrado = this.usuario.selecionar(usuario) ;
         
         if (modeloEncontrado == null) {
             JOptionPane.showMessageDialog(null, "Acesso Negado. Usuário ou senha incorreta.");

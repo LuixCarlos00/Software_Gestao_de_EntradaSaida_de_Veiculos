@@ -2,26 +2,29 @@ package view;
 
 import controller.VeiculoController;
 import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import model.FuncionarioModel;
 import model.VeiculoModel;
 
 public class VeiculoView extends javax.swing.JInternalFrame {
-    VeiculoController v = new VeiculoController();
+
+    VeiculoController veiculoController = new VeiculoController();
     boolean tabelaAtiva = true;
-    
+
     public VeiculoView() {
         initComponents();
-        
+
         carregarTabela();
-        
+
         //Ao abrir a janela, desabilita os campos de texto e os botões Salvar, Editar e Excluir
         jtfID.setEditable(false);
         jtfPlaca.setEditable(false);
         jtfMarca.setEditable(false);
         jtfModelo.setEditable(false);
         jftfAno.setEditable(false);
-        
+
         jbSalvar.setEnabled(false);
         jbEditar.setEnabled(false);
         jbExcluir.setEnabled(false);
@@ -32,40 +35,38 @@ public class VeiculoView extends javax.swing.JInternalFrame {
         //Ativa os botões Novo e Limpar
         jbNovo.setEnabled(true);
         jbLimpar.setEnabled(true);
-        
-       
-        
+
         //Desativa os outros botões e campos de texto
         jbSalvar.setEnabled(false);
         jbEditar.setEnabled(false);
         jbExcluir.setEnabled(false);
         jbCancelar.setEnabled(false);
-        
+
         jtfPlaca.setEditable(false);
         jtfMarca.setEditable(false);
         jtfModelo.setEditable(false);
         jftfAno.setEditable(false);
-        
+
         //Esvazia todos os campos de texto
         jtfID.setText("");
         jtfPlaca.setText("");
         jtfMarca.setText("");
         jtfModelo.setText("");
         jftfAno.setText("");
-        
+
         //Recarrega a tabela
         carregarTabela();
         //Altera o status da flag que ativa o evento de clique na tabela para true
         tabelaAtiva = true;
     }
-    
+
     public void ativarEdicao() {
         //Desabilita os botões Novo, Editar, Excluir e Limpar
         jbNovo.setEnabled(false);
         jbEditar.setEnabled(false);
         jbExcluir.setEnabled(false);
         jbLimpar.setEnabled(false);
-        
+
         //Habilita o botão Salvar e Cancelar e os campos de texto
         jbSalvar.setEnabled(true);
         jbCancelar.setEnabled(true);
@@ -73,29 +74,29 @@ public class VeiculoView extends javax.swing.JInternalFrame {
         jtfMarca.setEditable(true);
         jtfModelo.setEditable(true);
         jftfAno.setEditable(true);
-        
+
         //Altera o status da flag que ativa o evento de clique na tabela para false
         tabelaAtiva = false;
     }
-    
+
     public void carregarTabela() {
-        
-        ArrayList <VeiculoModel> veiculos = v.selecionarTodos();
-        DefaultTableModel modelo = (DefaultTableModel)jtVeiculos.getModel();
+
+        ArrayList<VeiculoModel> veiculos = veiculoController.selecionarTodos();
+        DefaultTableModel modelo = (DefaultTableModel) jtVeiculos.getModel();
         modelo.setRowCount(0);
-        
+
         for (int i = 0; i < veiculos.size(); i++) {
             modelo.addRow(new String[]{
-                String.valueOf(veiculos.get(i).getId()), 
+                String.valueOf(veiculos.get(i).getId()),
                 veiculos.get(i).getPlaca(),
                 veiculos.get(i).getMarca(),
                 veiculos.get(i).getModelo(),
-                Integer.toString(veiculos.get(i).getAno()),
+                veiculos.get(i).getAno(),
                 veiculos.get(i).getStatus()
             });
         }
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -116,7 +117,6 @@ public class VeiculoView extends javax.swing.JInternalFrame {
         jsVeiculos = new javax.swing.JScrollPane();
         jtVeiculos = new javax.swing.JTable();
         jtfMarca = new javax.swing.JTextField();
-        jtfPlaca = new javax.swing.JTextField();
         jlModelo = new javax.swing.JLabel();
         jtfModelo = new javax.swing.JTextField();
         jlID = new javax.swing.JLabel();
@@ -124,6 +124,7 @@ public class VeiculoView extends javax.swing.JInternalFrame {
         jbLimpar = new javax.swing.JButton();
         jbCancelar = new javax.swing.JButton();
         jbPesquisar = new javax.swing.JButton();
+        jtfPlaca = new javax.swing.JFormattedTextField();
 
         setClosable(true);
         setTitle("Cadastro de Veículos");
@@ -234,46 +235,52 @@ public class VeiculoView extends javax.swing.JInternalFrame {
             }
         });
 
+        try {
+            jtfPlaca.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###-####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jlID)
-                                            .addComponent(jlPlaca)
-                                            .addComponent(jlMarca)
-                                            .addComponent(jlModelo)
-                                            .addComponent(jlAno))
-                                        .addGap(46, 46, 46))
-                                    .addComponent(jtfID, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jtfPlaca, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jtfMarca, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jtfModelo, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jftfAno, javax.swing.GroupLayout.Alignment.TRAILING)))
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(10, 10, 10)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jbNovo, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)
-                                    .addComponent(jbEditar, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)
-                                    .addComponent(jbSalvar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jbLimpar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jbExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jbCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jlID)
+                                    .addComponent(jlPlaca)
+                                    .addComponent(jlMarca)
+                                    .addComponent(jlModelo)
+                                    .addComponent(jlAno))
+                                .addGap(46, 46, 46))
+                            .addComponent(jtfID, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jtfMarca, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jtfModelo, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jftfAno, javax.swing.GroupLayout.Alignment.TRAILING)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jbNovo, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)
+                            .addComponent(jbEditar, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)
+                            .addComponent(jbSalvar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jbLimpar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jbExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jbCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(58, 58, 58)
                         .addComponent(jbPesquisar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jtfPlaca)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jsVeiculos, javax.swing.GroupLayout.PREFERRED_SIZE, 582, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(8, 8, 8))
         );
@@ -303,9 +310,9 @@ public class VeiculoView extends javax.swing.JInternalFrame {
                         .addComponent(jtfID, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jlPlaca)
-                        .addGap(4, 4, 4)
-                        .addComponent(jtfPlaca, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jtfPlaca, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jlMarca)
                         .addGap(4, 4, 4)
                         .addComponent(jtfMarca, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -329,65 +336,65 @@ public class VeiculoView extends javax.swing.JInternalFrame {
         ativarEdicao();
         jbLimpar.setEnabled(true);
         jbPesquisar.setEnabled(false);
-       
-        
+
+
     }//GEN-LAST:event_jbNovoActionPerformed
-private void LimparCampos(){
-jtfID.setText("");
+    private void LimparCampos() {
+        jtfID.setText("");
         jtfPlaca.setText("");
         jtfMarca.setText("");
         jtfModelo.setText("");
         jftfAno.setText("");
-}
+    }
     private void jbSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSalvarActionPerformed
-        
+
         VeiculoModel veiculo = new VeiculoModel();
-        
+
         //Se o campo ID está vazio, o botão Novo foi pressionado
         if ("".equals(jtfID.getText())) {
             veiculo.setPlaca(jtfPlaca.getText());
             veiculo.setMarca(jtfMarca.getText());
             veiculo.setModelo(jtfModelo.getText());
-            veiculo.setAno(Integer.parseInt(jftfAno.getText()));
-            
-            if (v.inserir(veiculo)) 
+            veiculo.setAno((jftfAno.getText()));
+
+            if (veiculoController.inserir(veiculo)) {
                 JOptionPane.showMessageDialog(this, "Veículo cadastrado com sucesso.");
-            else
+            } else {
                 JOptionPane.showMessageDialog(this, "Erro ao cadastrar o veículo.");
-        }
-        
-        //Caso contrário, uma linha da tabela foi selecionada e o botão Editar foi pressionado
+            }
+        } //Caso contrário, uma linha da tabela foi selecionada e o botão Editar foi pressionado
         else {
             veiculo.setId(Integer.parseInt(jtfID.getText()));
             veiculo.setPlaca(jtfPlaca.getText());
             veiculo.setMarca(jtfMarca.getText());
             veiculo.setModelo(jtfModelo.getText());
 
-            if(v.editar(veiculo))
+            if (veiculoController.editar(veiculo)) {
                 JOptionPane.showMessageDialog(this, "Os dados do veículo foram atualizados com sucesso.");
-            else
+            } else {
                 JOptionPane.showMessageDialog(this, "Erro ao atualizar dados do veículo.");
+            }
         }
 
         resetTela();
     }//GEN-LAST:event_jbSalvarActionPerformed
 
     private void jtVeiculosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtVeiculosMouseClicked
-        
-        if(tabelaAtiva == true) {
+
+        if (tabelaAtiva == true) {
             int linha = jtVeiculos.getSelectedRow();
-            DefaultTableModel modelo = (DefaultTableModel)jtVeiculos.getModel();
+            DefaultTableModel modelo = (DefaultTableModel) jtVeiculos.getModel();
 
             jtfID.setText((modelo.getValueAt(linha, 0)).toString());
             jtfPlaca.setText((modelo.getValueAt(linha, 1)).toString());
-            jtfMarca.setText((modelo.getValueAt(linha,2)).toString());
-            jtfModelo.setText((modelo.getValueAt(linha,3)).toString());
-            jftfAno.setText((modelo.getValueAt(linha,4)).toString());
+            jtfMarca.setText((modelo.getValueAt(linha, 2)).toString());
+            jtfModelo.setText((modelo.getValueAt(linha, 3)).toString());
+            jftfAno.setText((modelo.getValueAt(linha, 4)).toString());
 
             jbEditar.setEnabled(true);
             jbExcluir.setEnabled(true);
         }
-        
+
     }//GEN-LAST:event_jtVeiculosMouseClicked
 
     private void jbEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEditarActionPerformed
@@ -397,12 +404,13 @@ jtfID.setText("");
     private void jbExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbExcluirActionPerformed
         VeiculoModel veiculo = new VeiculoModel();
         veiculo.setId(Integer.parseInt(jtfID.getText()));
-        
-        if(v.excluir(veiculo))
+
+        if (veiculoController.excluir(veiculo)) {
             JOptionPane.showMessageDialog(this, "Veículo excluído com sucesso.");
-        else
+        } else {
             JOptionPane.showMessageDialog(this, "Erro ao excluir o veículo.");
-        
+        }
+
         resetTela();
     }//GEN-LAST:event_jbExcluirActionPerformed
 
@@ -418,8 +426,273 @@ jtfID.setText("");
         resetTela();
     }//GEN-LAST:event_jbCancelarActionPerformed
 
+    public void limparCampos() {
+
+        jtfID.setText("");
+        jtfMarca.setText("");
+        jtfModelo.setText("");
+        jtfPlaca.setText("");
+        jftfAno.setText("");
+
+    }
+
     private void jbPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbPesquisarActionPerformed
-        // TODO add your handling code here:
+        VeiculoModel veiculo = new VeiculoModel();
+        String[] opcoesBusca = {"ID", "Placa", "Marca", "Modelo", "Ano", "Status"};
+
+        int escolha = JOptionPane.showOptionDialog(this, "Escolha o tipo de pesquisa:", "Pesquisa de Veiculos",
+                JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null,
+                opcoesBusca, opcoesBusca[0]);
+
+        if (escolha >= 0) { // se o usuário selecionou uma opção
+            String opcaoBusca = opcoesBusca[escolha];
+
+            switch (opcaoBusca) {
+                case "ID": {
+                    String idBusca = JOptionPaneCustom.showInputDialog("Digite o ID do Veiculo (número inteiro positivo):", "Pesquisa por ID").trim();
+
+                    if (idBusca.length() <= 0) {
+                        break;
+                    }
+
+                    try {
+                        int id = Integer.parseInt(idBusca);
+                        if (id > 0) {
+                            veiculo.setId(id);
+                            VeiculoModel veiculo_encontrado = veiculoController.selecionarID(veiculo);
+
+                            if (veiculo_encontrado == null) {
+                                limparCampos();
+                                JOptionPane.showMessageDialog(this, "Veiculo não encontrado no banco de dados.");
+                            } else {
+                                jtfID.setText(Integer.toString(veiculo_encontrado.getId()));
+                                jtfMarca.setText(veiculo_encontrado.getMarca());
+                                jtfModelo.setText(veiculo_encontrado.getModelo());
+                                jtfPlaca.setText(veiculo_encontrado.getPlaca());
+                                jftfAno.setText(veiculo_encontrado.getAno());
+                               
+
+                                jbEditar.setEnabled(true);
+                                jbExcluir.setEnabled(true);
+                                jbLimpar.setEnabled(true);
+
+                            }
+                        } else {
+                            JOptionPane.showMessageDialog(this, "O ID digitado deve ser um número inteiro positivo.");
+                        }
+                    } catch (NumberFormatException e) {
+                        JOptionPane.showMessageDialog(this, "O ID digitado deve ser um número inteiro positivo.");
+                    }
+
+                }
+                break;
+
+                case "Placa": {
+                    
+                 String BuscaPorPlaca = JOptionPaneCustom.showInputDialog("Digite a Placa do veiculo ", "Pesquisa por Placa ").trim();
+
+                    if (BuscaPorPlaca.length() <= 0) {
+                        break;
+                    } else if (BuscaPorPlaca.length()!= 8) {//verificar se tem 8 caracters 
+                        veiculo.setPlaca(BuscaPorPlaca);
+                        List<VeiculoModel> veiculo_encontrado = veiculoController.selecionarPlaca(veiculo);
+
+                        if (veiculo_encontrado.isEmpty()) {
+                            limparCampos();
+                            JOptionPane.showMessageDialog(this, "Essa Placa não foi encontrado no banco de dados");
+                        } else {
+
+                            JOptionPane.showMessageDialog(this, "Placas encontrada \nExibindo resultados na tabela.");
+                            DefaultTableModel model = (DefaultTableModel) jtVeiculos.getModel();
+                            model.setRowCount(0);
+                            List<VeiculoModel> MarcasEncontradas = veiculoController.selecionarPlaca(veiculo);
+                            for (VeiculoModel veiculos : MarcasEncontradas) {
+                                model.addRow(new Object[]{
+                                    veiculos.getId(),
+                                    veiculos.getAno(),
+                                    veiculos.getMarca(),
+                                    veiculos.getModelo(),
+                                    veiculos.getPlaca(),
+                                    veiculos.getStatus()
+
+                                });
+                            }
+
+                            jbEditar.setEnabled(true);
+                            jbExcluir.setEnabled(true);
+                            jbLimpar.setEnabled(true);
+
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(this, "O campo deve esta completo ###-####");
+                    }
+                }
+                
+                
+                break;
+
+                case "Marca": {
+                    String BuscaPorMarca = JOptionPaneCustom.showInputDialog("Digite a Marca do veiculo ", "Pesquisa por Marca ").trim();
+
+                    if (BuscaPorMarca.length() <= 0) {
+                        break;
+                    } else if (BuscaPorMarca.matches("[a-zA-Z]+")) {//verificar se tem apenas letras no campo
+                        veiculo.setMarca(BuscaPorMarca);
+                        List<VeiculoModel> veiculo_encontrado = veiculoController.selecionarMarca(veiculo);
+
+                        if (veiculo_encontrado.isEmpty()) {
+                            limparCampos();
+                            JOptionPane.showMessageDialog(this, "Essa Marca não foi encontrado no banco de dados");
+                        } else {
+
+                            JOptionPane.showMessageDialog(this, "Marcas encontrada \nExibindo resultados na tabela.");
+                            DefaultTableModel model = (DefaultTableModel) jtVeiculos.getModel();
+                            model.setRowCount(0);
+                            List<VeiculoModel> MarcasEncontradas = veiculoController.selecionarMarca(veiculo);
+                            for (VeiculoModel veiculos : MarcasEncontradas) {
+                                model.addRow(new Object[]{
+                                    veiculos.getId(),
+                                    veiculos.getAno(),
+                                    veiculos.getMarca(),
+                                    veiculos.getModelo(),
+                                    veiculos.getPlaca(),
+                                    veiculos.getStatus()
+
+                                });
+                            }
+
+                            jbEditar.setEnabled(true);
+                            jbExcluir.setEnabled(true);
+                            jbLimpar.setEnabled(true);
+
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(this, "O Nome digitado não é valido.");
+                    }
+                }
+                break;
+
+                case "Modelo": {
+
+                    String BuscaPorModelo = JOptionPaneCustom.showInputDialog("Digite o Modelo do veiculo ", "Pesquisa por Modelo ").trim();
+
+                    if (BuscaPorModelo.length() <= 0) {
+                        break;
+                    } else if (BuscaPorModelo.matches("[a-zA-Z]+")) {//verificar se tem apenas letras no campo
+                        veiculo.setModelo(BuscaPorModelo);
+                        List<VeiculoModel> veiculo_encontrado = veiculoController.selecionarModelo(veiculo);
+
+                        if (veiculo_encontrado.isEmpty()) {
+                            limparCampos();
+                            JOptionPane.showMessageDialog(this, "Esse Modelo não foi encontrado no banco de dados");
+                        } else {
+
+                            JOptionPane.showMessageDialog(this, "Modelos encontrado \nExibindo resultados na tabela.");
+                            DefaultTableModel model = (DefaultTableModel) jtVeiculos.getModel();
+                            model.setRowCount(0);
+                            List<VeiculoModel> ModelosEncontradas = veiculoController.selecionarModelo(veiculo);
+                            for (VeiculoModel veiculos : ModelosEncontradas) {
+                                model.addRow(new Object[]{
+                                    veiculos.getId(),
+                                    veiculos.getPlaca(),
+                                    veiculos.getMarca(),
+                                    veiculos.getModelo(),
+                                    veiculos.getAno(),
+                                    veiculos.getStatus()
+
+                                });
+                            }
+
+                            jbEditar.setEnabled(true);
+                            jbExcluir.setEnabled(true);
+                            jbLimpar.setEnabled(true);
+
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(this, "O Modelo digitado não é valido.");
+                    }
+                }
+                break;
+                case "Ano": {
+
+                    String BuscaPorAno = JOptionPaneCustom.showInputDialog("Digite o Ano do veiculo (formato ####):", "Pesquisa por Ano").trim();
+
+                    if (BuscaPorAno.length() <= 0) {
+                        break;
+                    } // O usuário tem que inserir 4
+                    else if (BuscaPorAno.length() != 4) {
+                        JOptionPane.showMessageDialog(null, "O Ano deve conter exatamente 4 caracteres.");
+                        break;
+                    } else {
+
+                        veiculo.setAno(BuscaPorAno);
+                        VeiculoModel veiculo_encontrado = veiculoController.selecionarAno(veiculo);
+
+                        if (veiculo_encontrado == null) {
+                            limparCampos();
+                            JOptionPane.showMessageDialog(this, "Funcionario não encontrado no banco de dados");
+                        } else {
+                            jtfID.setText(Integer.toString(veiculo_encontrado.getId()));
+                            jtfMarca.setText(veiculo_encontrado.getMarca());
+                            jtfModelo.setText(veiculo_encontrado.getModelo());
+                            jtfPlaca.setText(veiculo_encontrado.getPlaca());
+                            jftfAno.setText(veiculo_encontrado.getAno());
+                            jbEditar.setEnabled(true);
+                            jbExcluir.setEnabled(true);
+                            jbLimpar.setEnabled(true);
+                        }
+                    }
+
+                }
+
+                break;
+                case "Status":{
+                 
+                    
+                    String BuscaPorStatus = JOptionPaneCustom.showInputDialog("informe o Status do  veiculo ", "Pesquisa por Status ").trim();
+
+                    if (BuscaPorStatus.length() <= 0) {
+                        break;
+                    } else if (BuscaPorStatus.matches("[a-zA-Z]+")) {//verificar se tem apenas letras no campo
+                        veiculo.setStatus(BuscaPorStatus);
+                        List<VeiculoModel> veiculo_encontrado = veiculoController.selecionarStatus(veiculo);
+
+                        if (veiculo_encontrado.isEmpty()) {
+                            limparCampos();
+                            JOptionPane.showMessageDialog(this, "Essa Marca não foi encontrado no banco de dados");
+                        } else {
+
+                            JOptionPane.showMessageDialog(this, "Marcas encontrada \nExibindo resultados na tabela.");
+                            DefaultTableModel model = (DefaultTableModel) jtVeiculos.getModel();
+                            model.setRowCount(0);
+                            List<VeiculoModel> MarcasEncontradas = veiculoController.selecionarStatus(veiculo);
+                            for (VeiculoModel veiculos : MarcasEncontradas) {
+                                model.addRow(new Object[]{
+                                    veiculos.getId(),
+                                    veiculos.getAno(),
+                                    veiculos.getMarca(),
+                                    veiculos.getModelo(),
+                                    veiculos.getPlaca(),
+                                    veiculos.getStatus()
+
+                                });
+                            }
+
+                            jbEditar.setEnabled(true);
+                            jbExcluir.setEnabled(true);
+                            jbLimpar.setEnabled(true);
+
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(this, "O Nome digitado não é valido.");
+                    }
+                    
+                    
+                }
+                    break;
+
+            }
+        }        // TODO add your handling code here:
     }//GEN-LAST:event_jbPesquisarActionPerformed
 
 
@@ -442,6 +715,6 @@ jtfID.setText("");
     private javax.swing.JTextField jtfID;
     private javax.swing.JTextField jtfMarca;
     private javax.swing.JTextField jtfModelo;
-    private javax.swing.JTextField jtfPlaca;
+    private javax.swing.JFormattedTextField jtfPlaca;
     // End of variables declaration//GEN-END:variables
 }

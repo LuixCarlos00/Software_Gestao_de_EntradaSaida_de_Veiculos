@@ -23,6 +23,6 @@ public class JOptionPaneCustom extends JOptionPane {
         dialog.setVisible(true);
         dialog.dispose();
         final Object value = pane.getInputValue();
-        return (value == UNINITIALIZED_VALUE) ?  null : (String) value;
+        return (value == UNINITIALIZED_VALUE) ?  "" : (String) value;
     }
 }
