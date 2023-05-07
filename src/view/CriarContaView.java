@@ -126,10 +126,11 @@ public class CriarContaView extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbCriarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCriarUsuarioActionPerformed
-        String senha = jtfSenha.getText().trim();
-        String repetirSenha = jtfRepetirSenha.getText().trim();
+        String senha = jtfSenha.getText();
+        String repetirSenha = jtfRepetirSenha.getText();
+        String user = jtfUsuario.getText();
 
-        if (senha.contains(" ") || repetirSenha.contains(" ")) {
+        if (senha.contains(" ") || repetirSenha.contains(" ")|| user.contains(" ")) {
             JOptionPane.showMessageDialog(this, "Não é possivel cadastra as senhas ");
         } else if (senha.equals(repetirSenha)) {
             UsuarioModel usuario = new UsuarioModel();

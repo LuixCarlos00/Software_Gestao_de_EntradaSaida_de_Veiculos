@@ -108,10 +108,7 @@ public class FuncionarioView extends javax.swing.JInternalFrame {
 
         Tabela_funcionarios.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+
             },
             new String [] {
                 "ID", "NOME", "CPF", "IDADE", "SETOR"

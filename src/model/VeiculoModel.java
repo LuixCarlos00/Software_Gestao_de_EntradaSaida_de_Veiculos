@@ -5,10 +5,10 @@ public class VeiculoModel {
     private String placa;
     private String marca;
     private String modelo;
-    private String ano;
+    private int ano;
     private String status;
 
-    public VeiculoModel(int id, String placa, String marca, String modelo, String ano, String status) {
+    public VeiculoModel(int id, String placa, String marca, String modelo, int ano, String status) {
         this.id = id;
         this.placa = placa;
         this.marca = marca;
@@ -22,7 +22,7 @@ public class VeiculoModel {
         placa = "";
         marca = "";
         modelo = "";
-        ano = "";
+        ano = 0 ;
         status = "";
     }
 
@@ -58,11 +58,11 @@ public class VeiculoModel {
         this.modelo = modelo;
     }
 
-    public String getAno() {
+    public int getAno() {
         return ano;
     }
 
-    public void setAno(String ano) {
+    public void setAno(int ano) {
         this.ano = ano;
     }
 

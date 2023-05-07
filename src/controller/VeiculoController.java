@@ -23,7 +23,7 @@ public class VeiculoController {
             sentenca.setString(1, veiculo.getPlaca());
             sentenca.setString(2, veiculo.getMarca());
             sentenca.setString(3, veiculo.getModelo());
-            sentenca.setString(4, veiculo.getAno());
+            sentenca.setInt(4, veiculo.getAno());
             sentenca.setString(5, "DISPONIVEL");
             if (!sentenca.execute()) {
                 retorno = true;
@@ -52,7 +52,7 @@ public class VeiculoController {
                 modeloEncontrado.setPlaca(resultado.getString("placa"));
                 modeloEncontrado.setMarca(resultado.getString("marca"));
                 modeloEncontrado.setModelo(resultado.getString("modelo"));
-                modeloEncontrado.setAno(resultado.getString("ano"));
+                modeloEncontrado.setAno(resultado.getInt("ano"));
                 modeloEncontrado.setStatus(resultado.getString("status"));
             }
 
@@ -74,7 +74,7 @@ public class VeiculoController {
             sentenca.setString(1, veiculo.getPlaca());
             sentenca.setString(2, veiculo.getMarca());
             sentenca.setString(3, veiculo.getModelo());
-            sentenca.setString(4, veiculo.getAno());
+            sentenca.setInt(4, veiculo.getAno());
             sentenca.setInt(5, veiculo.getId());
             if (!sentenca.execute()) {
                 retorno = true;
@@ -121,7 +121,7 @@ public class VeiculoController {
                 modelo.setPlaca(resultado.getString("placa"));
                 modelo.setMarca(resultado.getString("marca"));
                 modelo.setModelo(resultado.getString("modelo"));
-                modelo.setAno(resultado.getString("ano"));
+                modelo.setAno(resultado.getInt("ano"));
                 modelo.setStatus(resultado.getString("status"));
                 veiculos.add(modelo);
             }
@@ -149,7 +149,7 @@ public class VeiculoController {
                 idencontrado.setPlaca(resultado.getString("placa"));
                 idencontrado.setMarca(resultado.getString("marca"));
                 idencontrado.setModelo(resultado.getString("modelo"));
-                idencontrado.setAno(resultado.getString("ano"));
+                idencontrado.setAno(resultado.getInt("ano"));
                 idencontrado.setStatus(resultado.getString("status"));
             }
 
@@ -161,25 +161,25 @@ public class VeiculoController {
         return idencontrado;
     }
 
-      public List<VeiculoModel> selecionarPlaca(VeiculoModel veiculos) {
-        String sql = "select * from veiculos where placa like ?;";
-        List<VeiculoModel> veiculos_encontrados = new ArrayList<>();
+     public VeiculoModel selecionarPlaca(VeiculoModel veiculo) {
+        String sql = "SELECT * FROM veiculos where placa = ?;";
+        VeiculoModel idencontrado = null;
         Conexao.conectar();
 
         try {
             PreparedStatement sentenca = Conexao.con.prepareStatement(sql);
-            sentenca.setString(1, "%" + veiculos.getPlaca()+ "%"); // adicionando % no início e fim do nome para pesquisar substrings
+            sentenca.setString(1, veiculo.getPlaca());
             ResultSet resultado = sentenca.executeQuery();
 
-            while (resultado.next()) {
-                VeiculoModel veiculoEncontrados = new VeiculoModel();
-                veiculoEncontrados.setId(resultado.getInt("id"));
-                veiculoEncontrados.setPlaca(resultado.getString("placa"));
-                veiculoEncontrados.setMarca(resultado.getString("marca"));
-                veiculoEncontrados.setModelo(resultado.getString("modelo"));
-                veiculoEncontrados.setAno(resultado.getString("ano"));
-                veiculoEncontrados.setStatus(resultado.getString("status"));
-                veiculos_encontrados.add(veiculoEncontrados);
+            if (resultado.next()) {
+                idencontrado = new VeiculoModel();
+                idencontrado.setId(resultado.getInt("id"));
+                idencontrado.setPlaca(resultado.getString("placa"));
+                idencontrado.setMarca(resultado.getString("marca"));
+                idencontrado.setModelo(resultado.getString("modelo"));
+                idencontrado.setAno(resultado.getInt("ano"));
+                idencontrado.setStatus(resultado.getString("status"));
+ 
             }
 
         } catch (SQLException e) {
@@ -187,8 +187,9 @@ public class VeiculoController {
         }
 
         Conexao.desconectar();
-        return veiculos_encontrados;
+        return idencontrado;
     }
+
 
     public List<VeiculoModel> selecionarMarca(VeiculoModel veiculos) {
         String sql = "select * from veiculos where marca like ?;";
@@ -206,7 +207,7 @@ public class VeiculoController {
                 veiculoEncontrados.setPlaca(resultado.getString("placa"));
                 veiculoEncontrados.setMarca(resultado.getString("marca"));
                 veiculoEncontrados.setModelo(resultado.getString("modelo"));
-                veiculoEncontrados.setAno(resultado.getString("ano"));
+                veiculoEncontrados.setAno(resultado.getInt("ano"));
                 veiculoEncontrados.setStatus(resultado.getString("status"));
                 veiculos_encontrados.add(veiculoEncontrados);
             }
@@ -235,7 +236,7 @@ public class VeiculoController {
                 veiculoEncontrados.setPlaca(resultado.getString("placa"));
                 veiculoEncontrados.setMarca(resultado.getString("marca"));
                 veiculoEncontrados.setModelo(resultado.getString("modelo"));
-                veiculoEncontrados.setAno(resultado.getString("ano"));
+                veiculoEncontrados.setAno(resultado.getInt("ano"));
                 veiculoEncontrados.setStatus(resultado.getString("status"));
                 veiculos_encontrados.add(veiculoEncontrados);
             }
@@ -248,24 +249,25 @@ public class VeiculoController {
         return veiculos_encontrados;
     }
 
-    public VeiculoModel selecionarAno(VeiculoModel veiculo) {
-        String sql = "SELECT * FROM veiculos where ano = ?;";
-        VeiculoModel veiculoEncontrados = null;
+     public List<VeiculoModel> selecionarAno(VeiculoModel veiculos) {
+        String sql = "select * from veiculos where ano like ?;";
+        List<VeiculoModel> veiculos_encontrados = new ArrayList<>();
         Conexao.conectar();
 
         try {
             PreparedStatement sentenca = Conexao.con.prepareStatement(sql);
-            sentenca.setString(1, veiculo.getAno());
+            sentenca.setInt(1,veiculos.getAno()); // adicionando % no início e fim do nome para pesquisar substrings
             ResultSet resultado = sentenca.executeQuery();
 
-            if (resultado.next()) {
-                veiculoEncontrados = new VeiculoModel();
+            while (resultado.next()) {
+                VeiculoModel veiculoEncontrados = new VeiculoModel();
                 veiculoEncontrados.setId(resultado.getInt("id"));
                 veiculoEncontrados.setPlaca(resultado.getString("placa"));
                 veiculoEncontrados.setMarca(resultado.getString("marca"));
                 veiculoEncontrados.setModelo(resultado.getString("modelo"));
-                veiculoEncontrados.setAno(resultado.getString("ano"));
+                veiculoEncontrados.setAno(resultado.getInt("ano"));
                 veiculoEncontrados.setStatus(resultado.getString("status"));
+                veiculos_encontrados.add(veiculoEncontrados);
             }
 
         } catch (SQLException e) {
@@ -273,8 +275,9 @@ public class VeiculoController {
         }
 
         Conexao.desconectar();
-        return veiculoEncontrados;
+        return veiculos_encontrados;
     }
+
         
      public List<VeiculoModel> selecionarStatus(VeiculoModel veiculos) {
         String sql = "select * from veiculos where Status like ?;";
@@ -292,7 +295,7 @@ public class VeiculoController {
                 veiculoEncontrados.setPlaca(resultado.getString("placa"));
                 veiculoEncontrados.setMarca(resultado.getString("marca"));
                 veiculoEncontrados.setModelo(resultado.getString("modelo"));
-                veiculoEncontrados.setAno(resultado.getString("ano"));
+                veiculoEncontrados.setAno(resultado.getInt("ano"));
                 veiculoEncontrados.setStatus(resultado.getString("status"));
                 veiculos_encontrados.add(veiculoEncontrados);
             }
