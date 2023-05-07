@@ -1,6 +1,18 @@
 package view;
 
+import controller.UsuarioController;
+import java.awt.Font;
+import java.awt.GridLayout;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
+import model.UsuarioModel;
+
 public class Principal extends javax.swing.JFrame {
+
+    UsuarioController usuario = new UsuarioController();
 
     public Principal() {
         initComponents();
@@ -27,6 +39,7 @@ public class Principal extends javax.swing.JFrame {
         jmOutros = new javax.swing.JMenu();
         Sobre = new javax.swing.JMenuItem();
         jmiLogout = new javax.swing.JMenuItem();
+        botaoLogin = new javax.swing.JMenuItem();
 
         jMenuItem3.setText("jMenuItem3");
 
@@ -46,8 +59,10 @@ public class Principal extends javax.swing.JFrame {
             .addGap(0, 697, Short.MAX_VALUE)
         );
 
+        Cadastro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/table_row_insert.png"))); // NOI18N
         Cadastro.setText("Cadastros");
 
+        Cadastro_Funcionario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/user_go.png"))); // NOI18N
         Cadastro_Funcionario.setText("Cadastro Funcionario");
         Cadastro_Funcionario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -56,6 +71,7 @@ public class Principal extends javax.swing.JFrame {
         });
         Cadastro.add(Cadastro_Funcionario);
 
+        Cadastro_veiculo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/car_add.png"))); // NOI18N
         Cadastro_veiculo.setText("Cadastro Veiculo");
         Cadastro_veiculo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -66,8 +82,10 @@ public class Principal extends javax.swing.JFrame {
 
         jmbMenuPrincipal.add(Cadastro);
 
+        Controle_Entrada_Saida.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/car.png"))); // NOI18N
         Controle_Entrada_Saida.setText("Movimentações de Veículos");
 
+        Nova_Entrada_Saida.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/book_open.png"))); // NOI18N
         Nova_Entrada_Saida.setText("Controle de Entradas/Saídas");
         Nova_Entrada_Saida.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -78,11 +96,14 @@ public class Principal extends javax.swing.JFrame {
 
         jmbMenuPrincipal.add(Controle_Entrada_Saida);
 
+        jMenu3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/money.png"))); // NOI18N
         jMenu3.setText("Controle de Gastos");
         jmbMenuPrincipal.add(jMenu3);
 
+        jmOutros.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/plugin.png"))); // NOI18N
         jmOutros.setText("Outros");
 
+        Sobre.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/information.png"))); // NOI18N
         Sobre.setText("Sobre");
         Sobre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -91,6 +112,7 @@ public class Principal extends javax.swing.JFrame {
         });
         jmOutros.add(Sobre);
 
+        jmiLogout.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/house.png"))); // NOI18N
         jmiLogout.setText("Logout");
         jmiLogout.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -98,6 +120,15 @@ public class Principal extends javax.swing.JFrame {
             }
         });
         jmOutros.add(jmiLogout);
+
+        botaoLogin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/cog.png"))); // NOI18N
+        botaoLogin.setText("Administrador Sistema");
+        botaoLogin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoLoginActionPerformed(evt);
+            }
+        });
+        jmOutros.add(botaoLogin);
 
         jmbMenuPrincipal.add(jmOutros);
 
@@ -121,7 +152,7 @@ public class Principal extends javax.swing.JFrame {
     private void Cadastro_FuncionarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Cadastro_FuncionarioActionPerformed
         FuncionarioView cadastro = new FuncionarioView();
         Area_trabalho.add(cadastro);
-        cadastro.setVisible(true);   
+        cadastro.setVisible(true);
     }//GEN-LAST:event_Cadastro_FuncionarioActionPerformed
 
     private void Cadastro_veiculoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Cadastro_veiculoActionPerformed
@@ -143,10 +174,69 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jmiLogoutActionPerformed
 
     private void SobreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SobreActionPerformed
-        // TODO add your handling code here:
+        JOptionPaneCustom.showMessageDialog(this, "O software de controle de frota de veículos e gastos é uma solução \n "
+                + "completa para empresas que precisam gerenciar sua frota de forma \n"
+                + "eficiente e econômica. Com este software, é possível monitorar o uso \n"
+                + "dos veículos, programar manutenções preventivas, controlar o consumo\n"
+                + "de combustível e registrar todas as despesas relacionadas à frota.\n"
+                + "    Além disso, o software oferece relatórios detalhados que ajudam na \n"
+                + "tomada de decisões estratégicas para reduzir custos e aumentar a produtividade.\n"
+                + "Com uma interface fácil de usar e suporte técnico especializado, o software é \n "
+                + "uma escolha ideal para empresas de todos os tamanhos que desejam maximizar o \n "
+                + "desempenho de sua frota.\n"
+                + " Entre em contato conosco para saber mais e solicitar uma demonstração.\n"
+                + "Desenvolvido por: Talles.R & Luiz.C");
     }//GEN-LAST:event_SobreActionPerformed
 
-    
+    private void botaoLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoLoginActionPerformed
+
+        if (evt.getSource() == botaoLogin) {
+            // Cria um JPanel para exibir os campos de login e senha
+            JPanel painelLogin = new JPanel(new GridLayout(2, 2));
+            JLabel labelUsuario = new JLabel("Usuário:");
+            JLabel labelSenha = new JLabel("Senha:");
+            JTextField campoUsuario = new JTextField(10);
+            JPasswordField campoSenha = new JPasswordField(10);
+            
+            painelLogin.add(labelUsuario);
+            painelLogin.add(campoUsuario);
+            painelLogin.add(labelSenha);
+            painelLogin.add(campoSenha);
+
+            // Exibe um JOptionPane com o painel de login
+            int opcao = JOptionPane.showOptionDialog(null, painelLogin, "Login", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, null, null);
+
+            // Verifica se o usuário clicou no botão "OK"
+            if (opcao == JOptionPane.OK_OPTION) {
+                // Obtém o nome de usuário e senha informados
+                UsuarioModel usuario = new UsuarioModel();
+                String login = campoUsuario.getText();
+                String senha = new String(campoSenha.getPassword());
+
+                usuario.setNome(campoUsuario.getText());
+                usuario.setSenha(senha);
+
+                UsuarioModel modeloEncontrado = this.usuario.selecionarADM(usuario);
+
+                if (modeloEncontrado == null) {
+                    JOptionPane.showMessageDialog(null, "Acesso Negado. Usuário ou senha incorreta.");
+                    campoUsuario.setText("");
+                    campoSenha.setText("");
+                    campoUsuario.requestFocus();
+                } else {
+                    JOptionPane.showMessageDialog(null, "Bem-Vindo.");
+                   LoginAdm log = new LoginAdm();
+                   log.setVisible(true);
+                   Area_trabalho.add(log);
+                   
+                }
+
+            }
+        }
+
+
+    }//GEN-LAST:event_botaoLoginActionPerformed
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -188,6 +278,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenu Controle_Entrada_Saida;
     private javax.swing.JMenuItem Nova_Entrada_Saida;
     private javax.swing.JMenuItem Sobre;
+    private javax.swing.JMenuItem botaoLogin;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenu jmOutros;

@@ -11,11 +11,17 @@
       <SubComponents>
         <Menu class="javax.swing.JMenu" name="Cadastro">
           <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/imagens/table_row_insert.png"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Cadastros"/>
           </Properties>
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="Cadastro_Funcionario">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/imagens/user_go.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Cadastro Funcionario"/>
               </Properties>
               <Events>
@@ -24,6 +30,9 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="Cadastro_veiculo">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/imagens/car_add.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Cadastro Veiculo"/>
               </Properties>
               <Events>
@@ -34,11 +43,17 @@
         </Menu>
         <Menu class="javax.swing.JMenu" name="Controle_Entrada_Saida">
           <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/imagens/car.png"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Movimenta&#xe7;&#xf5;es de Ve&#xed;culos"/>
           </Properties>
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="Nova_Entrada_Saida">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/imagens/book_open.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Controle de Entradas/Sa&#xed;das"/>
               </Properties>
               <Events>
@@ -49,16 +64,25 @@
         </Menu>
         <Menu class="javax.swing.JMenu" name="jMenu3">
           <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/imagens/money.png"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Controle de Gastos"/>
           </Properties>
         </Menu>
         <Menu class="javax.swing.JMenu" name="jmOutros">
           <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/imagens/plugin.png"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Outros"/>
           </Properties>
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="Sobre">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/imagens/information.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Sobre"/>
               </Properties>
               <Events>
@@ -67,10 +91,24 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jmiLogout">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/imagens/house.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Logout"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jmiLogoutActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="botaoLogin">
+              <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/imagens/cog.png"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Administrador Sistema"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botaoLoginActionPerformed"/>
               </Events>
             </MenuItem>
           </SubComponents>

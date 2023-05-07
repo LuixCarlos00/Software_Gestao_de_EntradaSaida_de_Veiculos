@@ -66,6 +66,7 @@ public class FuncionarioView extends javax.swing.JInternalFrame {
         textSetor = new javax.swing.JComboBox<>();
 
         setClosable(true);
+        setIconifiable(true);
         setTitle("Cadastro de Funcionários");
 
         jbNovo.setText("Novo");

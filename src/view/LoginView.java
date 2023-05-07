@@ -75,6 +75,7 @@ public class LoginView extends javax.swing.JFrame {
 
         jlLogin.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jlLogin.setForeground(new java.awt.Color(255, 255, 255));
+        jlLogin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/user_go.png"))); // NOI18N
         jlLogin.setText("Usuário:");
 
         jtfUsuario.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -85,6 +86,7 @@ public class LoginView extends javax.swing.JFrame {
 
         jlSenha.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jlSenha.setForeground(new java.awt.Color(255, 255, 255));
+        jlSenha.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/key.png"))); // NOI18N
         jlSenha.setText("Senha:");
 
         jpfSenha.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -105,6 +107,7 @@ public class LoginView extends javax.swing.JFrame {
         CriarConta.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         CriarConta.setForeground(new java.awt.Color(255, 255, 255));
         CriarConta.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        CriarConta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/user_go.png"))); // NOI18N
         CriarConta.setText("Criar conta");
         CriarConta.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -127,7 +130,7 @@ public class LoginView extends javax.swing.JFrame {
                     .addComponent(jtfUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, 238, Short.MAX_VALUE)
                     .addComponent(jpfSenha)
                     .addComponent(jlLogin)
-                    .addComponent(jlSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jlSenha))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jpLoginLayout.createSequentialGroup()
                 .addGap(86, 86, 86)

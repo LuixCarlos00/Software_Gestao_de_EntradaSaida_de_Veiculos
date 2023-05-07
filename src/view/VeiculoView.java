@@ -438,37 +438,41 @@ public class VeiculoView extends javax.swing.JInternalFrame {
                 case "ID": {
                     String idBusca = JOptionPaneCustom.showInputDialog("Digite o ID do Veiculo (número inteiro positivo):", "Pesquisa por ID").trim();
 
-                    if (idBusca.length() <= 0) {
-                        break;
-                    }
+                    // Verifica se o usuário cancelou a operação
+                    if (idBusca == null || idBusca.isEmpty() || idBusca == IS_CLOSED_PROPERTY) {
+                        JOptionPane.showMessageDialog(this, "Operação Cancelada");
+                    } else {
+                        if (idBusca.length() <= 0) {
+                            break;
+                        }
 
-                    try {
-                        int id = Integer.parseInt(idBusca);
-                        if (id > 0) {
-                            veiculo.setId(id);
-                            VeiculoModel veiculo_encontrado = veiculoController.selecionarID(veiculo);
+                        try {
+                            int id = Integer.parseInt(idBusca);
+                            if (id > 0) {
+                                veiculo.setId(id);
+                                VeiculoModel veiculo_encontrado = veiculoController.selecionarID(veiculo);
 
-                            if (veiculo_encontrado == null) {
-                                limparCampos();
-                                JOptionPane.showMessageDialog(this, "Veiculo não encontrado no banco de dados.");
+                                if (veiculo_encontrado == null) {
+                                    limparCampos();
+                                    JOptionPane.showMessageDialog(this, "Veiculo não encontrado no banco de dados.");
+                                } else {
+                                    jtfID.setText(Integer.toString(veiculo_encontrado.getId()));
+                                    jtfMarca.setText(veiculo_encontrado.getMarca());
+                                    jtfModelo.setText(veiculo_encontrado.getModelo());
+                                    jtfPlaca.setText(veiculo_encontrado.getPlaca());
+                                    jftfAno.setText(String.valueOf(veiculo_encontrado.getAno()));
+                                    jbEditar.setEnabled(true);
+                                    jbExcluir.setEnabled(true);
+                                    jbLimpar.setEnabled(true);
+
+                                }
                             } else {
-                                jtfID.setText(Integer.toString(veiculo_encontrado.getId()));
-                                jtfMarca.setText(veiculo_encontrado.getMarca());
-                                jtfModelo.setText(veiculo_encontrado.getModelo());
-                                jtfPlaca.setText(veiculo_encontrado.getPlaca());
-                                jftfAno.setText(String.valueOf(veiculo_encontrado.getAno()));
-                                jbEditar.setEnabled(true);
-                                jbExcluir.setEnabled(true);
-                                jbLimpar.setEnabled(true);
-
+                                JOptionPane.showMessageDialog(this, "O ID digitado deve ser um número inteiro positivo.");
                             }
-                        } else {
+                        } catch (NumberFormatException e) {
                             JOptionPane.showMessageDialog(this, "O ID digitado deve ser um número inteiro positivo.");
                         }
-                    } catch (NumberFormatException e) {
-                        JOptionPane.showMessageDialog(this, "O ID digitado deve ser um número inteiro positivo.");
                     }
-
                 }
                 break;
 
@@ -479,38 +483,41 @@ public class VeiculoView extends javax.swing.JInternalFrame {
                     // Verifica se o usuário cancelou a operação
                     if (BuscaPorPlaca == null || BuscaPorPlaca.isEmpty() || BuscaPorPlaca == IS_CLOSED_PROPERTY) {
                         JOptionPane.showMessageDialog(this, "Operação Cancelada");
-
-                     // Verifica se a placa informada possui o tamanho correto
-                     if (BuscaPorPlaca.length() != 8) {
-                        JOptionPane.showMessageDialog(null, "A placa deve conter exatamente 8 caracteres (XXX-XXXX).");
-                        return;
-                    }
-
-                    // Verifica se a placa informada possui apenas caracteres válidos (letras de a-z, números e underline)
-                    if (!BuscaPorPlaca.matches("^[a-zA-Z0-9_]{3}-[a-zA-Z0-9_]{4}$")) {
-                        JOptionPane.showMessageDialog(null, "A placa informada é inválida. Por favor, digite uma placa no formato XXX-XXXX, utilizando apenas letras de a-z, números e underline (_).");
-                        return;
-                    }
-
-                    // Caso a entrada do usuário seja válida, continua com a busca no banco de dados
-                    veiculo.setPlaca(BuscaPorPlaca);
-                    VeiculoModel veiculo_encontrado = veiculoController.selecionarPlaca(veiculo);
-
-                    if (veiculo_encontrado == null) {
-                        limparCampos();
-                        JOptionPane.showMessageDialog(this, "Veículo não encontrado no banco de dados.");
                     } else {
-                        jtfID.setText(Integer.toString(veiculo_encontrado.getId()));
-                        jtfMarca.setText(veiculo_encontrado.getMarca());
-                        jtfModelo.setText(veiculo_encontrado.getModelo());
-                        jtfPlaca.setText(veiculo_encontrado.getPlaca());
-                        jftfAno.setText(String.valueOf(veiculo_encontrado.getAno()));
 
-                        jbEditar.setEnabled(true);
-                        jbExcluir.setEnabled(true);
-                        jbLimpar.setEnabled(true);
+                        // Verifica se a placa informada possui o tamanho correto
+                        if (BuscaPorPlaca.length() != 8) {
+                            JOptionPane.showMessageDialog(null, "A placa deve conter exatamente 8 caracteres (XXX-XXXX).");
+                            return;
+                        }
+
+                        // Verifica se a placa informada possui apenas caracteres válidos (letras de a-z, números e underline)
+                        if (!BuscaPorPlaca.matches("^[a-zA-Z0-9_]{3}-[a-zA-Z0-9_]{4}$")) {
+                            JOptionPane.showMessageDialog(null, "   A placa informada é inválida.\n Por favor, digite uma placa no formato XXX-XXXX.\n Utilizando apenas letras de a-z, números e underline (_).");
+                            return;
+                        }
+
+                        // Caso a entrada do usuário seja válida, continua com a busca no banco de dados
+                        veiculo.setPlaca(BuscaPorPlaca);
+                        VeiculoModel veiculo_encontrado = veiculoController.selecionarPlaca(veiculo);
+
+                        if (veiculo_encontrado == null) {
+                            limparCampos();
+                            JOptionPane.showMessageDialog(this, "Veículo não encontrado no banco de dados.");
+                        } else {
+                            jtfID.setText(Integer.toString(veiculo_encontrado.getId()));
+                            jtfMarca.setText(veiculo_encontrado.getMarca());
+                            jtfModelo.setText(veiculo_encontrado.getModelo());
+                            jtfPlaca.setText(veiculo_encontrado.getPlaca());
+                            jftfAno.setText(String.valueOf(veiculo_encontrado.getAno()));
+
+                            jbEditar.setEnabled(true);
+                            jbExcluir.setEnabled(true);
+                            jbLimpar.setEnabled(true);
+                        }
+
                     }
-                    }
+
                 }
 
                 break;
@@ -518,40 +525,45 @@ public class VeiculoView extends javax.swing.JInternalFrame {
                 case "Marca": {
                     String BuscaPorMarca = JOptionPaneCustom.showInputDialog("Digite a Marca do veiculo ", "Pesquisa por Marca ").trim();
 
-                    if (BuscaPorMarca.length() <= 0) {
-                        break;
-                    } else if (BuscaPorMarca.matches("[a-zA-Z]+")) {//verificar se tem apenas letras no campo
-                        veiculo.setMarca(BuscaPorMarca);
-                        List<VeiculoModel> veiculo_encontrado = veiculoController.selecionarMarca(veiculo);
-
-                        if (veiculo_encontrado.isEmpty()) {
-                            limparCampos();
-                            JOptionPane.showMessageDialog(this, "Essa Marca não foi encontrado no banco de dados");
-                        } else {
-
-                            JOptionPane.showMessageDialog(this, "Marcas encontrada \nExibindo resultados na tabela.");
-                            DefaultTableModel model = (DefaultTableModel) jtVeiculos.getModel();
-                            model.setRowCount(0);
-                            List<VeiculoModel> MarcasEncontradas = veiculoController.selecionarMarca(veiculo);
-                            for (VeiculoModel veiculos : MarcasEncontradas) {
-                                model.addRow(new Object[]{
-                                    veiculos.getId(),
-                                    veiculos.getPlaca(),
-                                    veiculos.getMarca(),
-                                    veiculos.getModelo(),
-                                    veiculos.getAno(),
-                                    veiculos.getStatus()
-
-                                });
-                            }
-
-                            jbEditar.setEnabled(true);
-                            jbExcluir.setEnabled(true);
-                            jbLimpar.setEnabled(true);
-
-                        }
+                    if (BuscaPorMarca == null || BuscaPorMarca.isEmpty() || BuscaPorMarca == IS_CLOSED_PROPERTY) {
+                        JOptionPane.showMessageDialog(this, "Operação Cancelada");
                     } else {
-                        JOptionPane.showMessageDialog(this, "O Nome digitado não é valido.");
+
+                        if (BuscaPorMarca.length() <= 0) {
+                            break;
+                        } else if (BuscaPorMarca.matches("[a-zA-Z]+")) {//verificar se tem apenas letras no campo
+                            veiculo.setMarca(BuscaPorMarca);
+                            List<VeiculoModel> veiculo_encontrado = veiculoController.selecionarMarca(veiculo);
+
+                            if (veiculo_encontrado.isEmpty()) {
+                                limparCampos();
+                                JOptionPane.showMessageDialog(this, "Essa Marca não foi encontrado no banco de dados");
+                            } else {
+
+                                JOptionPane.showMessageDialog(this, "Marcas encontrada \nExibindo resultados na tabela.");
+                                DefaultTableModel model = (DefaultTableModel) jtVeiculos.getModel();
+                                model.setRowCount(0);
+                                List<VeiculoModel> MarcasEncontradas = veiculoController.selecionarMarca(veiculo);
+                                for (VeiculoModel veiculos : MarcasEncontradas) {
+                                    model.addRow(new Object[]{
+                                        veiculos.getId(),
+                                        veiculos.getPlaca(),
+                                        veiculos.getMarca(),
+                                        veiculos.getModelo(),
+                                        veiculos.getAno(),
+                                        veiculos.getStatus()
+
+                                    });
+                                }
+
+                                jbEditar.setEnabled(true);
+                                jbExcluir.setEnabled(true);
+                                jbLimpar.setEnabled(true);
+
+                            }
+                        } else {
+                            JOptionPane.showMessageDialog(this, "A Marca digitado não é valido.");
+                        }
                     }
                 }
                 break;
@@ -560,50 +572,54 @@ public class VeiculoView extends javax.swing.JInternalFrame {
 
                     String BuscaPorModelo = JOptionPaneCustom.showInputDialog("Digite o Modelo do veiculo ", "Pesquisa por Modelo ").trim();
 
-                    if (BuscaPorModelo.length() <= 0) {
-                        break;
-                    } else if (BuscaPorModelo.matches("[a-zA-Z]+")) {//verificar se tem apenas letras no campo
-                        veiculo.setModelo(BuscaPorModelo);
-                        List<VeiculoModel> veiculo_encontrado = veiculoController.selecionarModelo(veiculo);
-
-                        if (veiculo_encontrado.isEmpty()) {
-                            limparCampos();
-                            JOptionPane.showMessageDialog(this, "Esse Modelo não foi encontrado no banco de dados");
-                        } else {
-
-                            JOptionPane.showMessageDialog(this, "Modelos encontrado \nExibindo resultados na tabela.");
-                            DefaultTableModel model = (DefaultTableModel) jtVeiculos.getModel();
-                            model.setRowCount(0);
-                            List<VeiculoModel> ModelosEncontradas = veiculoController.selecionarModelo(veiculo);
-                            for (VeiculoModel veiculos : ModelosEncontradas) {
-                                model.addRow(new Object[]{
-                                    veiculos.getId(),
-                                    veiculos.getPlaca(),
-                                    veiculos.getMarca(),
-                                    veiculos.getModelo(),
-                                    veiculos.getAno(),
-                                    veiculos.getStatus()
-
-                                });
-                            }
-
-                            jbEditar.setEnabled(true);
-                            jbExcluir.setEnabled(true);
-                            jbLimpar.setEnabled(true);
-
-                        }
+                    if (BuscaPorModelo == null || BuscaPorModelo.isEmpty() || BuscaPorModelo == IS_CLOSED_PROPERTY) {
+                        JOptionPane.showMessageDialog(this, "Operação Cancelada");
                     } else {
-                        JOptionPane.showMessageDialog(this, "O Modelo digitado não é valido.");
+
+                        if (BuscaPorModelo.length() <= 0) {
+                            break;
+                        } else if (BuscaPorModelo.matches("[a-zA-Z]+")) {//verificar se tem apenas letras no campo
+                            veiculo.setModelo(BuscaPorModelo);
+                            List<VeiculoModel> veiculo_encontrado = veiculoController.selecionarModelo(veiculo);
+
+                            if (veiculo_encontrado.isEmpty()) {
+                                limparCampos();
+                                JOptionPane.showMessageDialog(this, "Esse Modelo não foi encontrado no banco de dados");
+                            } else {
+
+                                JOptionPane.showMessageDialog(this, "Modelos encontrado \nExibindo resultados na tabela.");
+                                DefaultTableModel model = (DefaultTableModel) jtVeiculos.getModel();
+                                model.setRowCount(0);
+                                List<VeiculoModel> ModelosEncontradas = veiculoController.selecionarModelo(veiculo);
+                                for (VeiculoModel veiculos : ModelosEncontradas) {
+                                    model.addRow(new Object[]{
+                                        veiculos.getId(),
+                                        veiculos.getPlaca(),
+                                        veiculos.getMarca(),
+                                        veiculos.getModelo(),
+                                        veiculos.getAno(),
+                                        veiculos.getStatus()
+
+                                    });
+                                }
+
+                                jbEditar.setEnabled(true);
+                                jbExcluir.setEnabled(true);
+                                jbLimpar.setEnabled(true);
+
+                            }
+                        } else {
+                            JOptionPane.showMessageDialog(this, "O Modelo digitado não é valido.");
+                        }
                     }
                 }
                 break;
                 case "Ano": {
 
-                    String buscaPorAno = JOptionPaneCustom.showInputDialog("Digite o Ano do veículo", "Pesquisa por Ano").trim();
+                    String buscaPorAno = JOptionPaneCustom.showInputDialog("Digite o Ano do veículo", "Pesquisa por Ano");
 
-                    if (buscaPorAno.isEmpty()) {
-                        JOptionPane.showMessageDialog(this, "Campo Vazio");
-                        //verifica se esta vazia 
+                    if (buscaPorAno == null || buscaPorAno.isEmpty() || buscaPorAno == IS_CLOSED_PROPERTY) {
+                        JOptionPane.showMessageDialog(this, "Operação Cancelada");
                     } else {
                         try {
                             int ano = Integer.parseInt(buscaPorAno);
@@ -648,42 +664,46 @@ public class VeiculoView extends javax.swing.JInternalFrame {
 
                     String BuscaPorStatus = JOptionPaneCustom.showInputDialog("informe o Status do  veiculo ", "Pesquisa por Status ").trim();
 
-                    if (BuscaPorStatus.length() <= 0) {
-                        break;
-                    } else if (BuscaPorStatus.matches("[a-zA-Z]+")) {//verificar se tem apenas letras no campo
-                        veiculo.setStatus(BuscaPorStatus);
-                        List<VeiculoModel> veiculo_encontrado = veiculoController.selecionarStatus(veiculo);
-
-                        if (veiculo_encontrado.isEmpty()) {
-                            limparCampos();
-                            JOptionPane.showMessageDialog(this, "Essa Marca não foi encontrado no banco de dados");
-                        } else {
-
-                            JOptionPane.showMessageDialog(this, "Marcas encontrada \nExibindo resultados na tabela.");
-                            DefaultTableModel model = (DefaultTableModel) jtVeiculos.getModel();
-                            model.setRowCount(0);
-                            List<VeiculoModel> MarcasEncontradas = veiculoController.selecionarStatus(veiculo);
-                            for (VeiculoModel veiculos : MarcasEncontradas) {
-                                model.addRow(new Object[]{
-                                    veiculos.getId(),
-                                    veiculos.getPlaca(),
-                                    veiculos.getMarca(),
-                                    veiculos.getModelo(),
-                                    veiculos.getAno(),
-                                    veiculos.getStatus()
-
-                                });
-                            }
-
-                            jbEditar.setEnabled(true);
-                            jbExcluir.setEnabled(true);
-                            jbLimpar.setEnabled(true);
-
-                        }
+                    if (BuscaPorStatus == null || BuscaPorStatus.isEmpty() || BuscaPorStatus == IS_CLOSED_PROPERTY) {
+                        JOptionPane.showMessageDialog(this, "Operação Cancelada");
                     } else {
-                        JOptionPane.showMessageDialog(this, "O Nome digitado não é valido.");
-                    }
 
+                        if (BuscaPorStatus.length() <= 0) {
+                            break;
+                        } else if (BuscaPorStatus.matches("[a-zA-Z]+")) {//verificar se tem apenas letras no campo
+                            veiculo.setStatus(BuscaPorStatus);
+                            List<VeiculoModel> veiculo_encontrado = veiculoController.selecionarStatus(veiculo);
+
+                            if (veiculo_encontrado.isEmpty()) {
+                                limparCampos();
+                                JOptionPane.showMessageDialog(this, "Essa Status não foi encontrado no banco de dados");
+                            } else {
+
+                                JOptionPane.showMessageDialog(this, "Status encontrada \nExibindo resultados na tabela.");
+                                DefaultTableModel model = (DefaultTableModel) jtVeiculos.getModel();
+                                model.setRowCount(0);
+                                List<VeiculoModel> MarcasEncontradas = veiculoController.selecionarStatus(veiculo);
+                                for (VeiculoModel veiculos : MarcasEncontradas) {
+                                    model.addRow(new Object[]{
+                                        veiculos.getId(),
+                                        veiculos.getPlaca(),
+                                        veiculos.getMarca(),
+                                        veiculos.getModelo(),
+                                        veiculos.getAno(),
+                                        veiculos.getStatus()
+
+                                    });
+                                }
+
+                                jbEditar.setEnabled(true);
+                                jbExcluir.setEnabled(true);
+                                jbLimpar.setEnabled(true);
+
+                            }
+                        } else {
+                            JOptionPane.showMessageDialog(this, "O Status digitado não é valido.");
+                        }
+                    }
                 }
                 break;
 

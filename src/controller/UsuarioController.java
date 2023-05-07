@@ -32,6 +32,11 @@ public class UsuarioController {
         
     }
     
+    
+      
+
+    
+    
     public UsuarioModel selecionar(UsuarioModel usuario){
         String sql = "SELECT * FROM usuarios WHERE nome = ? AND senha = ?;";
         UsuarioModel modeloEncontrado = null;
@@ -59,6 +64,37 @@ public class UsuarioController {
         
         Conexao.desconectar();
         return modeloEncontrado;
+    }
+
+    public UsuarioModel selecionarADM(UsuarioModel usuario) {
+         String sql = "SELECT * FROM tabela_adm WHERE nome = ? AND senha = ?;";
+        UsuarioModel modeloEncontrado = null;
+        Conexao.conectar();
+        
+        try{
+            PreparedStatement sentenca = Conexao.con.prepareStatement(sql);
+            sentenca.setString(1, usuario.getNome());
+            sentenca.setString(2, usuario.getSenha());
+            ResultSet resultado = sentenca.executeQuery();
+            
+            if(resultado.next()) {
+                modeloEncontrado = new UsuarioModel();
+                modeloEncontrado.setId(resultado.getInt("id"));
+                modeloEncontrado.setNome(resultado.getString("nome"));
+                modeloEncontrado.setSenha(resultado.getString("senha"));
+                modeloEncontrado.setAdmin(resultado.getString("admin"));
+            }
+            
+        }
+        
+        catch(SQLException e){
+            System.out.println("Erro na sentença SQL de seleção--: "+ e.getMessage());
+        }
+        
+         
+        Conexao.desconectar();
+        return modeloEncontrado;
+
     }
      
     
