@@ -48,7 +48,7 @@ public class Principal extends javax.swing.JFrame {
 
         Cadastro.setText("Cadastros");
 
-        Cadastro_Funcionario.setText("Cadastro Funcionario");
+        Cadastro_Funcionario.setText("Funcionários");
         Cadastro_Funcionario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 Cadastro_FuncionarioActionPerformed(evt);
@@ -56,7 +56,7 @@ public class Principal extends javax.swing.JFrame {
         });
         Cadastro.add(Cadastro_Funcionario);
 
-        Cadastro_veiculo.setText("Cadastro Veiculo");
+        Cadastro_veiculo.setText("Veículos");
         Cadastro_veiculo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 Cadastro_veiculoActionPerformed(evt);

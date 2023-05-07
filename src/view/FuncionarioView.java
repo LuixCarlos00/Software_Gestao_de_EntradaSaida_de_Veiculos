@@ -6,34 +6,86 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.FuncionarioModel;
+import util.Pesquisa;
 
 public class FuncionarioView extends javax.swing.JInternalFrame {
 
     FuncionarioController funcionarioController = new FuncionarioController();
     boolean tabelaAtiva = true;
 
-    /**
-     * Creates new form FuncionarioView
-     */
     public FuncionarioView() {
         initComponents();
-        carregarTabela();
-        jbNovo.setEnabled(true);
-        jbPesquisar.setEnabled(true);
-        jbLimpar.setEnabled(true);
+        resetTela();
+        textID.setEditable(false);
+    }
 
+    private void limparCampos() {
+        textID.setText("");
+        textCPF.setText("");
+        textData_nascimento.setText("");
+        textNome.setText("");
+        textSetor.setSelectedItem("");
+    }
+
+    public void carregarTabela() {
+
+        ArrayList<FuncionarioModel> funcionarios = funcionarioController.selecionarTodos();
+        DefaultTableModel modelo = (DefaultTableModel) Tabela_funcionarios.getModel();
+        modelo.setRowCount(0);
+
+        for (int i = 0; i < funcionarios.size(); i++) {
+            modelo.addRow(new String[]{
+                String.valueOf(funcionarios.get(i).getId()),
+                funcionarios.get(i).getNome(),
+                funcionarios.get(i).getCPF(),
+                funcionarios.get(i).getData_nascimento(),
+                funcionarios.get(i).getSetor()
+            });
+        }
+    }
+    
+    public void resetTela() {
+        //Ativa os botões Novo, Limpar e Pesquisar
+        jbNovo.setEnabled(true);
+        jbLimpar.setEnabled(true);
+        jbPesquisar.setEnabled(true);
+
+        //Desativa os outros botões e campos de texto
         jbEditar.setEnabled(false);
         jbSalvar.setEnabled(false);
         jbCancelar.setEnabled(false);
-        jbEditar.setEnabled(false);
         jbExcluir.setEnabled(false);
 
         textCPF.setEditable(false);
         textData_nascimento.setEditable(false);
         textNome.setEditable(false);
         textSetor.setEditable(false);
-        textID.setEditable(false);
 
+        //Recarrega a tabela, limpa os campos e ativa a flag do evento de clique da tabela
+        carregarTabela();
+        limparCampos();
+        tabelaAtiva = true;
+    }
+    
+    public void ativarEdicao() {
+        //Desabilita os botões Novo, Editar, Excluir, Limpar e Pesquisar
+        jbNovo.setEnabled(false);
+        jbEditar.setEnabled(false);
+        jbExcluir.setEnabled(false);
+        jbLimpar.setEnabled(false);
+        jbPesquisar.setEnabled(false);
+
+        //Habilita o botão Salvar e Cancelar e os campos de texto
+        jbSalvar.setEnabled(true);
+        jbCancelar.setEnabled(true);
+
+        textNome.setEditable(true);
+        textData_nascimento.setEditable(true);
+        textSetor.setEditable(true);
+        textCPF.setEditable(true);
+
+        //Desativa a flag do evento de clique da tabela
+        tabelaAtiva = false;
     }
 
     /**
@@ -143,11 +195,6 @@ public class FuncionarioView extends javax.swing.JInternalFrame {
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
-        textCPF.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                textCPFActionPerformed(evt);
-            }
-        });
 
         try {
             textData_nascimento.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
@@ -181,11 +228,6 @@ public class FuncionarioView extends javax.swing.JInternalFrame {
         });
 
         textSetor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Administraçâo", "Almoxarifado", "Contabilidade", "Segurança do Trabalho", "Oficina de Auto", "Moagem", "Britagem", "Forno", "Laboratorio", "Faxina", "Terceirizado", "Diretoria" }));
-        textSetor.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                textSetorActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -278,9 +320,6 @@ public class FuncionarioView extends javax.swing.JInternalFrame {
         limparCampos();
         carregarTabela();
         ativarEdicao();
-        //jbLimpar.setEnabled(true);
-        //textID.setEditable(false);//e necessario deixa o Id desabilitado poque quando ele chama ativarEdicao ele vem com ele ativado por padrao. 
-        //jbPesquisar.setEnabled(false);//e necessario deixa desabilitado porue ele fica abilitado quando esta fazendo o cadastro e se voce  se clicar nele enquanto faz o cadastro ele da erro .
     }//GEN-LAST:event_jbNovoActionPerformed
 
     private void jbSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSalvarActionPerformed
@@ -328,71 +367,6 @@ public class FuncionarioView extends javax.swing.JInternalFrame {
         carregarTabela();
         limparCampos();
     }//GEN-LAST:event_jbSalvarActionPerformed
-
-    public void ativarEdicao() {
-        //Desabilita os botões Novo, Editar, Excluir, Limpar e Pesquisar
-        jbNovo.setEnabled(false);
-        jbEditar.setEnabled(false);
-        jbExcluir.setEnabled(false);
-        jbLimpar.setEnabled(false);
-        jbPesquisar.setEnabled(false);
-
-        //Habilita o botão Salvar e Cancelar e os campos de texto
-        jbSalvar.setEnabled(true);
-        jbCancelar.setEnabled(true);
-
-        textNome.setEditable(true);
-        textData_nascimento.setEditable(true);
-        textSetor.setEditable(true);
-        textCPF.setEditable(true);
-
-        //Altera o status da flag que ativa o evento de clique na tabela para false
-        tabelaAtiva = false;
-    }
-
-    public void resetTela() {
-        //Ativa os botões Novo e Limpar e o campo Id para poder pesquisar quando quiser 
-        jbNovo.setEnabled(true);
-        jbLimpar.setEnabled(true);
-        jbPesquisar.setEnabled(true);
-
-        //Desativa os outros botões e campos de texto
-        jbEditar.setEnabled(false);
-        jbSalvar.setEnabled(false);
-        jbCancelar.setEnabled(false);
-        jbExcluir.setEnabled(false);
-
-        textCPF.setEditable(false);
-        textData_nascimento.setEditable(false);
-        textNome.setEditable(false);
-        textSetor.setEditable(false);
-
-        //Esvazia todos os campos de texto
-        limparCampos();
-
-        //Recarrega a tabela
-        carregarTabela();
-        //Altera o status da flag que ativa o evento de clique na tabela para true
-        tabelaAtiva = true;
-
-    }
-
-    public void carregarTabela() {
-
-        ArrayList<FuncionarioModel> funcionarios = funcionarioController.selecionarTodos();
-        DefaultTableModel modelo = (DefaultTableModel) Tabela_funcionarios.getModel();
-        modelo.setRowCount(0);
-
-        for (int i = 0; i < funcionarios.size(); i++) {
-            modelo.addRow(new String[]{
-                String.valueOf(funcionarios.get(i).getId()),
-                funcionarios.get(i).getNome(),
-                funcionarios.get(i).getCPF(),
-                funcionarios.get(i).getData_nascimento(),
-                funcionarios.get(i).getSetor()
-            });
-        }
-    }
 
     private void jbEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEditarActionPerformed
 
@@ -448,187 +422,57 @@ public class FuncionarioView extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jbExcluirActionPerformed
 
     private void jbPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbPesquisarActionPerformed
-        FuncionarioModel funcionario = new FuncionarioModel();
-        String[] opcoesBusca = {"ID","Nome","CPF","Setor"};
+        Pesquisa p = new Pesquisa();
+        String[] opcoesBusca = {"ID","CPF","Nome","Setor"};
+        List<FuncionarioModel> lista = p.pesquisaFuncionario(opcoesBusca);
         
-        int escolha = JOptionPane.showOptionDialog(this, "Escolha o tipo de pesquisa:", "Pesquisa de Funcionários",
-                JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null,
-                opcoesBusca, opcoesBusca[0]);
-
-        if (escolha >= 0) { // se o usuário selecionou uma opção
-            String opcaoBusca = opcoesBusca[escolha];
-
-            switch (opcaoBusca) {
-                case "ID": {
-                    String idBusca = JOptionPaneCustom.showInputDialog("Digite o ID do funcionário (número inteiro positivo):","Pesquisa por ID").trim();
-                    
-                    if (idBusca.length() <= 0) 
-                        break;
-                    
-                    try {
-                        int id = Integer.parseInt(idBusca);
-                        if (id > 0) {
-                            funcionario.setId(id);
-                            FuncionarioModel funcionario_encontrado = funcionarioController.selecionarID(funcionario);
-
-                            if (funcionario_encontrado == null) {
-                                limparCampos();
-                                JOptionPane.showMessageDialog(this, "Funcionário não encontrado no banco de dados.");
-                            } 
-
-                            else {
-                                textID.setText(Integer.toString(funcionario_encontrado.getId()));
-                                textNome.setText(funcionario_encontrado.getNome());
-                                textCPF.setText(funcionario_encontrado.getCPF());
-                                textData_nascimento.setText(funcionario_encontrado.getData_nascimento());
-                                textSetor.setSelectedItem(funcionario_encontrado.getSetor());
-
-                                jbEditar.setEnabled(true);
-                                jbExcluir.setEnabled(true);
-                                jbLimpar.setEnabled(true);
-
-                            } 
-                        } 
-
-                        else {
-                            JOptionPane.showMessageDialog(this, "O ID digitado deve ser um número inteiro positivo.");
-                        }
-                    }
-                        
-                    catch (NumberFormatException e) {
-                        JOptionPane.showMessageDialog(this, "O ID digitado deve ser um número inteiro positivo.");
-                    } 
-                    
-                }
-                break;
-
-                case "CPF": {
-
-                    String cpfBusca = JOptionPaneCustom.showInputDialog("Digite o CPF do funcionário (formato xxx.xxx.xxx-xx):","Pesquisa por CPF").trim();
-                    
-                    if (cpfBusca.length() <= 0) 
-                        break;
-                    
-                    // O usuário tem que inserir 14 caracteres (11 números, 2 pontos e 1 traço)
-                    else if (cpfBusca.length() != 14) {
-                        JOptionPane.showMessageDialog(null, "O CPF deve conter exatamente 14 caracteres (inclua os pontos e traços na busca).");
-                        break;
-                    }
-
-                    else {
-                        
-                        funcionario.setCPF(cpfBusca);
-                        FuncionarioModel funcionario_encontrado = funcionarioController.selecionarCPF(funcionario);
-
-                        if (funcionario_encontrado == null) {
-                            limparCampos();
-                            JOptionPane.showMessageDialog(this, "Funcionario não encontrado no banco de dados");
-                        } 
-                        
-                        else {
-                            textID.setText(Integer.toString(funcionario_encontrado.getId()));
-                            textNome.setText(funcionario_encontrado.getNome());
-                            textCPF.setText(funcionario_encontrado.getCPF());
-                            textData_nascimento.setText(funcionario_encontrado.getData_nascimento());
-                            textSetor.setSelectedItem(funcionario_encontrado.getSetor());
-                            jbEditar.setEnabled(true);
-                            jbExcluir.setEnabled(true);
-                            jbLimpar.setEnabled(true);
-                        }
-                    }
-                }
-                break;
-
-                case "Nome":
-                    String nomeBusca = JOptionPaneCustom.showInputDialog("Digite o nome do funcionário: ","Pesquisa por nome").trim();
-
-                    if (nomeBusca.length() <= 0) 
-                        break;
-                    
-                    else if (nomeBusca.matches("[a-zA-Z]+")) {//verificar se tem apenas letras no campo
-                        funcionario.setNome(nomeBusca);
-                        List<FuncionarioModel> funcionario_encontrado = funcionarioController.selecionarNome(funcionario);
-                        
-                        if (funcionario_encontrado.isEmpty()) {
-                            limparCampos();
-                            JOptionPane.showMessageDialog(this,"Funcionario não encontrado no banco de dados");
-                        } 
-                        
-                        else {
-
-                            JOptionPane.showMessageDialog(this, "Funcionários encontrados. \nExibindo resultados na tabela.");
-                            DefaultTableModel model = (DefaultTableModel) Tabela_funcionarios.getModel();
-                            model.setRowCount(0);
-                            List<FuncionarioModel> funcionariosEncontrados = funcionarioController.selecionarNome(funcionario);
-                            for (FuncionarioModel funcionarioEncontrado : funcionariosEncontrados) {
-                                model.addRow(new Object[]{
-                                    funcionarioEncontrado.getId(),
-                                    funcionarioEncontrado.getNome(),
-                                    funcionarioEncontrado.getCPF(),
-                                    funcionarioEncontrado.getData_nascimento(),
-                                    funcionarioEncontrado.getSetor()
-                                });
-                            }
-                            
-                            jbEditar.setEnabled(true);
-                            jbExcluir.setEnabled(true);
-                            jbLimpar.setEnabled(true);
-                            
-                        }
-                    } 
-                    
-                    else 
-                        JOptionPane.showMessageDialog(this, "O Nome digitado não é valido.");
-                    
-                    break;
-
-                case "Setor":
-
-                    String setorBusca = JOptionPaneCustom.showInputDialog("Digite o setor do funcionário:","Pesquisa por setor").trim();
-
-                    if (setorBusca.length() <= 0) 
-                        break;
-                    
-                    else if (setorBusca.matches("[a-zA-ZçÇáÁéÉíÍóÓúÚâÂêÊôÔûÛãÃõÕàÀèÈìÌòÒùÙ]+")) {//verificar se tem apenas letras e caracteres especiais no campo
-                        
-                        funcionario.setSetor(setorBusca);
-                        List<FuncionarioModel> funcionario_encontrado = funcionarioController.selecionarSetor(funcionario);
-                        
-                        if (funcionario_encontrado.isEmpty()) {
-                            limparCampos();
-                            JOptionPane.showMessageDialog(this, "Não existe nenhum funcionário registrado nesse setor.");
-                        } 
-                        
-                        else {
-                            
-                            JOptionPane.showMessageDialog(this, "Funcionários encontrados. \nExibindo resultados na tabela.");
-                            DefaultTableModel model = (DefaultTableModel) Tabela_funcionarios.getModel();
-                            model.setRowCount(0);
-                            List<FuncionarioModel> funcionariosEncontrados = funcionarioController.selecionarSetor(funcionario);
-                            for (FuncionarioModel funcionarioEncontrado : funcionariosEncontrados) {
-                                model.addRow(new Object[]{
-                                    funcionarioEncontrado.getId(),
-                                    funcionarioEncontrado.getNome(),
-                                    funcionarioEncontrado.getCPF(),
-                                    funcionarioEncontrado.getData_nascimento(),
-                                    funcionarioEncontrado.getSetor()
-                                });
-                            }
-                            
-                            jbEditar.setEnabled(true);
-                            jbExcluir.setEnabled(true);
-                            jbLimpar.setEnabled(true);
-                           
-                        }
-
-                    }
-                    
-                    else 
-                        JOptionPane.showMessageDialog(this, "O Nome digitado não é válido.");
-
-                    break;
-            }
+        // Se a pesquisa retornar null o usuário pesquisou um valor vazio ou inválido (a mensagem especificando qual o valor inválido é exibida no método pesquisarFuncionario)
+        if (lista == null) {
+            resetTela();
         }
+        
+        // Se a pesquisa retornar uma lista com tamanho 0 o usuário não digitou nenhum valor inválido, mas não foi encontrado nenhum funcionário no banco
+        else if (lista.size() == 0) {
+            JOptionPane.showMessageDialog(null, "Funcionário não encontrado no banco de dados.");
+            resetTela();
+        }
+        
+        // Se a pesquisa retornar uma lista de tamanho 1, apenas um funcionário foi encontrado na busca e os campos de texto são preenchidos
+        else if (lista.size() == 1) {
+            JOptionPane.showMessageDialog(this, "1 funcionário encontrado.\nExibindo o resultado nos campos de texto.");
+            resetTela();
+            FuncionarioModel f = lista.get(0);
+           
+            textID.setText(Integer.toString(f.getId()));
+            textNome.setText(f.getNome());
+            textCPF.setText(f.getCPF());
+            textData_nascimento.setText(f.getData_nascimento());
+            textSetor.setSelectedItem(f.getSetor());
+
+            jbEditar.setEnabled(true);
+            jbExcluir.setEnabled(true);
+            jbLimpar.setEnabled(true);
+        }
+        
+        // Se a pesquisa retornar uma lista de tamanho maior que 1, vários funcionários foram encontrados e a tabela é preenchida com os resultados
+        else {
+            JOptionPane.showMessageDialog(this, lista.size() + " funcionários encontrados.\nExibindo os resultados na tabela.");
+            resetTela();
+            DefaultTableModel model = (DefaultTableModel) Tabela_funcionarios.getModel();
+            model.setRowCount(0);
+            
+            for (FuncionarioModel funcionarioEncontrado : lista) {
+                model.addRow(new Object[]{
+                    funcionarioEncontrado.getId(),
+                    funcionarioEncontrado.getNome(),
+                    funcionarioEncontrado.getCPF(),
+                    funcionarioEncontrado.getData_nascimento(),
+                    funcionarioEncontrado.getSetor()
+                });
+            }
+            
+        }
+        
     }//GEN-LAST:event_jbPesquisarActionPerformed
 
     private void jbLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbLimparActionPerformed
@@ -638,10 +482,6 @@ public class FuncionarioView extends javax.swing.JInternalFrame {
     private void jbCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCancelarActionPerformed
         resetTela();
     }//GEN-LAST:event_jbCancelarActionPerformed
-
-    private void textCPFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textCPFActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_textCPFActionPerformed
 
     private void Tabela_funcionariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Tabela_funcionariosMouseClicked
 
@@ -661,21 +501,7 @@ public class FuncionarioView extends javax.swing.JInternalFrame {
             jbCancelar.setEnabled(false);
         }
 
-
     }//GEN-LAST:event_Tabela_funcionariosMouseClicked
-
-    private void textSetorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textSetorActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_textSetorActionPerformed
-
-    private void limparCampos() {
-        textID.setText("");
-        textCPF.setText("");
-        textData_nascimento.setText("");
-        textNome.setText("");
-        textSetor.setSelectedItem("");
-    }
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel ID;
