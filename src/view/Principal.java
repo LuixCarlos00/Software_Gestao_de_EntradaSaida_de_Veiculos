@@ -1,5 +1,7 @@
 package view;
 
+import javax.swing.JOptionPane;
+
 public class Principal extends javax.swing.JFrame {
 
     public Principal() {
@@ -46,8 +48,10 @@ public class Principal extends javax.swing.JFrame {
             .addGap(0, 697, Short.MAX_VALUE)
         );
 
+        Cadastro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/cog_add.png"))); // NOI18N
         Cadastro.setText("Cadastros");
 
+        Cadastro_Funcionario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/user_add.png"))); // NOI18N
         Cadastro_Funcionario.setText("Funcionários");
         Cadastro_Funcionario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -56,6 +60,7 @@ public class Principal extends javax.swing.JFrame {
         });
         Cadastro.add(Cadastro_Funcionario);
 
+        Cadastro_veiculo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/car_add.png"))); // NOI18N
         Cadastro_veiculo.setText("Veículos");
         Cadastro_veiculo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -66,8 +71,10 @@ public class Principal extends javax.swing.JFrame {
 
         jmbMenuPrincipal.add(Cadastro);
 
+        Controle_Entrada_Saida.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/book_open.png"))); // NOI18N
         Controle_Entrada_Saida.setText("Movimentações de Veículos");
 
+        Nova_Entrada_Saida.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/page_paintbrush.png"))); // NOI18N
         Nova_Entrada_Saida.setText("Controle de Entradas/Saídas");
         Nova_Entrada_Saida.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -78,11 +85,14 @@ public class Principal extends javax.swing.JFrame {
 
         jmbMenuPrincipal.add(Controle_Entrada_Saida);
 
+        jMenu3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/money.png"))); // NOI18N
         jMenu3.setText("Controle de Gastos");
         jmbMenuPrincipal.add(jMenu3);
 
+        jmOutros.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/plugin.png"))); // NOI18N
         jmOutros.setText("Outros");
 
+        Sobre.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/information.png"))); // NOI18N
         Sobre.setText("Sobre");
         Sobre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -91,6 +101,7 @@ public class Principal extends javax.swing.JFrame {
         });
         jmOutros.add(Sobre);
 
+        jmiLogout.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/status_busy.png"))); // NOI18N
         jmiLogout.setText("Logout");
         jmiLogout.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -121,7 +132,7 @@ public class Principal extends javax.swing.JFrame {
     private void Cadastro_FuncionarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Cadastro_FuncionarioActionPerformed
         FuncionarioView cadastro = new FuncionarioView();
         Area_trabalho.add(cadastro);
-        cadastro.setVisible(true);   
+        cadastro.setVisible(true);
     }//GEN-LAST:event_Cadastro_FuncionarioActionPerformed
 
     private void Cadastro_veiculoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Cadastro_veiculoActionPerformed
@@ -143,10 +154,21 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jmiLogoutActionPerformed
 
     private void SobreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SobreActionPerformed
-        // TODO add your handling code here:
+
+        JOptionPane.showMessageDialog(this, "O software de controle de frota de veículos e gastos é uma solução \n "
+                + "completa para empresas que precisam gerenciar sua frota de forma \n"
+                + "eficiente e econômica. Com este software, é possível monitorar o uso \n"
+                + "dos veículos, programar manutenções preventivas, controlar o consumo\n"
+                + "de combustível e registrar todas as despesas relacionadas à frota.\n"
+                + "Além disso, o software oferece relatórios detalhados que ajudam na \n"
+                + "tomada de decisões estratégicas para reduzir custos e aumentar a produtividade.\n"
+                + "Com uma interface fácil de usar e suporte técnico especializado, o software é\n"
+                + "uma escolha ideal para empresas de todos os tamanhos que desejam maximizar o\n"
+                + "desempenho de sua frota.\n"
+                + "Entre em contato conosco para saber mais e solicitar uma demonstração.\n"
+                + "Desenvolvido por: Talles.R & Luiz.C","Sobre",JOptionPane.PLAIN_MESSAGE);
     }//GEN-LAST:event_SobreActionPerformed
 
-    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
