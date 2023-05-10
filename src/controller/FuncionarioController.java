@@ -10,6 +10,7 @@ import util.Conexao;
 
 public class FuncionarioController {
 
+    
     public boolean inserir(FuncionarioModel funcionario) {
 
         String sql = "INSERT INTO funcionarios(nome,cpf,data_nascimento,setor) VALUES (?,?,?,?);";
@@ -35,6 +36,7 @@ public class FuncionarioController {
 
     }
 
+    
     public boolean editar(FuncionarioModel funcionario) {
         String sql = "UPDATE funcionarios SET nome = ?, cpf = ?, data_nascimento = ? , setor = ?  WHERE id = ?;";
         boolean retorno = false;
@@ -60,12 +62,54 @@ public class FuncionarioController {
     }
     
     
-    
-    
-    
-    
-    
+    public boolean excluir(FuncionarioModel funcionario) {
+        String sql = "DELETE FROM funcionarios WHERE id = ?;";
+        boolean retorno = false;
+        Conexao.conectar();
 
+        try {
+            PreparedStatement sentenca = Conexao.con.prepareStatement(sql);
+            sentenca.setInt(1, funcionario.getId());
+            if (!sentenca.execute()) {
+                retorno = true;
+            }
+        } catch (SQLException e) {
+            System.out.println("Erro na sentença SQL de exclusão.\n" + e.getMessage());
+        }
+
+        Conexao.desconectar();
+        return retorno;
+    }
+
+    
+    public ArrayList<FuncionarioModel> selecionarTodos() {
+        ArrayList<FuncionarioModel> funcionarios = new ArrayList<>();
+        String sql = "SELECT * FROM funcionarios";
+        Conexao.conectar();
+
+        try {
+            PreparedStatement sentenca = Conexao.con.prepareStatement(sql);
+            ResultSet resultado = sentenca.executeQuery();
+
+            while (resultado.next()) {
+                FuncionarioModel modelo = new FuncionarioModel();
+                modelo.setId(resultado.getInt("id"));
+                modelo.setNome(resultado.getString("nome"));
+                modelo.setCPF(resultado.getString("cpf"));
+                modelo.setData_nascimento(resultado.getString("data_nascimento"));
+                modelo.setSetor(resultado.getString("setor"));
+
+                funcionarios.add(modelo);
+            }
+        } catch (SQLException e) {
+            System.out.println("Erro na sentença SQL de seleção.\n" + e.getMessage());
+        }
+
+        Conexao.desconectar();
+        return funcionarios;
+    }
+    
+    
     public FuncionarioModel selecionarID(FuncionarioModel funcionario) {
         String sql = "SELECT * FROM funcionarios where ID = ?;";
         FuncionarioModel idencontrado = null;
@@ -94,10 +138,6 @@ public class FuncionarioController {
     }
 
     
-
-
-
-
     public List<FuncionarioModel> selecionarNome(FuncionarioModel funcionario) {
         String sql = "select * from funcionarios where nome like ?;";
         List<FuncionarioModel> nomesEncontrado = new ArrayList<>();
@@ -156,15 +196,6 @@ public class FuncionarioController {
     }
 
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
     public FuncionarioModel selecionarCPF(FuncionarioModel funcionario) {
         String sql = "SELECT * FROM funcionarios where CPF = ?;";
         FuncionarioModel idencontrado = null;
@@ -190,60 +221,6 @@ public class FuncionarioController {
 
         Conexao.desconectar();
         return idencontrado;
-    }
-
-    
-    
-    
-    
-    
-    
-    
-    
-    public boolean excluir(FuncionarioModel funcionario) {
-        String sql = "DELETE FROM funcionarios WHERE id = ?;";
-        boolean retorno = false;
-        Conexao.conectar();
-
-        try {
-            PreparedStatement sentenca = Conexao.con.prepareStatement(sql);
-            sentenca.setInt(1, funcionario.getId());
-            if (!sentenca.execute()) {
-                retorno = true;
-            }
-        } catch (SQLException e) {
-            System.out.println("Erro na sentença SQL de exclusão.\n" + e.getMessage());
-        }
-
-        Conexao.desconectar();
-        return retorno;
-    }
-
-    public ArrayList<FuncionarioModel> selecionarTodos() {
-        ArrayList<FuncionarioModel> funcionarios = new ArrayList<>();
-        String sql = "SELECT * FROM funcionarios";
-        Conexao.conectar();
-
-        try {
-            PreparedStatement sentenca = Conexao.con.prepareStatement(sql);
-            ResultSet resultado = sentenca.executeQuery();
-
-            while (resultado.next()) {
-                FuncionarioModel modelo = new FuncionarioModel();
-                modelo.setId(resultado.getInt("id"));
-                modelo.setNome(resultado.getString("nome"));
-                modelo.setCPF(resultado.getString("cpf"));
-                modelo.setData_nascimento(resultado.getString("data_nascimento"));
-                modelo.setSetor(resultado.getString("setor"));
-
-                funcionarios.add(modelo);
-            }
-        } catch (SQLException e) {
-            System.out.println("Erro na sentença SQL de seleção.\n" + e.getMessage());
-        }
-
-        Conexao.desconectar();
-        return funcionarios;
     }
 
 }

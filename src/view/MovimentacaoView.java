@@ -2,9 +2,13 @@ package view;
 
 import controller.MovimentacaoController;
 import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import model.FuncionarioModel;
 import model.MovimentacaoModel;
 import model.VeiculoModel;
+import util.Pesquisa;
 
 public class MovimentacaoView extends javax.swing.JInternalFrame {
    
@@ -13,7 +17,6 @@ public class MovimentacaoView extends javax.swing.JInternalFrame {
 
     public MovimentacaoView() {
         initComponents();
-        carregarTabela();
         resetTela();
         jtfId.setEditable(false);
         jtfIdVeiculo.setEditable(false);
@@ -421,11 +424,45 @@ public class MovimentacaoView extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jtMovimentacoesMouseClicked
 
     private void jbPesquisarVeiculoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbPesquisarVeiculoActionPerformed
-        // TODO add your handling code here:
+        Pesquisa p = new Pesquisa();
+        String[] opcoesBusca = {"ID", "Placa"};
+        List<VeiculoModel> lista = p.pesquisaVeiculo(opcoesBusca);
+        
+        if (lista == null) {
+            jtfIdVeiculo.setText("");
+        }
+        
+        else if (lista.size() == 0) {
+            JOptionPane.showMessageDialog(null, "Veículo não encontrado no banco de dados.");
+            jtfIdVeiculo.setText("");
+        }
+        
+        else if (lista.size() == 1) {
+            VeiculoModel v = lista.get(0);
+            JOptionPane.showMessageDialog(this, "Veículo encontrado: " + v.getMarca() + " " + v.getModelo() + " (" + v.getAno() + ").");
+            jtfIdVeiculo.setText(Integer.toString(v.getId()));
+        }
     }//GEN-LAST:event_jbPesquisarVeiculoActionPerformed
 
     private void jbPesquisarFuncionarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbPesquisarFuncionarioActionPerformed
-        // TODO add your handling code here:
+        Pesquisa p = new Pesquisa();
+        String[] opcoesBusca = {"ID","CPF"};
+        List<FuncionarioModel> lista = p.pesquisaFuncionario(opcoesBusca);
+        
+        if (lista == null) {
+            jtfIdFuncionario.setText("");
+        }
+        
+        else if (lista.size() == 0) {
+            JOptionPane.showMessageDialog(null, "Funcionário não encontrado no banco de dados.");
+            jtfIdFuncionario.setText("");
+        }
+        
+        else if (lista.size() == 1) {
+            FuncionarioModel f = lista.get(0);
+            JOptionPane.showMessageDialog(this, "Funcionário encontrado: " + f.getNome() + ".");
+            jtfIdFuncionario.setText(Integer.toString(f.getId()));
+        }
     }//GEN-LAST:event_jbPesquisarFuncionarioActionPerformed
 
 
