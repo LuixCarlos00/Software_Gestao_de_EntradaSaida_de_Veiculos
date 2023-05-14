@@ -5,9 +5,9 @@ import javax.swing.JOptionPane;
 import model.UsuarioModel;
 
 public class CriarContaView extends javax.swing.JFrame {
-
+    
     UsuarioController usuario = new UsuarioController();
-
+    
     public CriarContaView() {
         initComponents();
     }
@@ -31,30 +31,38 @@ public class CriarContaView extends javax.swing.JFrame {
         jtfSenha = new javax.swing.JPasswordField();
         jtfRepetirSenha = new javax.swing.JPasswordField();
         jbVoltar = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        textCPF = new javax.swing.JFormattedTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Cadastro de Novo Usuário");
+
+        jpCriarConta.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jlUsuario.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jlUsuario.setForeground(new java.awt.Color(255, 255, 255));
         jlUsuario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/status_online.png"))); // NOI18N
         jlUsuario.setText("Usuário:");
+        jpCriarConta.add(jlUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, 238, -1));
 
         jtfUsuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jtfUsuarioActionPerformed(evt);
             }
         });
+        jpCriarConta.add(jtfUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 130, 238, -1));
 
         jlSenha.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jlSenha.setForeground(new java.awt.Color(255, 255, 255));
         jlSenha.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/key.png"))); // NOI18N
         jlSenha.setText("Senha:");
+        jpCriarConta.add(jlSenha, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 230, 238, 22));
 
         jlRepetirSenha.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jlRepetirSenha.setForeground(new java.awt.Color(255, 255, 255));
         jlRepetirSenha.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/key.png"))); // NOI18N
         jlRepetirSenha.setText("Digite a senha novamente:");
+        jpCriarConta.add(jlRepetirSenha, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 290, 238, 22));
 
         jbCriarUsuario.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jbCriarUsuario.setForeground(new java.awt.Color(255, 255, 255));
@@ -65,12 +73,16 @@ public class CriarContaView extends javax.swing.JFrame {
                 jbCriarUsuarioActionPerformed(evt);
             }
         });
+        jpCriarConta.add(jbCriarUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 360, 150, -1));
 
         jlTitulo.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jlTitulo.setForeground(new java.awt.Color(255, 255, 255));
         jlTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jlTitulo.setText("Criar novo usuário");
         jlTitulo.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jpCriarConta.add(jlTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 288, 99));
+        jpCriarConta.add(jtfSenha, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 260, 238, -1));
+        jpCriarConta.add(jtfRepetirSenha, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 320, 238, -1));
 
         jbVoltar.setText("Voltar");
         jbVoltar.addActionListener(new java.awt.event.ActionListener() {
@@ -78,52 +90,22 @@ public class CriarContaView extends javax.swing.JFrame {
                 jbVoltarActionPerformed(evt);
             }
         });
+        jpCriarConta.add(jbVoltar, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 390, -1, -1));
 
-        javax.swing.GroupLayout jpCriarContaLayout = new javax.swing.GroupLayout(jpCriarConta);
-        jpCriarConta.setLayout(jpCriarContaLayout);
-        jpCriarContaLayout.setHorizontalGroup(
-            jpCriarContaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jlTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, 288, Short.MAX_VALUE)
-            .addGroup(jpCriarContaLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jpCriarContaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jlRepetirSenha, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jlSenha, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jlUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jtfUsuario)
-                    .addComponent(jtfSenha)
-                    .addComponent(jtfRepetirSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jpCriarContaLayout.createSequentialGroup()
-                        .addGap(41, 41, 41)
-                        .addComponent(jbCriarUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jpCriarContaLayout.createSequentialGroup()
-                .addGap(114, 114, 114)
-                .addComponent(jbVoltar)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jpCriarContaLayout.setVerticalGroup(
-            jpCriarContaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jpCriarContaLayout.createSequentialGroup()
-                .addComponent(jlTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jlUsuario)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jtfUsuario)
-                .addGap(18, 18, 18)
-                .addComponent(jlSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jtfSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jlRepetirSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jtfRepetirSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(38, 38, 38)
-                .addComponent(jbCriarUsuario)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jbVoltar)
-                .addGap(55, 55, 55))
-        );
+        jLabel1.setText("CPF");
+        jpCriarConta.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 170, -1, -1));
+
+        try {
+            textCPF.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        textCPF.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                textCPFActionPerformed(evt);
+            }
+        });
+        jpCriarConta.add(textCPF, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 190, 240, 30));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -136,9 +118,9 @@ public class CriarContaView extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(jpCriarConta, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jpCriarConta, javax.swing.GroupLayout.DEFAULT_SIZE, 430, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
@@ -146,21 +128,26 @@ public class CriarContaView extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbCriarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCriarUsuarioActionPerformed
+        UsuarioController usuarioCont = new UsuarioController();
         String senha = jtfSenha.getText();
         String repetirSenha = jtfRepetirSenha.getText();
         String user = jtfUsuario.getText();
-
-        if (senha.isEmpty() || repetirSenha.isEmpty() || user.isEmpty()) {
+        String cpf = textCPF.getText();
+        
+        if (senha.isEmpty() || repetirSenha.isEmpty() || user.isEmpty() || cpf.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Preencha todos os campos.");
-        } else if (senha.contains(" ") || repetirSenha.contains(" ") || user.contains(" ")) {
+        } else if (senha.contains(" ") || repetirSenha.contains(" ") || user.contains(" ") || cpf.contains(" ")) {
             JOptionPane.showMessageDialog(this, "Não é possível cadastrar usuário com espaços em branco.");
+        } else if (usuarioCont.verificarCPF(cpf)) {
+            JOptionPane.showMessageDialog(this, "Já existe um usuário cadastrado com esse CPF.");
         } else if (senha.equals(repetirSenha)) {
             UsuarioModel usuario = new UsuarioModel();
-            usuario.setNome(jtfUsuario.getText());
-            usuario.setSenha(jtfSenha.getText());
+            usuario.setNome(user);
+            usuario.setSenha(senha);
+            usuario.setCpf(cpf);
             usuario.setAdmin("N");
-
-            if (this.usuario.inserir(usuario)) {
+            
+            if (usuarioCont.inserir(usuario)) {
                 JOptionPane.showMessageDialog(this, "Usuário cadastrado com sucesso.");
                 LoginView login = new LoginView();
                 login.setVisible(true);
@@ -168,12 +155,12 @@ public class CriarContaView extends javax.swing.JFrame {
             } else {
                 JOptionPane.showMessageDialog(this, "Erro ao cadastrar novo usuário.");
             }
-
         } else {
-            JOptionPane.showMessageDialog(this, "As senhas correspondem .");
+            JOptionPane.showMessageDialog(this, "As senhas não correspondem.");
             limparCampos();
             jtfUsuario.requestFocus();
         }
+        
     }//GEN-LAST:event_jbCriarUsuarioActionPerformed
 
     private void jtfUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfUsuarioActionPerformed
@@ -186,13 +173,19 @@ public class CriarContaView extends javax.swing.JFrame {
         setVisible(false);
     }//GEN-LAST:event_jbVoltarActionPerformed
 
+    private void textCPFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textCPFActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_textCPFActionPerformed
+    
     private void limparCampos() {
         jtfRepetirSenha.setText("");
         jtfSenha.setText("");
         jtfUsuario.setText("");
-
+        
+        
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JButton jbCriarUsuario;
     private javax.swing.JButton jbVoltar;
     private javax.swing.JLabel jlRepetirSenha;
@@ -203,5 +196,6 @@ public class CriarContaView extends javax.swing.JFrame {
     private javax.swing.JPasswordField jtfRepetirSenha;
     private javax.swing.JPasswordField jtfSenha;
     private javax.swing.JTextField jtfUsuario;
+    private javax.swing.JFormattedTextField textCPF;
     // End of variables declaration//GEN-END:variables
 }

@@ -158,6 +158,15 @@ public class FuncionarioController {
                 nomesEncontrado.add(nomeEncontrado);
             }
 
+            
+            
+            
+            
+            
+            
+            
+            
+            
         } catch (SQLException e) {
             System.out.println("Erro na sentença SQL de seleção: " + e.getMessage());
         }

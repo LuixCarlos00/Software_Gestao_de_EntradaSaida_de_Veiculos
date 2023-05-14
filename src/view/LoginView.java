@@ -11,7 +11,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 import model.UsuarioModel;
 
 public class LoginView extends javax.swing.JFrame {
-    UsuarioController usuario = new UsuarioController();
+    UsuarioController usuarioCont = new UsuarioController();
 
     public LoginView() {
         try {
@@ -24,27 +24,28 @@ public class LoginView extends javax.swing.JFrame {
         initComponents();
     }
 
-    private void checarLogin() {
-        UsuarioModel usuario = new UsuarioModel();
-        usuario.setNome(jtfUsuario.getText());
-        usuario.setSenha(jpfSenha.getText());
-        
-        UsuarioModel modeloEncontrado = this.usuario.selecionar(usuario) ;
-        
-        if (modeloEncontrado == null) {
-            JOptionPane.showMessageDialog(null, "Acesso Negado. Usuário ou senha incorreta.");
-            jtfUsuario.setText("");
-            jpfSenha.setText("");
-            jtfUsuario.requestFocus();
+        private void checarLogin() {
+            UsuarioModel usuario = new UsuarioModel();
+            usuario.setCpf(jtfUsuario.getText());
+            usuario.setSenha(jpfSenha.getText());
+
+            UsuarioModel modeloEncontrado = this.usuarioCont.selecionar(usuario) ;
+           
+            if (modeloEncontrado == null) {
+                JOptionPane.showMessageDialog(null, "Acesso Negado. Usuário ou senha incorreta.");
+                jtfUsuario.setText("");
+                jpfSenha.setText("");
+                jtfUsuario.requestFocus();
+            }
+
+            else {
+                JOptionPane.showMessageDialog(null, "Bem-Vindo.");
+                setVisible(false);
+                Principal principal = new Principal();
+                principal.setVisible(true);
+            }
         }
         
-        else {
-            JOptionPane.showMessageDialog(null, "Bem-Vindo.");
-            setVisible(false);
-            Principal principal = new Principal();
-            principal.setVisible(true);
-        }
-    }
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -58,11 +59,12 @@ public class LoginView extends javax.swing.JFrame {
         jpLogin = new javax.swing.JPanel();
         jlTitulo = new javax.swing.JLabel();
         jlLogin = new javax.swing.JLabel();
-        jtfUsuario = new javax.swing.JTextField();
         jlSenha = new javax.swing.JLabel();
         jpfSenha = new javax.swing.JPasswordField();
         jBEntrar = new javax.swing.JButton();
         CriarConta = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        jtfUsuario = new javax.swing.JFormattedTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Login de Usuário");
@@ -77,12 +79,6 @@ public class LoginView extends javax.swing.JFrame {
         jlLogin.setForeground(new java.awt.Color(255, 255, 255));
         jlLogin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/user_go.png"))); // NOI18N
         jlLogin.setText("Usuário:");
-
-        jtfUsuario.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                jtfUsuarioKeyPressed(evt);
-            }
-        });
 
         jlSenha.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jlSenha.setForeground(new java.awt.Color(255, 255, 255));
@@ -115,6 +111,14 @@ public class LoginView extends javax.swing.JFrame {
             }
         });
 
+        jLabel1.setText("Entre com seu CPF e sua senha ");
+
+        try {
+            jtfUsuario.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+
         javax.swing.GroupLayout jpLoginLayout = new javax.swing.GroupLayout(jpLogin);
         jpLogin.setLayout(jpLoginLayout);
         jpLoginLayout.setHorizontalGroup(
@@ -125,17 +129,21 @@ public class LoginView extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addComponent(jlTitulo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jpLoginLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jpLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jtfUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, 238, Short.MAX_VALUE)
-                    .addComponent(jpfSenha)
-                    .addComponent(jlLogin)
-                    .addComponent(jlSenha))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jpLoginLayout.createSequentialGroup()
                 .addGap(86, 86, 86)
                 .addComponent(jBEntrar, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(85, Short.MAX_VALUE))
+                .addContainerGap(94, Short.MAX_VALUE))
+            .addGroup(jpLoginLayout.createSequentialGroup()
+                .addGap(62, 62, 62)
+                .addComponent(jLabel1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jpLoginLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jpLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jpfSenha, javax.swing.GroupLayout.DEFAULT_SIZE, 238, Short.MAX_VALUE)
+                    .addComponent(jlLogin)
+                    .addComponent(jlSenha)
+                    .addComponent(jtfUsuario))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jpLoginLayout.setVerticalGroup(
             jpLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -144,12 +152,14 @@ public class LoginView extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
                 .addComponent(jlLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jtfUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jtfUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jlSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jpfSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(35, 35, 35)
+                .addGap(1, 1, 1)
+                .addComponent(jLabel1)
+                .addGap(18, 18, 18)
                 .addComponent(jBEntrar, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(CriarConta)
@@ -170,11 +180,6 @@ public class LoginView extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jtfUsuarioKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtfUsuarioKeyPressed
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER)
-        checarLogin();
-    }//GEN-LAST:event_jtfUsuarioKeyPressed
 
     private void jpfSenhaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jpfSenhaKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER)
@@ -229,11 +234,12 @@ public class LoginView extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel CriarConta;
     private javax.swing.JButton jBEntrar;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jlLogin;
     private javax.swing.JLabel jlSenha;
     private javax.swing.JLabel jlTitulo;
     private javax.swing.JPanel jpLogin;
     private javax.swing.JPasswordField jpfSenha;
-    private javax.swing.JTextField jtfUsuario;
+    private javax.swing.JFormattedTextField jtfUsuario;
     // End of variables declaration//GEN-END:variables
 }

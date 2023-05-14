@@ -6,12 +6,13 @@ public class UsuarioModel {
     private String nome;
     private String senha;
     private String admin;
-
-    public UsuarioModel(int id, String nome, String senha, String admin) {
+    private String cpf;
+    public UsuarioModel(int id, String nome, String senha, String admin, String cpf) {
         this.id = id;
         this.nome = nome;
         this.senha = senha;
         this.admin = admin;
+        this.cpf = cpf;
     }
     
     public UsuarioModel() {
@@ -19,8 +20,20 @@ public class UsuarioModel {
         nome = "";
         senha = "";
         admin = "N";
+        cpf = "";
     }
 
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
+    }
+
+    
+    
+    
     public int getId() {
         return id;
     }

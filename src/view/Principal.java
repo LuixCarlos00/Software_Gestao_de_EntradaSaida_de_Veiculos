@@ -1,11 +1,15 @@
 package view;
 
+import controller.UsuarioController;
 import javax.swing.JOptionPane;
+import model.UsuarioModel;
 
 public class Principal extends javax.swing.JFrame {
 
     public Principal() {
         initComponents();
+        UsuarioController usuario = new UsuarioController();
+
     }
 
     /**
@@ -19,13 +23,16 @@ public class Principal extends javax.swing.JFrame {
 
         jMenuItem3 = new javax.swing.JMenuItem();
         Area_trabalho = new javax.swing.JPanel();
+        jSeparator1 = new javax.swing.JSeparator();
         jmbMenuPrincipal = new javax.swing.JMenuBar();
         Cadastro = new javax.swing.JMenu();
         Cadastro_Funcionario = new javax.swing.JMenuItem();
         Cadastro_veiculo = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
         Controle_Entrada_Saida = new javax.swing.JMenu();
         Nova_Entrada_Saida = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
         jmOutros = new javax.swing.JMenu();
         Sobre = new javax.swing.JMenuItem();
         jmiLogout = new javax.swing.JMenuItem();
@@ -36,20 +43,17 @@ public class Principal extends javax.swing.JFrame {
 
         Area_trabalho.setBackground(new java.awt.Color(50, 50, 50));
         Area_trabalho.setPreferredSize(new java.awt.Dimension(809, 606));
-
-        javax.swing.GroupLayout Area_trabalhoLayout = new javax.swing.GroupLayout(Area_trabalho);
-        Area_trabalho.setLayout(Area_trabalhoLayout);
-        Area_trabalhoLayout.setHorizontalGroup(
-            Area_trabalhoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1280, Short.MAX_VALUE)
-        );
-        Area_trabalhoLayout.setVerticalGroup(
-            Area_trabalhoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 697, Short.MAX_VALUE)
-        );
+        Area_trabalho.setLayout(null);
+        Area_trabalho.add(jSeparator1);
+        jSeparator1.setBounds(1030, 20, 0, 180);
 
         Cadastro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/cog_add.png"))); // NOI18N
         Cadastro.setText("Cadastros");
+        Cadastro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CadastroActionPerformed(evt);
+            }
+        });
 
         Cadastro_Funcionario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/user_add.png"))); // NOI18N
         Cadastro_Funcionario.setText("Funcionários");
@@ -69,6 +73,15 @@ public class Principal extends javax.swing.JFrame {
         });
         Cadastro.add(Cadastro_veiculo);
 
+        jMenuItem2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/report_user.png"))); // NOI18N
+        jMenuItem2.setText("Empresas");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
+        Cadastro.add(jMenuItem2);
+
         jmbMenuPrincipal.add(Cadastro);
 
         Controle_Entrada_Saida.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/book_open.png"))); // NOI18N
@@ -87,6 +100,21 @@ public class Principal extends javax.swing.JFrame {
 
         jMenu3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/money.png"))); // NOI18N
         jMenu3.setText("Controle de Gastos");
+        jMenu3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenu3ActionPerformed(evt);
+            }
+        });
+
+        jMenuItem1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/bullet_wrench.png"))); // NOI18N
+        jMenuItem1.setText("Requisição de compras");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jMenuItem1);
+
         jmbMenuPrincipal.add(jMenu3);
 
         jmOutros.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/plugin.png"))); // NOI18N
@@ -153,6 +181,7 @@ public class Principal extends javax.swing.JFrame {
         login.setVisible(true);
     }//GEN-LAST:event_jmiLogoutActionPerformed
 
+
     private void SobreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SobreActionPerformed
 
         JOptionPane.showMessageDialog(this, "O software de controle de frota de veículos e gastos é uma solução \n "
@@ -166,8 +195,34 @@ public class Principal extends javax.swing.JFrame {
                 + "uma escolha ideal para empresas de todos os tamanhos que desejam maximizar o\n"
                 + "desempenho de sua frota.\n"
                 + "Entre em contato conosco para saber mais e solicitar uma demonstração.\n"
-                + "Desenvolvido por: Talles.R & Luiz.C","Sobre",JOptionPane.PLAIN_MESSAGE);
+                + "Desenvolvido por: Talles.R & Luiz.C\n"
+                + "ζξ\n"
+                + "┌─┬┐\n"
+                + "│☆├┘\n"
+                + "└─┘\n"
+                + "Cafe", "Sobre", JOptionPane.PLAIN_MESSAGE);
     }//GEN-LAST:event_SobreActionPerformed
+
+
+    private void jMenu3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu3ActionPerformed
+
+    }//GEN-LAST:event_jMenu3ActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        RequisicaoView manutencao = new RequisicaoView();
+        Area_trabalho.add(manutencao);
+        manutencao.setVisible(true);
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void CadastroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CadastroActionPerformed
+
+    }//GEN-LAST:event_CadastroActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        EmpresasView emp = new EmpresasView();
+        Area_trabalho.add(emp);
+        emp.setVisible(true);
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -211,7 +266,10 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem Nova_Entrada_Saida;
     private javax.swing.JMenuItem Sobre;
     private javax.swing.JMenu jMenu3;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JSeparator jSeparator1;
     private javax.swing.JMenu jmOutros;
     private javax.swing.JMenuBar jmbMenuPrincipal;
     private javax.swing.JMenuItem jmiLogout;

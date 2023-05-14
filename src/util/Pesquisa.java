@@ -1,5 +1,6 @@
 package util;
 
+import controller.EmpresasController;
 import javax.swing.JOptionPane;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,6 +10,7 @@ import controller.FuncionarioController;
 
 import model.VeiculoModel;
 import controller.VeiculoController;
+import model.EmpresasModel;
 
 public class Pesquisa {
 
@@ -236,6 +238,102 @@ public class Pesquisa {
                             return veiculo_encontrado;
                         } else {
                             JOptionPane.showMessageDialog(null, "O status digitado não é válido.");
+                        }
+                    }
+                }
+                break;
+            }
+        }
+        return null;
+    }
+
+    public List<EmpresasModel> pesquisaEmpresas(String[] opcoesBuscaEmpresa) {
+        EmpresasController controller = new EmpresasController();
+        EmpresasModel Model = new EmpresasModel();
+
+        int escolha = JOptionPane.showOptionDialog(null, "Escolha o tipo de pesquisa:", "Pesquisa de Empresas ",
+                JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, opcoesBuscaEmpresa, opcoesBuscaEmpresa[0]);
+
+        if (escolha >= 0) { //Se o usuário selecionou uma opção
+            String opcaoBusca = opcoesBuscaEmpresa[escolha];
+
+            switch (opcaoBusca) {
+                case "ID": {
+                    String idBusca = JOptionPaneCustom.showInputDialog("Digite o ID da Empresa (número inteiro positivo):", "Pesquisa por ID").trim();
+                    if (idBusca == null || idBusca.isEmpty()) {
+                        JOptionPane.showMessageDialog(null, "Operação Cancelada");
+                    } else {
+                        try {
+                            int id = Integer.parseInt(idBusca);
+
+                            if (idBusca.length() > 0 && id > 0) {
+                                Model.setId(id);
+                                EmpresasModel empresa = controller.selecionarID(Model);
+
+                                List<EmpresasModel> lista = new ArrayList<>();;
+                                if (empresa != null) {
+                                    lista.add(empresa);
+                                }
+                                return lista;
+                            } else {
+                                JOptionPane.showMessageDialog(null, "O ID digitado deve ser um número inteiro positivo.");
+                            }
+                        } catch (NumberFormatException n) {
+                            JOptionPane.showMessageDialog(null, "O ID digitado deve ser um número inteiro positivo.");
+                        }
+                    }
+                }
+                break;
+
+                case "CNPJ": {
+                    String cnpjBusca = JOptionPaneCustom.showInputDialog("Digite o CNPJ da Empresa (formato xx.xxx.xxx/xxxx-xx):", "Pesquisa por CNPJ").trim();
+                    if (cnpjBusca == null || cnpjBusca.isEmpty()) {
+                        JOptionPane.showMessageDialog(null, "Operação Cancelada");
+                    } else {
+                        if (cnpjBusca.length() == 18) {
+                            Model.setCnpj(cnpjBusca);
+                            EmpresasModel empresa = controller.selecionarCNPJ(Model);
+
+                            List<EmpresasModel> lista = new ArrayList<>();;
+                            if (empresa != null) {
+                                lista.add(empresa);
+                            }
+                            return lista;
+                        } else {
+                            JOptionPane.showMessageDialog(null, "O CNPJ deve conter exatamente 18 caracteres (inclua os pontos e traços na busca).");
+                        }
+                    }
+                }
+                break;
+
+                case "Nome": {
+                    String nomeBusca = JOptionPaneCustom.showInputDialog("Digite o nome da Empresa: ", "Pesquisa por nome").trim();
+                    if (nomeBusca == null || nomeBusca.isEmpty()) {
+                        JOptionPane.showMessageDialog(null, "Operação Cancelada");
+                    } else {
+                        if (nomeBusca.length() > 0 && nomeBusca.matches("[a-zA-Z]+")) {
+                            Model.setNomeEmpresa(nomeBusca);
+                            List<EmpresasModel> lista = controller.selecionarNome(Model);
+                            return lista;
+                        } else {
+                            JOptionPane.showMessageDialog(null, "O nome digitado não é valido.");
+                        }
+                    }
+                }
+                break;
+
+                case "UF": {
+
+                    String BuscaUF = JOptionPaneCustom.showInputDialog("Digite o UF da Empresa:", "Pesquisa por UF").trim();
+                    if (BuscaUF == null || BuscaUF.isEmpty()) {
+                        JOptionPane.showMessageDialog(null, "Operação Cancelada");
+                    } else {
+                        if (BuscaUF.length() > 0 && BuscaUF.matches("[a-zA-ZçÇáÁéÉíÍóÓúÚâÂêÊôÔûÛãÃõÕàÀèÈìÌòÒùÙ]+")) {
+                            Model.setUf(BuscaUF);
+                            List<EmpresasModel> lista = controller.selecionarUF(Model);
+                            return lista;
+                        } else {
+                            JOptionPane.showMessageDialog(null, "O UF digitado não é válido.");
                         }
                     }
                 }
