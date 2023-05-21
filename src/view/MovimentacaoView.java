@@ -439,7 +439,7 @@ public class MovimentacaoView extends javax.swing.JInternalFrame {
         
         else if (lista.size() == 1) {
             VeiculoModel v = lista.get(0);
-            JOptionPane.showMessageDialog(this, "Veículo encontrado: " + v.getMarca() + " " + v.getModelo() + " (" + v.getAno() + ").");
+            JOptionPane.showMessageDialog(this, "Veículo encontrado: " + v.getMarca() + " " + v.getModelo() + " " + v.getAno() + " ");
             jtfIdVeiculo.setText(Integer.toString(v.getId()));
         }
     }//GEN-LAST:event_jbPesquisarVeiculoActionPerformed

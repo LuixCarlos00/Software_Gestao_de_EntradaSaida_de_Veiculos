@@ -6,6 +6,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import model.EmpresasModel;
+<<<<<<< Updated upstream
+=======
+import model.FuncionarioModel;
+>>>>>>> Stashed changes
 import util.Conexao;
 
 public class EmpresasController {
@@ -122,11 +126,20 @@ public class EmpresasController {
 
             if (resultado.next()) {
                 idencontrado = new EmpresasModel();
+<<<<<<< Updated upstream
                 sentenca.setString(1, empresa.getNomeEmpresa());
                 sentenca.setString(2, empresa.getCnpj());
                 sentenca.setString(3, empresa.getFax());
                 sentenca.setString(4, empresa.getEndereco());
                 sentenca.setString(5, empresa.getUf());
+=======
+                idencontrado.setId(resultado.getInt("id"));
+                idencontrado.setNomeEmpresa(resultado.getString("nome"));
+                idencontrado.setCnpj(resultado.getString("cnpj"));
+                idencontrado.setFax(resultado.getString("fax"));
+                idencontrado.setEndereco(resultado.getString("endereco"));
+                idencontrado.setUf(resultado.getString("uf"));
+>>>>>>> Stashed changes
             }
 
         } catch (SQLException e) {

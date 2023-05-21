@@ -10,8 +10,13 @@ import model.EmpresasModel;
 
 import java.util.List;
 import javax.swing.JOptionPane;
+<<<<<<< Updated upstream
 import javax.swing.table.DefaultTableModel;
 import model.FuncionarioModel;
+=======
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+>>>>>>> Stashed changes
 
 import util.Pesquisa;
 
@@ -28,8 +33,16 @@ public class EmpresasView extends javax.swing.JInternalFrame {
         initComponents();
         textID.setEditable(false);
         resetTela();
+<<<<<<< Updated upstream
     }
 
+=======
+               
+    }
+
+    
+    
+>>>>>>> Stashed changes
     public void carregarTabela() {
 
         ArrayList<EmpresasModel> empresa = controller.selecionarTodos();
@@ -107,6 +120,11 @@ public class EmpresasView extends javax.swing.JInternalFrame {
         jLabel5 = new javax.swing.JLabel();
         textFax = new javax.swing.JTextField();
 
+<<<<<<< Updated upstream
+=======
+        setClosable(true);
+
+>>>>>>> Stashed changes
         textUf.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Acre (AC)", "Alagoas (AL)", "Amapá (AP)", "Amazonas (AM)", "Bahia (BA)", "Ceará (CE)", "Distrito Federal (DF)", "Espírito Santo (ES)", "Goiás (GO)", "Maranhão (MA)", "Mato Grosso (MT)", "Mato Grosso do Sul (MS)", "Minas Gerais (MG)", "Pará (PA)", "Paraíba (PB)", "Paraná (PR)", "Pernambuco (PE)", "Piauí (PI)", "Rio de Janeiro (RJ)", "Rio Grande do Norte (RN)", "Rio Grande do Sul (RS)", "Rondônia (RO)", "Roraima (RR)", "Santa Catarina (SC)", "São Paulo (SP)", "Sergipe (SE)", "Tocantins (TO)" }));
 
         Tabela_Empresa.setModel(new javax.swing.table.DefaultTableModel(
@@ -118,7 +136,11 @@ public class EmpresasView extends javax.swing.JInternalFrame {
             }
         ) {
             Class[] types = new Class [] {
+<<<<<<< Updated upstream
                 java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class
+=======
+                java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+>>>>>>> Stashed changes
             };
             boolean[] canEdit = new boolean [] {
                 false, false, false, false, false, true
@@ -138,6 +160,23 @@ public class EmpresasView extends javax.swing.JInternalFrame {
             }
         });
         jScrollPane1.setViewportView(Tabela_Empresa);
+<<<<<<< Updated upstream
+=======
+        if (Tabela_Empresa.getColumnModel().getColumnCount() > 0) {
+            Tabela_Empresa.getColumnModel().getColumn(0).setMinWidth(35);
+            Tabela_Empresa.getColumnModel().getColumn(0).setMaxWidth(45);
+            Tabela_Empresa.getColumnModel().getColumn(1).setMinWidth(170);
+            Tabela_Empresa.getColumnModel().getColumn(1).setMaxWidth(170);
+            Tabela_Empresa.getColumnModel().getColumn(2).setMinWidth(120);
+            Tabela_Empresa.getColumnModel().getColumn(2).setMaxWidth(90);
+            Tabela_Empresa.getColumnModel().getColumn(3).setMinWidth(120);
+            Tabela_Empresa.getColumnModel().getColumn(3).setMaxWidth(120);
+            Tabela_Empresa.getColumnModel().getColumn(4).setMinWidth(200);
+            Tabela_Empresa.getColumnModel().getColumn(4).setMaxWidth(200);
+            Tabela_Empresa.getColumnModel().getColumn(5).setMinWidth(120);
+            Tabela_Empresa.getColumnModel().getColumn(5).setMaxWidth(120);
+        }
+>>>>>>> Stashed changes
 
         jbNovo.setText("Novo");
         jbNovo.addActionListener(new java.awt.event.ActionListener() {
@@ -283,7 +322,12 @@ public class EmpresasView extends javax.swing.JInternalFrame {
                         .addContainerGap()
                         .addComponent(textEndereco, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
+<<<<<<< Updated upstream
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 706, Short.MAX_VALUE))
+=======
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 779, Short.MAX_VALUE)
+                .addContainerGap())
+>>>>>>> Stashed changes
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

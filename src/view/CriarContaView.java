@@ -3,6 +3,7 @@ package view;
 import controller.UsuarioController;
 import javax.swing.JOptionPane;
 import model.UsuarioModel;
+import view.LoginView;
 
 public class CriarContaView extends javax.swing.JFrame {
     

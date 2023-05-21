@@ -11,6 +11,10 @@ import controller.FuncionarioController;
 import model.VeiculoModel;
 import controller.VeiculoController;
 import model.EmpresasModel;
+<<<<<<< Updated upstream
+=======
+import util.JOptionPaneCustom;
+>>>>>>> Stashed changes
 
 public class Pesquisa {
 
@@ -259,7 +263,11 @@ public class Pesquisa {
 
             switch (opcaoBusca) {
                 case "ID": {
+<<<<<<< Updated upstream
                     String idBusca = JOptionPaneCustom.showInputDialog("Digite o ID da Empresa (número inteiro positivo):", "Pesquisa por ID").trim();
+=======
+                     String idBusca = JOptionPaneCustom.showInputDialog("Digite o ID do veículo (número inteiro positivo):", "Pesquisa por ID").trim();
+>>>>>>> Stashed changes
                     if (idBusca == null || idBusca.isEmpty()) {
                         JOptionPane.showMessageDialog(null, "Operação Cancelada");
                     } else {
@@ -268,11 +276,19 @@ public class Pesquisa {
 
                             if (idBusca.length() > 0 && id > 0) {
                                 Model.setId(id);
+<<<<<<< Updated upstream
                                 EmpresasModel empresa = controller.selecionarID(Model);
 
                                 List<EmpresasModel> lista = new ArrayList<>();;
                                 if (empresa != null) {
                                     lista.add(empresa);
+=======
+                                EmpresasModel empresasModel = controller.selecionarID(Model);
+
+                                List<EmpresasModel> lista = new ArrayList<>();;
+                                if (empresasModel != null) {
+                                    lista.add(empresasModel);
+>>>>>>> Stashed changes
                                 }
                                 return lista;
                             } else {

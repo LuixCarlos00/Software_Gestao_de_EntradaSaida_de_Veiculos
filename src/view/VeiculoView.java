@@ -27,7 +27,7 @@ public class VeiculoView extends javax.swing.JInternalFrame {
         jtfModelo.setText("");
         jftfAno.setText("");
     }
-    
+
     public void carregarTabela() {
 
         ArrayList<VeiculoModel> veiculos = veiculoController.selecionarTodos();
@@ -45,7 +45,7 @@ public class VeiculoView extends javax.swing.JInternalFrame {
             });
         }
     }
-    
+
     public void resetTela() {
         //Ativa os botões Novo, Limpar e Pesquisar
         jbNovo.setEnabled(true);
@@ -119,6 +119,7 @@ public class VeiculoView extends javax.swing.JInternalFrame {
 
         setClosable(true);
         setTitle("Cadastro de Veículos");
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jbNovo.setText("Novo");
         jbNovo.addActionListener(new java.awt.event.ActionListener() {
@@ -126,6 +127,7 @@ public class VeiculoView extends javax.swing.JInternalFrame {
                 jbNovoActionPerformed(evt);
             }
         });
+        getContentPane().add(jbNovo, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 80, -1));
 
         jbSalvar.setText("Salvar");
         jbSalvar.addActionListener(new java.awt.event.ActionListener() {
@@ -133,6 +135,7 @@ public class VeiculoView extends javax.swing.JInternalFrame {
                 jbSalvarActionPerformed(evt);
             }
         });
+        getContentPane().add(jbSalvar, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, 80, -1));
 
         jbEditar.setText("Editar");
         jbEditar.addActionListener(new java.awt.event.ActionListener() {
@@ -140,6 +143,7 @@ public class VeiculoView extends javax.swing.JInternalFrame {
                 jbEditarActionPerformed(evt);
             }
         });
+        getContentPane().add(jbEditar, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 45, 80, -1));
 
         jbExcluir.setText("Excluir");
         jbExcluir.addActionListener(new java.awt.event.ActionListener() {
@@ -147,14 +151,19 @@ public class VeiculoView extends javax.swing.JInternalFrame {
                 jbExcluirActionPerformed(evt);
             }
         });
+        getContentPane().add(jbExcluir, new org.netbeans.lib.awtextra.AbsoluteConstraints(106, 45, 80, -1));
 
         jlMarca.setText("Marca:");
+        getContentPane().add(jlMarca, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 262, -1, -1));
 
         jlAno.setText("Ano:");
+        getContentPane().add(jlAno, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 376, -1, -1));
 
         jlPlaca.setText("Placa:");
+        getContentPane().add(jlPlaca, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 207, -1, -1));
 
         jftfAno.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
+        getContentPane().add(jftfAno, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 396, 180, 25));
 
         jtVeiculos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -187,16 +196,27 @@ public class VeiculoView extends javax.swing.JInternalFrame {
             }
         });
         jsVeiculos.setViewportView(jtVeiculos);
+        if (jtVeiculos.getColumnModel().getColumnCount() > 0) {
+            jtVeiculos.getColumnModel().getColumn(0).setMinWidth(35);
+            jtVeiculos.getColumnModel().getColumn(0).setMaxWidth(45);
+        }
+
+        getContentPane().add(jsVeiculos, new org.netbeans.lib.awtextra.AbsoluteConstraints(198, 10, 582, 412));
 
         jtfMarca.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jtfMarcaActionPerformed(evt);
             }
         });
+        getContentPane().add(jtfMarca, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 282, 180, 25));
 
         jlModelo.setText("Modelo:");
+        getContentPane().add(jlModelo, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 319, -1, -1));
+        getContentPane().add(jtfModelo, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 339, 180, 25));
 
         jlID.setText("ID:");
+        getContentPane().add(jlID, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 150, -1, -1));
+        getContentPane().add(jtfID, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 170, 180, 25));
 
         jbLimpar.setText("Limpar");
         jbLimpar.addActionListener(new java.awt.event.ActionListener() {
@@ -204,6 +224,7 @@ public class VeiculoView extends javax.swing.JInternalFrame {
                 jbLimparActionPerformed(evt);
             }
         });
+        getContentPane().add(jbLimpar, new org.netbeans.lib.awtextra.AbsoluteConstraints(106, 10, 80, -1));
 
         jbCancelar.setText("Cancelar");
         jbCancelar.addActionListener(new java.awt.event.ActionListener() {
@@ -211,6 +232,7 @@ public class VeiculoView extends javax.swing.JInternalFrame {
                 jbCancelarActionPerformed(evt);
             }
         });
+        getContentPane().add(jbCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(106, 80, 80, -1));
 
         jbPesquisar.setText("Pesquisar");
         jbPesquisar.addActionListener(new java.awt.event.ActionListener() {
@@ -218,93 +240,8 @@ public class VeiculoView extends javax.swing.JInternalFrame {
                 jbPesquisarActionPerformed(evt);
             }
         });
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jlID)
-                                    .addComponent(jlPlaca)
-                                    .addComponent(jlMarca)
-                                    .addComponent(jlModelo)
-                                    .addComponent(jlAno))
-                                .addGap(46, 46, 46))
-                            .addComponent(jtfID, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jtfMarca, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jtfModelo, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jftfAno, javax.swing.GroupLayout.Alignment.TRAILING)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jbNovo, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)
-                            .addComponent(jbEditar, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)
-                            .addComponent(jbSalvar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jbLimpar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jbExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jbCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(58, 58, 58)
-                        .addComponent(jbPesquisar)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jtfPlaca)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jsVeiculos, javax.swing.GroupLayout.PREFERRED_SIZE, 582, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(8, 8, 8))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jsVeiculos, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jbNovo)
-                            .addComponent(jbLimpar))
-                        .addGap(12, 12, 12)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jbEditar)
-                            .addComponent(jbExcluir))
-                        .addGap(12, 12, 12)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jbSalvar)
-                            .addComponent(jbCancelar))
-                        .addGap(12, 12, 12)
-                        .addComponent(jbPesquisar)
-                        .addGap(12, 12, 12)
-                        .addComponent(jlID)
-                        .addGap(4, 4, 4)
-                        .addComponent(jtfID, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jlPlaca)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jtfPlaca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(11, 11, 11)
-                        .addComponent(jlMarca)
-                        .addGap(4, 4, 4)
-                        .addComponent(jtfMarca, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jlModelo)
-                        .addGap(4, 4, 4)
-                        .addComponent(jtfModelo, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jlAno)
-                        .addGap(4, 4, 4)
-                        .addComponent(jftfAno, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 1, Short.MAX_VALUE)))
-                .addGap(10, 10, 10))
-        );
+        getContentPane().add(jbPesquisar, new org.netbeans.lib.awtextra.AbsoluteConstraints(58, 115, -1, -1));
+        getContentPane().add(jtfPlaca, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 229, 180, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -317,13 +254,20 @@ public class VeiculoView extends javax.swing.JInternalFrame {
 
 
     }//GEN-LAST:event_jbNovoActionPerformed
-    
+
     private void jbSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSalvarActionPerformed
 
         VeiculoModel veiculo = new VeiculoModel();
+        String placa = jtfPlaca.getText();
+        String Marca = jtfMarca.getText();
+        String modelo = jtfModelo.getText();
+        String Ano = jftfAno.getText();
 
-        //Se o campo ID está vazio, o botão Novo foi pressionado
-        if ("".equals(jtfID.getText())) {
+        if (placa.isEmpty() || Marca.isEmpty() || modelo.isEmpty() || Ano.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Por favor, prencha todos os campos solicitados.");
+        } else if (placa.length() != 7) {
+            JOptionPane.showMessageDialog(this, "A placa deve conter exatamente 7 caracteres.");
+        } else if ("".equals(jtfID.getText())) {
             veiculo.setPlaca(jtfPlaca.getText());
             veiculo.setMarca(jtfMarca.getText());
             veiculo.setModelo(jtfModelo.getText());
@@ -374,16 +318,27 @@ public class VeiculoView extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jbEditarActionPerformed
 
     private void jbExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbExcluirActionPerformed
-        VeiculoModel veiculo = new VeiculoModel();
-        veiculo.setId(Integer.parseInt(jtfID.getText()));
 
-        if (veiculoController.excluir(veiculo)) {
-            JOptionPane.showMessageDialog(this, "Veículo excluído com sucesso.");
-        } else {
-            JOptionPane.showMessageDialog(this, "Erro ao excluir o veículo.");
+        String placa = jtfPlaca.getText();
+        String Marca = jtfMarca.getText();
+        String modelo = jtfModelo.getText();
+        String Ano = jftfAno.getText();
+
+        if (placa.isEmpty() || Marca.isEmpty() || modelo.isEmpty() || Ano.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Não a nada a ser excluido.");
+        } else if (JOptionPane.showConfirmDialog(null, "Tem certeza de que deseja excluir esse Cadastro ?", "Confirmação", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+            JOptionPane.showMessageDialog(this, "Veiculo apagado com sucesso.");
+
+            VeiculoModel veiculo = new VeiculoModel();
+            veiculo.setId(Integer.parseInt(jtfID.getText()));
+            resetTela();
+            limparCampos();
+        } else if (JOptionPane.CLOSED_OPTION == JOptionPane.CLOSED_OPTION) {
+            JOptionPane.showMessageDialog(this, "Operação cancelada.");
+            limparCampos();
+            resetTela();
         }
-
-        resetTela();
+        carregarTabela();
     }//GEN-LAST:event_jbExcluirActionPerformed
 
     private void jbLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbLimparActionPerformed
@@ -402,24 +357,20 @@ public class VeiculoView extends javax.swing.JInternalFrame {
         Pesquisa p = new Pesquisa();
         String[] opcoesBusca = {"ID", "Placa", "Marca", "Modelo", "Ano", "Status"};
         List<VeiculoModel> lista = p.pesquisaVeiculo(opcoesBusca);
-        
+
         // Se a pesquisa retornar null o usuário pesquisou um valor vazio ou inválido (a mensagem especificando qual o valor inválido é exibida no método pesquisarVeiculo)
         if (lista == null) {
             resetTela();
-        }
-        
-        // Se a pesquisa retornar uma lista com tamanho 0 o usuário não digitou nenhum valor inválido, mas não foi encontrado nenhum veículo no banco
+        } // Se a pesquisa retornar uma lista com tamanho 0 o usuário não digitou nenhum valor inválido, mas não foi encontrado nenhum veículo no banco
         else if (lista.size() == 0) {
             JOptionPane.showMessageDialog(null, "Veículo não encontrado no banco de dados.");
             resetTela();
-        }
-        
-        // Se a pesquisa retornar uma lista de tamanho 1, apenas um veículo foi encontrado na busca e os campos de texto são preenchidos
+        } // Se a pesquisa retornar uma lista de tamanho 1, apenas um veículo foi encontrado na busca e os campos de texto são preenchidos
         else if (lista.size() == 1) {
             JOptionPane.showMessageDialog(this, "1 Veículo encontrado.\nExibindo o resultado nos campos de texto.");
             resetTela();
             VeiculoModel v = lista.get(0);
-           
+
             jtfID.setText(Integer.toString(v.getId()));
             jtfPlaca.setText(v.getPlaca());
             jtfMarca.setText(v.getMarca());
@@ -429,15 +380,13 @@ public class VeiculoView extends javax.swing.JInternalFrame {
             jbEditar.setEnabled(true);
             jbExcluir.setEnabled(true);
             jbLimpar.setEnabled(true);
-        }
-        
-        // Se a pesquisa retornar uma lista de tamanho maior que 1, vários veículos foram encontrados e a tabela é preenchida com os resultados
+        } // Se a pesquisa retornar uma lista de tamanho maior que 1, vários veículos foram encontrados e a tabela é preenchida com os resultados
         else {
             JOptionPane.showMessageDialog(this, lista.size() + " veículos encontrados.\nExibindo os resultados na tabela.");
             resetTela();
             DefaultTableModel model = (DefaultTableModel) jtVeiculos.getModel();
             model.setRowCount(0);
-            
+
             for (VeiculoModel veiculoEncontrado : lista) {
                 model.addRow(new Object[]{
                     veiculoEncontrado.getId(),

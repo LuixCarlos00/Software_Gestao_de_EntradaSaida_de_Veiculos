@@ -188,6 +188,10 @@ public class FuncionarioView extends javax.swing.JInternalFrame {
             }
         });
         jScrollPane1.setViewportView(Tabela_funcionarios);
+        if (Tabela_funcionarios.getColumnModel().getColumnCount() > 0) {
+            Tabela_funcionarios.getColumnModel().getColumn(0).setMinWidth(35);
+            Tabela_funcionarios.getColumnModel().getColumn(0).setMaxWidth(45);
+        }
 
         ID.setText("ID:");
 

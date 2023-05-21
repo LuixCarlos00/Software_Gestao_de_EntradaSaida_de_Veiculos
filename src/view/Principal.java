@@ -3,6 +3,11 @@ package view;
 import controller.UsuarioController;
 import javax.swing.JOptionPane;
 import model.UsuarioModel;
+<<<<<<< Updated upstream
+=======
+import view.RequisicaoView;
+import view.VeiculoView;
+>>>>>>> Stashed changes
 
 public class Principal extends javax.swing.JFrame {
 
@@ -119,6 +124,11 @@ public class Principal extends javax.swing.JFrame {
 
         jmOutros.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/plugin.png"))); // NOI18N
         jmOutros.setText("Outros");
+        jmOutros.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmOutrosActionPerformed(evt);
+            }
+        });
 
         Sobre.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/information.png"))); // NOI18N
         Sobre.setText("Sobre");
@@ -129,7 +139,7 @@ public class Principal extends javax.swing.JFrame {
         });
         jmOutros.add(Sobre);
 
-        jmiLogout.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/status_busy.png"))); // NOI18N
+        jmiLogout.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/status_offline.png"))); // NOI18N
         jmiLogout.setText("Logout");
         jmiLogout.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -224,6 +234,13 @@ public class Principal extends javax.swing.JFrame {
         emp.setVisible(true);
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
+<<<<<<< Updated upstream
+=======
+    private void jmOutrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmOutrosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jmOutrosActionPerformed
+
+>>>>>>> Stashed changes
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">

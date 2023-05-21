@@ -9,6 +9,7 @@ import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import model.UsuarioModel;
+import view.Principal;
 
 public class LoginView extends javax.swing.JFrame {
     UsuarioController usuarioCont = new UsuarioController();
