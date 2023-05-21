@@ -7,20 +7,17 @@ public class UsuarioModel {
     private String senha;
     private String admin;
     private String cpf;
-<<<<<<< Updated upstream
-=======
 
->>>>>>> Stashed changes
+
     public UsuarioModel(int id, String nome, String senha, String admin, String cpf) {
         this.id = id;
         this.nome = nome;
         this.senha = senha;
         this.admin = admin;
-<<<<<<< Updated upstream
+
         this.cpf = cpf;
-=======
-        this.cpf =cpf;
->>>>>>> Stashed changes
+
+ 
     }
     
     public UsuarioModel() {
@@ -28,20 +25,10 @@ public class UsuarioModel {
         nome = "";
         senha = "";
         admin = "N";
-<<<<<<< Updated upstream
-        cpf = "";
-=======
         cpf ="";
->>>>>>> Stashed changes
+
     }
 
-    public String getCpf() {
-        return cpf;
-    }
-
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
-    }
 
     
     

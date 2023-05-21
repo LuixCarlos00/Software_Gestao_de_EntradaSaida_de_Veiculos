@@ -3,11 +3,11 @@ package view;
 import controller.UsuarioController;
 import javax.swing.JOptionPane;
 import model.UsuarioModel;
-<<<<<<< Updated upstream
-=======
+
+
 import view.RequisicaoView;
 import view.VeiculoView;
->>>>>>> Stashed changes
+
 
 public class Principal extends javax.swing.JFrame {
 
@@ -234,13 +234,11 @@ public class Principal extends javax.swing.JFrame {
         emp.setVisible(true);
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
-<<<<<<< Updated upstream
-=======
+
     private void jmOutrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmOutrosActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jmOutrosActionPerformed
 
->>>>>>> Stashed changes
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">

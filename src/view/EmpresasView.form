@@ -1,12 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
 <Form version="1.5" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JInternalFrameFormInfo">
-<<<<<<< Updated upstream
-=======
-  <Properties>
-    <Property name="closable" type="boolean" value="true"/>
-  </Properties>
->>>>>>> Stashed changes
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
   </SyntheticProperties>
@@ -98,12 +92,7 @@
                   </Group>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
-<<<<<<< Updated upstream
               <Component id="jScrollPane1" pref="706" max="32767" attributes="0"/>
-=======
-              <Component id="jScrollPane1" pref="779" max="32767" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
->>>>>>> Stashed changes
           </Group>
       </Group>
     </DimensionLayout>
@@ -215,67 +204,39 @@
                 <Column editable="false" title="ID " type="java.lang.String"/>
                 <Column editable="false" title="Nome da Empresa" type="java.lang.String"/>
                 <Column editable="false" title="CNPJ" type="java.lang.Integer"/>
-<<<<<<< Updated upstream
                 <Column editable="false" title="Fax/Celular" type="java.lang.Integer"/>
-=======
-                <Column editable="false" title="Fax/Celular" type="java.lang.String"/>
->>>>>>> Stashed changes
                 <Column editable="false" title="Endere&#xe7;o" type="java.lang.String"/>
                 <Column editable="true" title="UF" type="java.lang.String"/>
               </Table>
             </Property>
             <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
               <TableColumnModel selectionModel="0">
-<<<<<<< Updated upstream
                 <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-=======
-                <Column maxWidth="45" minWidth="35" prefWidth="-1" resizable="true">
->>>>>>> Stashed changes
                   <Title/>
                   <Editor/>
                   <Renderer/>
                 </Column>
-<<<<<<< Updated upstream
                 <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-=======
-                <Column maxWidth="170" minWidth="170" prefWidth="-1" resizable="true">
->>>>>>> Stashed changes
                   <Title/>
                   <Editor/>
                   <Renderer/>
                 </Column>
-<<<<<<< Updated upstream
                 <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-=======
-                <Column maxWidth="90" minWidth="120" prefWidth="-1" resizable="true">
->>>>>>> Stashed changes
                   <Title/>
                   <Editor/>
                   <Renderer/>
                 </Column>
-<<<<<<< Updated upstream
                 <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-=======
-                <Column maxWidth="120" minWidth="120" prefWidth="-1" resizable="true">
->>>>>>> Stashed changes
                   <Title/>
                   <Editor/>
                   <Renderer/>
                 </Column>
-<<<<<<< Updated upstream
                 <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-=======
-                <Column maxWidth="200" minWidth="200" prefWidth="-1" resizable="true">
->>>>>>> Stashed changes
                   <Title/>
                   <Editor/>
                   <Renderer/>
                 </Column>
-<<<<<<< Updated upstream
                 <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-=======
-                <Column maxWidth="120" minWidth="120" prefWidth="-1" resizable="true">
->>>>>>> Stashed changes
                   <Title/>
                   <Editor/>
                   <Renderer/>

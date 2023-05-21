@@ -113,28 +113,11 @@ public class UsuarioController {
 
     }
 
-<<<<<<< Updated upstream
-=======
-   public boolean verificarCPF(String cpf) {
-        String sql = "SELECT cpf FROM usuarios WHERE cpf = ?";
-        boolean cpfExiste = false;
-        Conexao.conectar();
-        try {
-            PreparedStatement sentenca = Conexao.con.prepareStatement(sql);
-            sentenca.setString(1, cpf);
-            ResultSet resultado = sentenca.executeQuery();
-            cpfExiste = resultado.next();
-        } catch (SQLException e) {
-            System.out.println("Erro ao verificar CPF no banco de dados: " + e.getMessage());
-        }
-        Conexao.desconectar();
-        return cpfExiste;
-    }
-    
+
+  
      
     
-    
->>>>>>> Stashed changes
+
     
     
     
