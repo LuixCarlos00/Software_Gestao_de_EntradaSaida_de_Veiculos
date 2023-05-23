@@ -10,7 +10,10 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.EmpresasModel;
+import model.FuncionarioModel;
 import model.MovimentacaoModel;
+import model.RequisicaoModel;
+import model.VeiculoModel;
 import util.Pesquisa;
 
 /**
@@ -20,11 +23,16 @@ import util.Pesquisa;
 public class RequisicaoView extends javax.swing.JInternalFrame {
     MovimentacaoController controller = new MovimentacaoController();
     MovimentacaoModel  model = new MovimentacaoModel();
+    RequisicaoTM Modelo;
+    
     
     boolean tabelaAtiva = true;
 
     public RequisicaoView() {
         initComponents();
+        
+        Modelo = new RequisicaoTM();
+        TabelaCompras.setModel(Modelo);
     }
 
     @SuppressWarnings("unchecked")
@@ -35,7 +43,7 @@ public class RequisicaoView extends javax.swing.JInternalFrame {
         jbSalvar = new javax.swing.JButton();
         jbEditar = new javax.swing.JButton();
         jbExcluir = new javax.swing.JButton();
-        jbPesquisar = new javax.swing.JButton();
+        jbPesquisarEmpresa = new javax.swing.JButton();
         jbLimpar = new javax.swing.JButton();
         jbCancelar = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
@@ -45,25 +53,30 @@ public class RequisicaoView extends javax.swing.JInternalFrame {
         jlTitulo1 = new javax.swing.JLabel();
         jSeparator5 = new javax.swing.JSeparator();
         textCampoEmpresa = new javax.swing.JTextField();
-        jTextField11 = new javax.swing.JTextField();
+        JtfQuantidade = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jbPesquisar1 = new javax.swing.JButton();
-        jbPesquisar2 = new javax.swing.JButton();
-        textCampoVeiculo = new javax.swing.JTextField();
+        JBPesquisarFuncionario = new javax.swing.JButton();
+        JtfPlaca = new javax.swing.JTextField();
         textCampoFuncionario = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
         jSeparator4 = new javax.swing.JSeparator();
         jScrollPane1 = new javax.swing.JScrollPane();
         TabelaCompras = new javax.swing.JTable();
         jLabel10 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
-        jTextField16 = new javax.swing.JTextField();
-        jTextField17 = new javax.swing.JTextField();
-        jbPesquisar3 = new javax.swing.JButton();
+        JtfItens = new javax.swing.JTextField();
+        JtfValorUnitario = new javax.swing.JTextField();
+        JBPesquisarVeiculo = new javax.swing.JButton();
+        JbExcluir = new javax.swing.JButton();
+        JbAdicionar = new javax.swing.JButton();
+        jSeparator6 = new javax.swing.JSeparator();
+        textCampoVeiculo1 = new javax.swing.JTextField();
+        textData_nascimento = new javax.swing.JFormattedTextField();
 
+        setClosable(true);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jbNovo.setText("Novo");
@@ -81,7 +94,7 @@ public class RequisicaoView extends javax.swing.JInternalFrame {
                 jbSalvarActionPerformed(evt);
             }
         });
-        getContentPane().add(jbSalvar, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 200, 76, -1));
+        getContentPane().add(jbSalvar, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 76, -1));
 
         jbEditar.setText("Editar");
         jbEditar.setMinimumSize(null);
@@ -100,14 +113,14 @@ public class RequisicaoView extends javax.swing.JInternalFrame {
         });
         getContentPane().add(jbExcluir, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 40, 76, -1));
 
-        jbPesquisar.setText("Pesquisar");
-        jbPesquisar.setMaximumSize(new java.awt.Dimension(72, 22));
-        jbPesquisar.addActionListener(new java.awt.event.ActionListener() {
+        jbPesquisarEmpresa.setText("Pesquisar");
+        jbPesquisarEmpresa.setMaximumSize(new java.awt.Dimension(72, 22));
+        jbPesquisarEmpresa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbPesquisarActionPerformed(evt);
+                jbPesquisarEmpresaActionPerformed(evt);
             }
         });
-        getContentPane().add(jbPesquisar, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 80, -1, -1));
+        getContentPane().add(jbPesquisarEmpresa, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 80, -1, -1));
 
         jbLimpar.setText("Limpar");
         jbLimpar.setMinimumSize(null);
@@ -126,17 +139,16 @@ public class RequisicaoView extends javax.swing.JInternalFrame {
                 jbCancelarActionPerformed(evt);
             }
         });
-        getContentPane().add(jbCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 200, 76, -1));
+        getContentPane().add(jbCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 70, 76, -1));
 
         jSeparator1.setForeground(new java.awt.Color(204, 204, 204));
         getContentPane().add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 150, 830, 10));
 
         jLabel2.setText("Nome da Empresa:");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 80, 110, 30));
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 80, 100, 30));
 
         jSeparator2.setForeground(new java.awt.Color(204, 204, 204));
-        jSeparator2.setOrientation(javax.swing.SwingConstants.VERTICAL);
-        getContentPane().add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1000, 0, 70, 620));
+        getContentPane().add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 660, 830, 10));
 
         jSeparator3.setForeground(new java.awt.Color(204, 204, 204));
         getContentPane().add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 0, 830, 20));
@@ -150,21 +162,21 @@ public class RequisicaoView extends javax.swing.JInternalFrame {
 
         jSeparator5.setForeground(new java.awt.Color(204, 204, 204));
         jSeparator5.setOrientation(javax.swing.SwingConstants.VERTICAL);
-        getContentPane().add(jSeparator5, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, -20, 20, 640));
+        getContentPane().add(jSeparator5, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, -40, 20, 700));
         getContentPane().add(textCampoEmpresa, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 80, 210, -1));
 
-        jTextField11.addActionListener(new java.awt.event.ActionListener() {
+        JtfQuantidade.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField11ActionPerformed(evt);
+                JtfQuantidadeActionPerformed(evt);
             }
         });
-        getContentPane().add(jTextField11, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 200, 150, -1));
+        getContentPane().add(JtfQuantidade, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 170, 70, -1));
 
         jLabel1.setText("Nome do Veiculo:");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 120, -1, 20));
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 120, -1, 20));
 
         jLabel5.setText("Nome Funcionario");
-        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 80, -1, 20));
+        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 80, -1, 30));
 
         jbPesquisar1.setText("Pesquisar");
         jbPesquisar1.setMaximumSize(new java.awt.Dimension(72, 22));
@@ -173,17 +185,17 @@ public class RequisicaoView extends javax.swing.JInternalFrame {
                 jbPesquisar1ActionPerformed(evt);
             }
         });
-        getContentPane().add(jbPesquisar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 80, -1, -1));
+        getContentPane().add(jbPesquisar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 110, -1, -1));
 
-        jbPesquisar2.setText("Pesquisar");
-        jbPesquisar2.setMaximumSize(new java.awt.Dimension(72, 22));
-        jbPesquisar2.addActionListener(new java.awt.event.ActionListener() {
+        JBPesquisarFuncionario.setText("Pesquisar");
+        JBPesquisarFuncionario.setMaximumSize(new java.awt.Dimension(72, 22));
+        JBPesquisarFuncionario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbPesquisar2ActionPerformed(evt);
+                JBPesquisarFuncionarioActionPerformed(evt);
             }
         });
-        getContentPane().add(jbPesquisar2, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 80, -1, -1));
-        getContentPane().add(textCampoVeiculo, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 120, 210, -1));
+        getContentPane().add(JBPesquisarFuncionario, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 80, -1, -1));
+        getContentPane().add(JtfPlaca, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 120, 90, -1));
 
         textCampoFuncionario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -195,29 +207,22 @@ public class RequisicaoView extends javax.swing.JInternalFrame {
         jLabel8.setText("Data:");
         getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 120, 30, 30));
 
-        jTextField3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField3ActionPerformed(evt);
-            }
-        });
-        getContentPane().add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 120, 130, -1));
-
         jSeparator4.setForeground(new java.awt.Color(204, 204, 204));
         getContentPane().add(jSeparator4, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 70, 830, 10));
 
         TabelaCompras.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
             },
             new String [] {
-                "Funcionario", "Veiculo", "Empresa", "Data", "Itens", "Quantidade", "Valor Unitario"
+                "Itens", "Quantidade", "Valor Unitario"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, true, true, false, false
+                false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -227,47 +232,68 @@ public class RequisicaoView extends javax.swing.JInternalFrame {
         jScrollPane1.setViewportView(TabelaCompras);
         if (TabelaCompras.getColumnModel().getColumnCount() > 0) {
             TabelaCompras.getColumnModel().getColumn(0).setResizable(false);
-            TabelaCompras.getColumnModel().getColumn(1).setResizable(false);
-            TabelaCompras.getColumnModel().getColumn(2).setResizable(false);
-            TabelaCompras.getColumnModel().getColumn(3).setResizable(false);
-            TabelaCompras.getColumnModel().getColumn(4).setResizable(false);
-            TabelaCompras.getColumnModel().getColumn(5).setResizable(false);
-            TabelaCompras.getColumnModel().getColumn(6).setResizable(false);
+            TabelaCompras.getColumnModel().getColumn(1).setMinWidth(120);
+            TabelaCompras.getColumnModel().getColumn(1).setMaxWidth(120);
+            TabelaCompras.getColumnModel().getColumn(2).setMinWidth(120);
+            TabelaCompras.getColumnModel().getColumn(2).setMaxWidth(120);
         }
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 240, 830, 400));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 210, 800, 440));
 
         jLabel10.setText("Quantidade:");
-        getContentPane().add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 200, -1, 30));
+        getContentPane().add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 170, -1, 30));
 
         jLabel12.setText("Itens:");
-        getContentPane().add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 160, -1, 40));
+        getContentPane().add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 160, -1, 40));
 
         jLabel13.setText("Valor Unitario:");
-        getContentPane().add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 160, -1, 30));
+        getContentPane().add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 170, -1, 30));
 
-        jTextField16.addActionListener(new java.awt.event.ActionListener() {
+        JtfItens.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField16ActionPerformed(evt);
+                JtfItensActionPerformed(evt);
             }
         });
-        getContentPane().add(jTextField16, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 160, 240, -1));
+        getContentPane().add(JtfItens, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 170, 240, -1));
 
-        jTextField17.addActionListener(new java.awt.event.ActionListener() {
+        JtfValorUnitario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField17ActionPerformed(evt);
+                JtfValorUnitarioActionPerformed(evt);
             }
         });
-        getContentPane().add(jTextField17, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 160, 160, -1));
+        getContentPane().add(JtfValorUnitario, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 170, 80, -1));
 
-        jbPesquisar3.setText("Pesquisar");
-        jbPesquisar3.setMaximumSize(new java.awt.Dimension(72, 22));
-        jbPesquisar3.addActionListener(new java.awt.event.ActionListener() {
+        JBPesquisarVeiculo.setText("Pesquisar");
+        JBPesquisarVeiculo.setMaximumSize(new java.awt.Dimension(72, 22));
+        JBPesquisarVeiculo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbPesquisar3ActionPerformed(evt);
+                JBPesquisarVeiculoActionPerformed(evt);
             }
         });
-        getContentPane().add(jbPesquisar3, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 120, -1, -1));
+        getContentPane().add(JBPesquisarVeiculo, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 120, -1, -1));
+
+        JbExcluir.setText("Excluir");
+        getContentPane().add(JbExcluir, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 170, -1, -1));
+
+        JbAdicionar.setText("Adicionar ");
+        JbAdicionar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JbAdicionarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(JbAdicionar, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 170, -1, -1));
+
+        jSeparator6.setForeground(new java.awt.Color(204, 204, 204));
+        jSeparator6.setOrientation(javax.swing.SwingConstants.VERTICAL);
+        getContentPane().add(jSeparator6, new org.netbeans.lib.awtextra.AbsoluteConstraints(1000, 0, -1, 660));
+        getContentPane().add(textCampoVeiculo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 120, 90, -1));
+
+        try {
+            textData_nascimento.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        getContentPane().add(textData_nascimento, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 120, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -275,7 +301,7 @@ public class RequisicaoView extends javax.swing.JInternalFrame {
     private void limparCampos() {
         textCampoEmpresa.setText("");
         textCampoFuncionario.setText("");
-        textCampoVeiculo.setText("");
+        JtfPlaca.setText("");
     }
 
     public void ativarEdicao() {
@@ -284,7 +310,7 @@ public class RequisicaoView extends javax.swing.JInternalFrame {
         jbEditar.setEnabled(false);
         jbExcluir.setEnabled(false);
         jbLimpar.setEnabled(false);
-        jbPesquisar.setEnabled(false);
+        jbPesquisarEmpresa.setEnabled(false);
 
         //Habilita o botão Salvar e Cancelar e os campos de texto
         jbSalvar.setEnabled(true);
@@ -292,7 +318,7 @@ public class RequisicaoView extends javax.swing.JInternalFrame {
 
         textCampoEmpresa.setEditable(true);
         textCampoFuncionario.setEditable(true);
-        textCampoVeiculo.setEditable(true);
+        JtfPlaca.setEditable(true);
 
         //Desativa a flag do evento de clique da tabela
         tabelaAtiva = false;
@@ -304,7 +330,7 @@ public class RequisicaoView extends javax.swing.JInternalFrame {
         //Ativa os botões Novo, Limpar e Pesquisar
         jbNovo.setEnabled(true);
         jbLimpar.setEnabled(true);
-        jbPesquisar.setEnabled(true);
+        jbPesquisarEmpresa.setEnabled(true);
 
         //Desativa os outros botões e campos de texto
         jbEditar.setEnabled(false);
@@ -314,7 +340,7 @@ public class RequisicaoView extends javax.swing.JInternalFrame {
 
         textCampoEmpresa.setEditable(false);
         textCampoFuncionario.setEditable(false);
-        textCampoVeiculo.setEditable(false);
+        JtfPlaca.setEditable(false);
 
         //Recarrega a tabela, limpa os campos e ativa a flag do evento de clique da tabela
        //l carregarTabela();
@@ -435,90 +461,118 @@ public class RequisicaoView extends javax.swing.JInternalFrame {
         //  resetTela();
     }//GEN-LAST:event_jbLimparActionPerformed
 
-    private void jbPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbPesquisarActionPerformed
+    private void jbPesquisarEmpresaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbPesquisarEmpresaActionPerformed
 
-        Pesquisa p = new Pesquisa();
-        String[] opcoesBusca = {"ID", "CNPJ", "Nome", "UF"};
+       Pesquisa p = new Pesquisa();
+        String[] opcoesBusca = {"ID","CNPJ"};
         List<EmpresasModel> lista = p.pesquisaEmpresas(opcoesBusca);
-
-        // Se a pesquisa retornar null o usuário pesquisou um valor vazio ou inválido (a mensagem especificando qual o valor inválido é exibida no método pesquisarFuncionario)
+        
         if (lista == null) {
-            resetTela();
-        } // Se a pesquisa retornar uma lista com tamanho 0 o usuário não digitou nenhum valor inválido, mas não foi encontrado nenhum funcionário no banco
-        else if (lista.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Funcionário não encontrado no banco de dados.");
-            resetTela();
-        } // Se a pesquisa retornar uma lista de tamanho 1, apenas um funcionário foi encontrado na busca e os campos de texto são preenchidos
-        else if (lista.size() == 1) {
-            JOptionPane.showMessageDialog(this, "1 funcionário encontrado.\nExibindo o resultado nos campos de texto.");
-            resetTela();
-            EmpresasModel empresa = lista.get(0);
-
-//            textID.setText(Integer.toString(empresa.getId()));
-//            textNomeEmpresa.setText(empresa.getNomeEmpresa());
-//            textCnpj.setText(empresa.getCnpj());
-//            textFax.setText(empresa.getFax());
-//            textEndereco.setText(empresa.getEndereco());
-//            textUf.setSelectedItem(empresa.getUf());
-
-            jbEditar.setEnabled(true);
-            jbExcluir.setEnabled(true);
-            jbLimpar.setEnabled(true);
-        } // Se a pesquisa retornar uma lista de tamanho maior que 1, vários funcionários foram encontrados e a tabela é preenchida com os resultados
-        else {
-            JOptionPane.showMessageDialog(this, lista.size() + " funcionários encontrados.\nExibindo os resultados na tabela.");
-            resetTela();
-            DefaultTableModel model = (DefaultTableModel) TabelaCompras.getModel();
-            model.setRowCount(0);
-
-            for (EmpresasModel EmpresaEncontrada : lista) {
-                model.addRow(new Object[]{
-                    EmpresaEncontrada.getId(),
-                    EmpresaEncontrada.getNomeEmpresa(),
-                    EmpresaEncontrada.getCnpj(),
-                    EmpresaEncontrada.getFax(),
-                    EmpresaEncontrada.getEndereco(),
-                    EmpresaEncontrada.getUf()
-                });
-            }
-
+            textCampoEmpresa.setText("");
         }
-    }//GEN-LAST:event_jbPesquisarActionPerformed
+        
+        else if (lista.size() == 0) {
+            JOptionPane.showMessageDialog(null, "Empresa não encontrado no banco de dados.");
+            textCampoEmpresa.setText("");
+        }
+        
+        else if (lista.size() == 1) {
+            EmpresasModel v = lista.get(0);
+            JOptionPane.showMessageDialog(this, "Empresa Encontrada: \n" +"Nome: "+ v.getNomeEmpresa()+ "\n" +"Cnpj: "+v.getCnpj()+ "\n" +"Endereço: "+ v.getEndereco()+"," + v.getUf()+"\n"+ "Fax/Celular: "+v.getFax());
+            textCampoEmpresa.setText(v.getNomeEmpresa());
+        }
+    }//GEN-LAST:event_jbPesquisarEmpresaActionPerformed
 
-    private void jTextField11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField11ActionPerformed
+    private void JtfQuantidadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JtfQuantidadeActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField11ActionPerformed
+    }//GEN-LAST:event_JtfQuantidadeActionPerformed
 
     private void jbPesquisar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbPesquisar1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jbPesquisar1ActionPerformed
 
-    private void jbPesquisar2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbPesquisar2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jbPesquisar2ActionPerformed
+    private void JBPesquisarFuncionarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBPesquisarFuncionarioActionPerformed
+        Pesquisa p = new Pesquisa();
+        String[] opcoesBusca = {"ID","CPF"};
+        List<FuncionarioModel> lista = p.pesquisaFuncionario(opcoesBusca);
+        
+        if (lista == null) {
+           textCampoFuncionario.setText("");
+        }
+        
+        else if (lista.size() == 0) {
+            JOptionPane.showMessageDialog(null, "Funcionario não encontrado no banco de dados.");
+            textCampoFuncionario.setText("");
+        }
+        
+        else if (lista.size() == 1) {
+            FuncionarioModel v = lista.get(0);
+            JOptionPane.showMessageDialog(this, "Funcionario  encontrado: \n" + "Nome: "+v.getNome()+ "\n" +"CPF: " +v.getCPF() +"\n"+"Setor: "+ v.getSetor()+ "\n" +"Data Nacimento: "+ v.getData_nascimento()+ " ");
+            textCampoFuncionario.setText(v.getNome());
+        }
+    }//GEN-LAST:event_JBPesquisarFuncionarioActionPerformed
 
-    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
+    private void JtfItensActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JtfItensActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField3ActionPerformed
+    }//GEN-LAST:event_JtfItensActionPerformed
 
-    private void jTextField16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField16ActionPerformed
+    private void JtfValorUnitarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JtfValorUnitarioActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField16ActionPerformed
+    }//GEN-LAST:event_JtfValorUnitarioActionPerformed
 
-    private void jTextField17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField17ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField17ActionPerformed
-
-    private void jbPesquisar3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbPesquisar3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jbPesquisar3ActionPerformed
+    private void JBPesquisarVeiculoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBPesquisarVeiculoActionPerformed
+       Pesquisa p = new Pesquisa();
+        String[] opcoesBusca = {"ID", "Placa"};
+        List<VeiculoModel> lista = p.pesquisaVeiculo(opcoesBusca);
+        
+        if (lista == null) {
+            JtfPlaca.setText("");
+        }
+        
+        else if (lista.size() == 0) {
+            JOptionPane.showMessageDialog(null, "Veículo não encontrado no banco de dados.");
+            JtfPlaca.setText("");
+        }
+        
+        else if (lista.size() == 1) {
+            VeiculoModel v = lista.get(0);
+            JOptionPane.showMessageDialog(this, "Veículo encontrado: \n" + "Modelo: "+v.getModelo()+ "\n" +"Marca: "+ v.getMarca() +"\n"+"Placa: "+v.getPlaca()+ "\n" +"Ano: "+ v.getAno() + " ");
+            textCampoVeiculo1.setText(v.getModelo());
+            JtfPlaca.setText(v.getPlaca());
+        }
+    }//GEN-LAST:event_JBPesquisarVeiculoActionPerformed
 
     private void textCampoFuncionarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textCampoFuncionarioActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_textCampoFuncionarioActionPerformed
 
+    private void JbAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JbAdicionarActionPerformed
+       RequisicaoModel R = new RequisicaoModel();
+       R.setItens(JtfItens.getText());
+       R.setQuantidade(Float.parseFloat(JtfQuantidade.getText()));
+       R.setValorUnitario(Float.parseFloat(JtfValorUnitario.getText()));
+       Modelo.addCompras(R);
+       LimparCampos();
+       JtfItens.requestFocus();
+       
+    }//GEN-LAST:event_JbAdicionarActionPerformed
 
+    
+    public void LimparCampos(){
+    JtfItens.setText("");
+    JtfQuantidade.setText("");
+    JtfValorUnitario.setText("");
+            }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton JBPesquisarFuncionario;
+    private javax.swing.JButton JBPesquisarVeiculo;
+    private javax.swing.JButton JbAdicionar;
+    private javax.swing.JButton JbExcluir;
+    private javax.swing.JTextField JtfItens;
+    private javax.swing.JTextField JtfPlaca;
+    private javax.swing.JTextField JtfQuantidade;
+    private javax.swing.JTextField JtfValorUnitario;
     private javax.swing.JTable TabelaCompras;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -533,23 +587,19 @@ public class RequisicaoView extends javax.swing.JInternalFrame {
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator4;
     private javax.swing.JSeparator jSeparator5;
-    private javax.swing.JTextField jTextField11;
-    private javax.swing.JTextField jTextField16;
-    private javax.swing.JTextField jTextField17;
-    private javax.swing.JTextField jTextField3;
+    private javax.swing.JSeparator jSeparator6;
     private javax.swing.JButton jbCancelar;
     private javax.swing.JButton jbEditar;
     private javax.swing.JButton jbExcluir;
     private javax.swing.JButton jbLimpar;
     private javax.swing.JButton jbNovo;
-    private javax.swing.JButton jbPesquisar;
     private javax.swing.JButton jbPesquisar1;
-    private javax.swing.JButton jbPesquisar2;
-    private javax.swing.JButton jbPesquisar3;
+    private javax.swing.JButton jbPesquisarEmpresa;
     private javax.swing.JButton jbSalvar;
     private javax.swing.JLabel jlTitulo1;
     private javax.swing.JTextField textCampoEmpresa;
     private javax.swing.JTextField textCampoFuncionario;
-    private javax.swing.JTextField textCampoVeiculo;
+    private javax.swing.JTextField textCampoVeiculo1;
+    private javax.swing.JFormattedTextField textData_nascimento;
     // End of variables declaration//GEN-END:variables
 }

@@ -10,29 +10,22 @@ package model;
  */
 public class RequisicaoModel {
     
-     
-    private int ID;
+
     private String Itens;
-    private int Quantidade;
+    private float Quantidade;
     private float ValorUnitario;
 
-    public RequisicaoModel(int ID, String Itens, int Quantidade, float ValorUnitario) {
-        this.ID = ID;
+    public RequisicaoModel( String Itens, int Quantidade, float ValorUnitario) {
+    
         this.Itens = Itens;
         this.Quantidade = Quantidade;
         this.ValorUnitario = ValorUnitario;
     }
 
-    public RequisicaoModel() {
+    public RequisicaoModel() {    
     }
 
-    public int getID() {
-        return ID;
-    }
-
-    public void setID(int ID) {
-        this.ID = ID;
-    }
+    
 
     public String getItens() {
         return Itens;
@@ -42,13 +35,15 @@ public class RequisicaoModel {
         this.Itens = Itens;
     }
 
-    public int getQuantidade() {
+    public float getQuantidade() {
         return Quantidade;
     }
 
-    public void setQuantidade(int Quantidade) {
+    public void setQuantidade(float Quantidade) {
         this.Quantidade = Quantidade;
     }
+
+   
 
     public float getValorUnitario() {
         return ValorUnitario;

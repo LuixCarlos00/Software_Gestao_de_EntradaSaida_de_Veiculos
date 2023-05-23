@@ -100,7 +100,7 @@ public class RequisicaoTM extends AbstractTableModel{
         
       
         f.setItens(aValue.getItens());
-        f.setQuantidade(Integer.valueOf(aValue.getQuantidade()));
+        f.setQuantidade(Float.parseFloat(aValue.toString()));
         f.setValorUnitario(Float.parseFloat(aValue.toString()));
   
         fireTableCellUpdated(rowIndex, 0);

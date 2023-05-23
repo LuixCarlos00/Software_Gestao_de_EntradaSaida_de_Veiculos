@@ -126,20 +126,12 @@ public class EmpresasController {
 
             if (resultado.next()) {
                 idencontrado = new EmpresasModel();
-
-                sentenca.setString(1, empresa.getNomeEmpresa());
-                sentenca.setString(2, empresa.getCnpj());
-                sentenca.setString(3, empresa.getFax());
-                sentenca.setString(4, empresa.getEndereco());
-                sentenca.setString(5, empresa.getUf());
-
                 idencontrado.setId(resultado.getInt("id"));
                 idencontrado.setNomeEmpresa(resultado.getString("nome"));
                 idencontrado.setCnpj(resultado.getString("cnpj"));
                 idencontrado.setFax(resultado.getString("fax"));
                 idencontrado.setEndereco(resultado.getString("endereco"));
                 idencontrado.setUf(resultado.getString("uf"));
-
             }
 
         } catch (SQLException e) {

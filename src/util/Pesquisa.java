@@ -14,13 +14,13 @@ import model.EmpresasModel;
 
 import util.JOptionPaneCustom;
 
-
 public class Pesquisa {
-
+ 
     public List<FuncionarioModel> pesquisaFuncionario(String[] opcoesBusca) {
         FuncionarioController funcionarioController = new FuncionarioController();
         FuncionarioModel funcionario = new FuncionarioModel();
-
+        
+      
         int escolha = JOptionPane.showOptionDialog(null, "Escolha o tipo de pesquisa:", "Pesquisa de Funcionários",
                 JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, opcoesBusca, opcoesBusca[0]);
 
@@ -262,9 +262,7 @@ public class Pesquisa {
 
             switch (opcaoBusca) {
                 case "ID": {
-
-                    String idBusca = JOptionPaneCustom.showInputDialog("Digite o ID da Empresa (número inteiro positivo):", "Pesquisa por ID").trim();
-
+                    String idBusca = JOptionPaneCustom.showInputDialog("Digite o ID do veículo (número inteiro positivo):", "Pesquisa por ID").trim();
                     if (idBusca == null || idBusca.isEmpty()) {
                         JOptionPane.showMessageDialog(null, "Operação Cancelada");
                     } else {
@@ -273,13 +271,11 @@ public class Pesquisa {
 
                             if (idBusca.length() > 0 && id > 0) {
                                 Model.setId(id);
-
                                 EmpresasModel empresasModel = controller.selecionarID(Model);
 
                                 List<EmpresasModel> lista = new ArrayList<>();;
                                 if (empresasModel != null) {
                                     lista.add(empresasModel);
-
                                 }
                                 return lista;
                             } else {

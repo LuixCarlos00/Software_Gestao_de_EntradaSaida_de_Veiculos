@@ -107,6 +107,8 @@ public class EmpresasView extends javax.swing.JInternalFrame {
         jLabel5 = new javax.swing.JLabel();
         textFax = new javax.swing.JTextField();
 
+        setClosable(true);
+
         textUf.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Acre (AC)", "Alagoas (AL)", "Amapá (AP)", "Amazonas (AM)", "Bahia (BA)", "Ceará (CE)", "Distrito Federal (DF)", "Espírito Santo (ES)", "Goiás (GO)", "Maranhão (MA)", "Mato Grosso (MT)", "Mato Grosso do Sul (MS)", "Minas Gerais (MG)", "Pará (PA)", "Paraíba (PB)", "Paraná (PR)", "Pernambuco (PE)", "Piauí (PI)", "Rio de Janeiro (RJ)", "Rio Grande do Norte (RN)", "Rio Grande do Sul (RS)", "Rondônia (RO)", "Roraima (RR)", "Santa Catarina (SC)", "São Paulo (SP)", "Sergipe (SE)", "Tocantins (TO)" }));
 
         Tabela_Empresa.setModel(new javax.swing.table.DefaultTableModel(
@@ -138,6 +140,10 @@ public class EmpresasView extends javax.swing.JInternalFrame {
             }
         });
         jScrollPane1.setViewportView(Tabela_Empresa);
+        if (Tabela_Empresa.getColumnModel().getColumnCount() > 0) {
+            Tabela_Empresa.getColumnModel().getColumn(0).setMinWidth(35);
+            Tabela_Empresa.getColumnModel().getColumn(0).setMaxWidth(45);
+        }
 
         jbNovo.setText("Novo");
         jbNovo.addActionListener(new java.awt.event.ActionListener() {
