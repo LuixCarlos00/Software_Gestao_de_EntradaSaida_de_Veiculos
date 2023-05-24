@@ -11,10 +11,16 @@ package model;
 public class RequisicaoModel {
     
 
+    private  int id;
     private String Itens;
     private float Quantidade;
     private float ValorUnitario;
-
+    private String Empresa;
+    private String Veiculo;
+    private String Funcionario;
+    private String Placaveiculo; 
+    private String data;
+    
     public RequisicaoModel( String Itens, int Quantidade, float ValorUnitario) {
     
         this.Itens = Itens;
@@ -24,6 +30,56 @@ public class RequisicaoModel {
 
     public RequisicaoModel() {    
     }
+
+    
+    
+    public String getdata() {
+        return data;
+    }
+
+    public void setDate(String data) {
+        this.data = data;
+    }
+    
+    public String getPlacaveiculo() {
+        return Placaveiculo;
+    }
+
+    public void setPlacaveiculo(String Placaveiculo) {
+        this.Placaveiculo = Placaveiculo;
+    }
+
+    
+    public String getEmpresa() {
+        return Empresa;
+    }
+
+    public void setEmpresa(String Empresa) {
+        this.Empresa = Empresa;
+    }
+
+    public String getVeiculo() {
+        return Veiculo;
+    }
+
+    public void setVeiculo(String Veiculo) {
+        this.Veiculo = Veiculo;
+    }
+
+    public String getFuncionario() {
+        return Funcionario;
+    }
+
+    public void setFuncionario(String Funcionario) {
+        this.Funcionario = Funcionario;
+    }
+
+    
+    
+    
+    
+    
+    
 
     
 

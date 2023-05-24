@@ -13,36 +13,34 @@ import model.RequisicaoModel;
  *
  * @author luixc
  */
-public class RequisicaoTM extends AbstractTableModel{
+public class RequisicaoTM extends AbstractTableModel {
 
-    private List<RequisicaoModel> linhas ;
-    private String[] colunas = new String[]{"Itens","Quantidade","Valor Unitario"};
-            
-     
-    
+    private List<RequisicaoModel> linhas;
+    private String[] colunas = new String[]{"Itens", "Quantidade", "Valor Unitario", "Empresa", "Funcionario", "Placa Veiculo", "Veiculo", "Data"};
+
     public RequisicaoTM() {
         linhas = new ArrayList<RequisicaoModel>();
     }
-    
+
     public RequisicaoTM(List<RequisicaoModel> lista) {
         linhas = new ArrayList<RequisicaoModel>(lista);
     }
-    
+
     @Override
-    public int getColumnCount() {        
+    public int getColumnCount() {
         return colunas.length;
     }
-    
+
     @Override
     public int getRowCount() {
         return linhas.size();
     }
-    
+
     @Override
     public String getColumnName(int columnIndex) {
         return colunas[columnIndex];
     }
-    
+
     @Override
     public Class<?> getColumnClass(int columnIndex) {
         /*
@@ -52,34 +50,44 @@ public class RequisicaoTM extends AbstractTableModel{
             default:
                 return String.class;
         }
-        */
+         */
         return String.class;
     }
-    
+
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         RequisicaoModel f = linhas.get(rowIndex);
 
         switch (columnIndex) {
-           
+
             case 0:
                 return f.getItens();
             case 1:
                 return f.getQuantidade();
             case 2:
                 return f.getValorUnitario();
+            case 3:
+                return f.getEmpresa();
+            case 4:
+                return f.getFuncionario();
+            case 5:
+                return f.getVeiculo();
+            case 6:
+                return f.getPlacaveiculo();
+            case 7:
+                return f.getdata();
             default:
                 throw new IndexOutOfBoundsException("columnIndex out of bounds");
         }
     }
-    
+
     @Override
     //modifica na linha e coluna especificada
     public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
         RequisicaoModel f = linhas.get(rowIndex); // Carrega o item da linha que deve ser modificado
 
         switch (columnIndex) { // Seta o valor do campo respectivo
-            
+
             case 0:
                 f.setItens(aValue.toString());
                 break;
@@ -88,43 +96,68 @@ public class RequisicaoTM extends AbstractTableModel{
             case 2:
                 f.setValorUnitario(Float.parseFloat(aValue.toString()));
                 break;
+            case 3:
+                f.setEmpresa(aValue.toString());
+                break;
+            case 4:
+                f.setFuncionario(aValue.toString());
+                break;
+            case 5:
+                f.setVeiculo(aValue.toString());
+                break;
+            case 6:
+                f.setPlacaveiculo(aValue.toString());
+                break;
+            case 7:
+                f.setDate(aValue.toString());
+                break;
             default:
-                // Isto não deveria acontecer...             
+            // Isto não deveria acontecer...             
         }
         fireTableCellUpdated(rowIndex, columnIndex);
-     }
-    
+    }
+
     //modifica na linha especificada
     public void setValueAt(RequisicaoModel aValue, int rowIndex) {
         RequisicaoModel f = linhas.get(rowIndex); // Carrega o item da linha que deve ser modificado
-        
-      
+
         f.setItens(aValue.getItens());
         f.setQuantidade(Float.parseFloat(aValue.toString()));
         f.setValorUnitario(Float.parseFloat(aValue.toString()));
-  
+        f.setEmpresa(aValue.getEmpresa());
+        f.setFuncionario(aValue.getFuncionario());
+        f.setVeiculo(aValue.getVeiculo());
+        f.setPlacaveiculo(aValue.getPlacaveiculo());
+        f.setDate(aValue.getdata());
+        
         fireTableCellUpdated(rowIndex, 0);
         fireTableCellUpdated(rowIndex, 1);
         fireTableCellUpdated(rowIndex, 2);
+        fireTableCellUpdated(rowIndex, 3);
+        fireTableCellUpdated(rowIndex, 4);
+        fireTableCellUpdated(rowIndex, 5);
+        fireTableCellUpdated(rowIndex, 6);
+        fireTableCellUpdated(rowIndex, 7);
+
     }
-    
+
     @Override
     public boolean isCellEditable(int rowIndex, int columnIndex) {
         return false;
     }
-    
+
     public RequisicaoModel getCompras(int indiceLinha) {
         return linhas.get(indiceLinha);
     }
-    
+
     public void addCompras(RequisicaoModel f) {
         // Adiciona o registro.
         linhas.add(f);
         int ultimoIndice = getRowCount() - 1;
         fireTableRowsInserted(ultimoIndice, ultimoIndice);
     }
-    
-     /* Remove a linha especificada. */
+
+    /* Remove a linha especificada. */
     public void remove(int indiceLinha) {
         linhas.remove(indiceLinha);
         fireTableRowsDeleted(indiceLinha, indiceLinha);
@@ -149,8 +182,6 @@ public class RequisicaoTM extends AbstractTableModel{
     /* Verifica se este table model esta vazio. */
     public boolean isEmpty() {
         return linhas.isEmpty();
-    }   
-   
-}
-    
+    }
 
+}
