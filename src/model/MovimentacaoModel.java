@@ -12,9 +12,9 @@ public class MovimentacaoModel {
     private String data;
     private String hora;
     private String destino;
-    private float quilometragem;
+    private int quilometragem;
 
-    public MovimentacaoModel(int id, String tipo, int idVeiculo, int idFuncionario, String data, String hora, String destino, float quilometragem) {
+    public MovimentacaoModel(int id, String tipo, int idVeiculo, int idFuncionario, String data, String hora, String destino, int quilometragem) {
         this.id = id;
         this.tipo = tipo;
         this.idVeiculo = idVeiculo;
@@ -93,11 +93,11 @@ public class MovimentacaoModel {
         this.destino = destino;
     }
 
-    public float getQuilometragem() {
+    public int getQuilometragem() {
         return quilometragem;
     }
 
-    public void setQuilometragem(float quilometragem) {
+    public void setQuilometragem(int quilometragem) {
         this.quilometragem = quilometragem;
     }
     

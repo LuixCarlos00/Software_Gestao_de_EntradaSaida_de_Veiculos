@@ -14,7 +14,7 @@ import util.Conexao;
 public class MovimentacaoController {
     
     public boolean inserir(MovimentacaoModel movimentacao) {
-        String sql = "INSERT INTO movimentacoes (tipo,id_veiculo,id_funcionario,data,hora,destino,quilometragem) VALUES (?,?,?,?,?,?);";
+        String sql = "INSERT INTO movimentacoes (tipo,id_veiculo,id_funcionario,data,hora,destino,quilometragem) VALUES (?,?,?,?,?,?,?);";
         boolean retorno = false;
         Conexao.conectar();
         
@@ -58,7 +58,7 @@ public class MovimentacaoController {
                 modeloEncontrado.setData(resultado.getString("data"));
                 modeloEncontrado.setHora(resultado.getString("hora"));
                 modeloEncontrado.setDestino(resultado.getString("destino"));
-                modeloEncontrado.setQuilometragem(resultado.getFloat("quilometragem"));
+                modeloEncontrado.setQuilometragem(resultado.getInt("quilometragem"));
             }
             
         }
@@ -72,18 +72,17 @@ public class MovimentacaoController {
     }
  
     public boolean editar(MovimentacaoModel movimentacao) {
-        String sql = "UPDATE movimentacoes SET id_veiculo = ?, id_funcionario = ?, data = ?, hora = ?, destino = ?, quilometragem = ? WHERE id = ?;";
+        String sql = "UPDATE movimentacoes SET data = ?, hora = ?, destino = ?, quilometragem = ? WHERE id = ?;";
         boolean retorno = false;
         Conexao.conectar();
         
          try{
             PreparedStatement sentenca = Conexao.con.prepareStatement(sql);
-            sentenca.setInt(1, movimentacao.getIdVeiculo());
-            sentenca.setInt(2, movimentacao.getIdFuncionario());
-            sentenca.setString(3, movimentacao.getData());
-            sentenca.setString(4, movimentacao.getHora());
-            sentenca.setString(5, movimentacao.getDestino());
-            sentenca.setFloat(6, movimentacao.getQuilometragem());
+            sentenca.setString(1, movimentacao.getData());
+            sentenca.setString(2, movimentacao.getHora());
+            sentenca.setString(3, movimentacao.getDestino());
+            sentenca.setInt(4, movimentacao.getQuilometragem());
+            sentenca.setInt(5, movimentacao.getId());
             
             if (!sentenca.execute())
                 retorno = true;
@@ -135,7 +134,7 @@ public class MovimentacaoController {
                 modelo.setData(resultado.getString("data"));
                 modelo.setHora(resultado.getString("hora"));
                 modelo.setDestino(resultado.getString("destino"));
-                modelo.setQuilometragem(resultado.getFloat("quilometragem"));
+                modelo.setQuilometragem(resultado.getInt("quilometragem"));
                 movimentacoes.add(modelo);
             }
         }

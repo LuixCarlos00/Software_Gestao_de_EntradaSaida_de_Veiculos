@@ -308,4 +308,26 @@ public class VeiculoController {
         return veiculos_encontrados;
     }
 
+     public boolean atualizarStatus(VeiculoModel veiculo) {
+        String sql = "UPDATE veiculos SET status = ? WHERE id = ?;";
+        boolean retorno = false;
+        Conexao.conectar();
+
+        try {
+            PreparedStatement sentenca = Conexao.con.prepareStatement(sql);
+            if ("DISPONIVEL".equals(veiculo.getStatus()))
+                sentenca.setString(1, "OCUPADO");
+            else sentenca.setString(1, "DISPONIVEL");
+            sentenca.setInt(2, veiculo.getId());
+            if (!sentenca.execute()) {
+                retorno = true;
+            }
+        } catch (SQLException e) {
+            System.out.println("Erro ao atualizar status do veículo.\n" + e.getMessage());
+        }
+
+        Conexao.desconectar();
+        return retorno;
+    }
+     
 }

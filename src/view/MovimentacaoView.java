@@ -1,6 +1,7 @@
 package view;
 
 import controller.MovimentacaoController;
+import controller.VeiculoController;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -21,13 +22,18 @@ public class MovimentacaoView extends javax.swing.JInternalFrame {
         jtfId.setEditable(false);
         jtfIdVeiculo.setEditable(false);
         jtfIdFuncionario.setEditable(false);
+        jtfTipoMov.setEditable(false);
     }
 
     private void limparCampos(){
+        jtfId.setText("");
+        jtfIdVeiculo.setText("");
+        jtfIdFuncionario.setText("");
+        jtfTipoMov.setText("");
         jftfData.setText("");
         jftfHora.setText("");
         jtfDestino.setText("");
-        jtfQuilometragem.setText("");
+        jftfQuilometragem.setText("");
     }
     
     public void carregarTabela() {
@@ -64,11 +70,10 @@ public class MovimentacaoView extends javax.swing.JInternalFrame {
         jbPesquisarVeiculo.setEnabled(false);
         jbPesquisarFuncionario.setEnabled(false);
         
-        jcbTipoMov.setEnabled(false);
         jftfData.setEditable(false);
         jftfHora.setEditable(false);
         jtfDestino.setEditable(false);
-        jtfQuilometragem.setEditable(false);
+        jftfQuilometragem.setEditable(false);
                 
         //Recarrega a tabela, limpa os campos e ativa a flag do evento de clique da tabela
         carregarTabela();
@@ -88,16 +93,24 @@ public class MovimentacaoView extends javax.swing.JInternalFrame {
         jbCancelar.setEnabled(true);
         jbPesquisarVeiculo.setEnabled(true);
         jbPesquisarFuncionario.setEnabled(true);
-        jcbTipoMov.setEnabled(true);
         jftfData.setEditable(true);
         jftfHora.setEditable(true);
         jtfDestino.setEditable(true);
-        jtfQuilometragem.setEditable(true);
+        jftfQuilometragem.setEditable(true);
         
         //Altera o status da flag que ativa o evento de clique na tabela para false
         tabelaAtiva = false;
     }
     
+    public VeiculoModel getVeiculo() {
+        VeiculoController veiculoController = new VeiculoController();
+        VeiculoModel veiculoPesquisado = new VeiculoModel();
+        
+        veiculoPesquisado.setId(Integer.parseInt(jtfIdVeiculo.getText()));
+        VeiculoModel veiculoEncontrado = veiculoController.selecionar(veiculoPesquisado);
+        return veiculoEncontrado;
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -110,7 +123,6 @@ public class MovimentacaoView extends javax.swing.JInternalFrame {
         jlId = new javax.swing.JLabel();
         jtfId = new javax.swing.JTextField();
         jlTipoMov = new javax.swing.JLabel();
-        jcbTipoMov = new javax.swing.JComboBox<>();
         jlVeiculo = new javax.swing.JLabel();
         jlFuncionario = new javax.swing.JLabel();
         jlData = new javax.swing.JLabel();
@@ -130,10 +142,11 @@ public class MovimentacaoView extends javax.swing.JInternalFrame {
         jtMovimentacoes = new javax.swing.JTable();
         jbPesquisarVeiculo = new javax.swing.JButton();
         jlQuilometragem = new javax.swing.JLabel();
-        jtfQuilometragem = new javax.swing.JTextField();
         jtfIdVeiculo = new javax.swing.JTextField();
         jtfIdFuncionario = new javax.swing.JTextField();
         jbPesquisarFuncionario = new javax.swing.JButton();
+        jtfTipoMov = new javax.swing.JTextField();
+        jftfQuilometragem = new javax.swing.JFormattedTextField();
 
         setClosable(true);
         setTitle("Entrada e Saída de Veículos");
@@ -141,8 +154,6 @@ public class MovimentacaoView extends javax.swing.JInternalFrame {
         jlId.setText("ID:");
 
         jlTipoMov.setText("Tipo de Movimentação:");
-
-        jcbTipoMov.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Entrada", "Saída" }));
 
         jlVeiculo.setText("Veículo:");
 
@@ -217,20 +228,20 @@ public class MovimentacaoView extends javax.swing.JInternalFrame {
 
         jtMovimentacoes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "ID", "Tipo Mov.", "Veículo", "Funcionário", "Data", "Hora", "Destino"
+                "ID", "Tipo Mov.", "Veículo", "Funcionário", "Data", "Hora", "Destino", "KM"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -264,6 +275,9 @@ public class MovimentacaoView extends javax.swing.JInternalFrame {
             }
         });
 
+        jftfQuilometragem.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
+        jftfQuilometragem.setText("");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -271,7 +285,6 @@ public class MovimentacaoView extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jcbTipoMov, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jtfDestino)
                     .addComponent(jtfId, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jlData, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -284,7 +297,15 @@ public class MovimentacaoView extends javax.swing.JInternalFrame {
                     .addComponent(jlDestino, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jlHora, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jlQuilometragem, javax.swing.GroupLayout.DEFAULT_SIZE, 167, Short.MAX_VALUE)
-                    .addComponent(jtfQuilometragem)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jtfIdFuncionario)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jbPesquisarFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jtfIdVeiculo)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jbPesquisarVeiculo, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jtfTipoMov)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -301,14 +322,7 @@ public class MovimentacaoView extends javax.swing.JInternalFrame {
                                 .addGap(43, 43, 43)
                                 .addComponent(jbPesquisar)))
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jtfIdFuncionario)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jbPesquisarFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jtfIdVeiculo)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jbPesquisarVeiculo, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jftfQuilometragem, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jspMovimentacoes, javax.swing.GroupLayout.DEFAULT_SIZE, 653, Short.MAX_VALUE)
                 .addContainerGap())
@@ -339,8 +353,8 @@ public class MovimentacaoView extends javax.swing.JInternalFrame {
                         .addGap(12, 12, 12)
                         .addComponent(jlTipoMov)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jcbTipoMov, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(12, 12, 12)
+                        .addComponent(jtfTipoMov, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jlVeiculo)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -367,7 +381,7 @@ public class MovimentacaoView extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jlQuilometragem, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jtfQuilometragem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jftfQuilometragem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jspMovimentacoes))
                 .addContainerGap())
         );
@@ -381,18 +395,68 @@ public class MovimentacaoView extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jbNovoActionPerformed
 
     private void jbLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbLimparActionPerformed
-        resetTela();
+        limparCampos();
     }//GEN-LAST:event_jbLimparActionPerformed
 
     private void jbEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEditarActionPerformed
         ativarEdicao();
+        jftfData.setEditable(true);
+        jftfHora.setEditable(true);
+        jtfDestino.setEditable(true);
+        jftfQuilometragem.setEditable(true);
     }//GEN-LAST:event_jbEditarActionPerformed
 
     private void jbExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbExcluirActionPerformed
+        MovimentacaoModel movimentacao = new MovimentacaoModel();
+        movimentacao.setId(Integer.parseInt(jtfId.getText()));
+
+        if (movController.excluir(movimentacao)) {
+            JOptionPane.showMessageDialog(this, "Movimentação excluída com sucesso.");
+        } else {
+            JOptionPane.showMessageDialog(this, "Erro ao excluir a movimentação.");
+        }
+
         resetTela();
     }//GEN-LAST:event_jbExcluirActionPerformed
 
     private void jbSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSalvarActionPerformed
+       
+        MovimentacaoModel movimentacao = new MovimentacaoModel();
+
+        //Se o campo ID está vazio, o botão Novo foi pressionado
+        if ("".equals(jtfId.getText())) {
+            movimentacao.setTipo(jtfTipoMov.getText());
+            movimentacao.setIdVeiculo(Integer.parseInt(jtfIdVeiculo.getText()));
+            movimentacao.setIdFuncionario(Integer.parseInt(jtfIdFuncionario.getText()));
+            movimentacao.setData(jftfData.getText());
+            movimentacao.setHora(jftfHora.getText());
+            movimentacao.setDestino(jtfDestino.getText());
+            movimentacao.setQuilometragem(Integer.parseInt(jftfQuilometragem.getText()));
+
+            if (movController.inserir(movimentacao)) {
+                JOptionPane.showMessageDialog(this, "Movimentação realizada com sucesso.");
+                VeiculoController veiculoController = new VeiculoController();
+                veiculoController.atualizarStatus(getVeiculo());
+            } else {
+                JOptionPane.showMessageDialog(this, "Erro ao registrar a movimentação.");
+            }
+        } //Caso contrário, uma linha da tabela foi selecionada e o botão Editar foi pressionado
+        else {
+            movimentacao.setId(Integer.parseInt(jtfId.getText()));
+            movimentacao.setIdVeiculo(Integer.parseInt(jtfIdVeiculo.getText()));
+            movimentacao.setIdFuncionario(Integer.parseInt(jtfIdFuncionario.getText()));
+            movimentacao.setData(jftfData.getText());
+            movimentacao.setHora(jftfHora.getText());
+            movimentacao.setDestino(jtfDestino.getText());
+            movimentacao.setQuilometragem(Integer.parseInt(jftfQuilometragem.getText()));
+            
+            if (movController.editar(movimentacao)) {
+                JOptionPane.showMessageDialog(this, "Os dados da movimentação foram atualizados com sucesso.");
+            } else {
+                JOptionPane.showMessageDialog(this, "Erro ao atualizar dados do veículo.");
+            }
+        }
+
         resetTela();
     }//GEN-LAST:event_jbSalvarActionPerformed
 
@@ -411,11 +475,13 @@ public class MovimentacaoView extends javax.swing.JInternalFrame {
             DefaultTableModel modelo = (DefaultTableModel)jtMovimentacoes.getModel();
 
             jtfId.setText((modelo.getValueAt(linha, 0)).toString());
+            jtfTipoMov.setText((modelo.getValueAt(linha, 1)).toString());
             jtfIdVeiculo.setText((modelo.getValueAt(linha,2)).toString());
             jtfIdFuncionario.setText((modelo.getValueAt(linha,3)).toString());
             jftfData.setText((modelo.getValueAt(linha,4)).toString());
             jftfHora.setText((modelo.getValueAt(linha,5)).toString());
             jtfDestino.setText((modelo.getValueAt(linha,6)).toString());
+            jftfQuilometragem.setText((modelo.getValueAt(linha,7)).toString());
 
             jbEditar.setEnabled(true);
             jbExcluir.setEnabled(true);
@@ -430,17 +496,24 @@ public class MovimentacaoView extends javax.swing.JInternalFrame {
         
         if (lista == null) {
             jtfIdVeiculo.setText("");
+            jtfTipoMov.setText("");
         }
         
         else if (lista.size() == 0) {
             JOptionPane.showMessageDialog(null, "Veículo não encontrado no banco de dados.");
             jtfIdVeiculo.setText("");
+            jtfTipoMov.setText("");
         }
         
         else if (lista.size() == 1) {
             VeiculoModel v = lista.get(0);
             JOptionPane.showMessageDialog(this, "Veículo encontrado: " + v.getMarca() + " " + v.getModelo() + " " + v.getAno() + " ");
             jtfIdVeiculo.setText(Integer.toString(v.getId()));
+            if ("DISPONIVEL".equals(getVeiculo().getStatus()))
+                jtfTipoMov.setText("SAIDA");
+            else jtfTipoMov.setText("ENTRADA");
+            
+            
         }
     }//GEN-LAST:event_jbPesquisarVeiculoActionPerformed
 
@@ -476,9 +549,9 @@ public class MovimentacaoView extends javax.swing.JInternalFrame {
     private javax.swing.JButton jbPesquisarFuncionario;
     private javax.swing.JButton jbPesquisarVeiculo;
     private javax.swing.JButton jbSalvar;
-    private javax.swing.JComboBox<String> jcbTipoMov;
     private javax.swing.JFormattedTextField jftfData;
     private javax.swing.JFormattedTextField jftfHora;
+    private javax.swing.JFormattedTextField jftfQuilometragem;
     private javax.swing.JLabel jlData;
     private javax.swing.JLabel jlDestino;
     private javax.swing.JLabel jlFuncionario;
@@ -493,6 +566,6 @@ public class MovimentacaoView extends javax.swing.JInternalFrame {
     private javax.swing.JTextField jtfId;
     private javax.swing.JTextField jtfIdFuncionario;
     private javax.swing.JTextField jtfIdVeiculo;
-    private javax.swing.JTextField jtfQuilometragem;
+    private javax.swing.JTextField jtfTipoMov;
     // End of variables declaration//GEN-END:variables
 }
