@@ -1,8 +1,13 @@
 package view;
 
+import controller.RequisicaoControlle;
 import controller.UsuarioController;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import model.UsuarioModel;
+
 
 
 import view.RequisicaoView;
@@ -38,6 +43,7 @@ public class Principal extends javax.swing.JFrame {
         Nova_Entrada_Saida = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
+        GerarRelatorioCompras = new javax.swing.JMenuItem();
         jmOutros = new javax.swing.JMenu();
         Sobre = new javax.swing.JMenuItem();
         jmiLogout = new javax.swing.JMenuItem();
@@ -119,6 +125,14 @@ public class Principal extends javax.swing.JFrame {
             }
         });
         jMenu3.add(jMenuItem1);
+
+        GerarRelatorioCompras.setText("Gerar Relatorio de Compras");
+        GerarRelatorioCompras.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                GerarRelatorioComprasActionPerformed(evt);
+            }
+        });
+        jMenu3.add(GerarRelatorioCompras);
 
         jmbMenuPrincipal.add(jMenu3);
 
@@ -239,6 +253,19 @@ public class Principal extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jmOutrosActionPerformed
 
+    private void GerarRelatorioComprasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GerarRelatorioComprasActionPerformed
+     
+        RequisicaoControlle controller =  new RequisicaoControlle();
+        String coluna = JOptionPane.showInputDialog("Informe a placa do veiculo ");
+
+        try {
+            // Chama o método no controlador para gerar o relatório
+            controller.gerarRelatorio(coluna);
+        } catch (IOException ex) {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_GerarRelatorioComprasActionPerformed
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -278,6 +305,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem Cadastro_Funcionario;
     private javax.swing.JMenuItem Cadastro_veiculo;
     private javax.swing.JMenu Controle_Entrada_Saida;
+    private javax.swing.JMenuItem GerarRelatorioCompras;
     private javax.swing.JMenuItem Nova_Entrada_Saida;
     private javax.swing.JMenuItem Sobre;
     private javax.swing.JMenu jMenu3;

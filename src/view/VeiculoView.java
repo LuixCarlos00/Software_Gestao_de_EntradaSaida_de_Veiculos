@@ -18,6 +18,7 @@ public class VeiculoView extends javax.swing.JInternalFrame {
         initComponents();
         resetTela();
         jtfID.setEditable(false);
+        carregarTabela();
     }
 
     private void limparCampos() {
@@ -31,7 +32,7 @@ public class VeiculoView extends javax.swing.JInternalFrame {
     public void carregarTabela() {
 
         ArrayList<VeiculoModel> veiculos = veiculoController.selecionarTodos();
-        DefaultTableModel modelo = (DefaultTableModel) jtVeiculos.getModel();
+        DefaultTableModel modelo = (DefaultTableModel) TabelaVeiculos.getModel();
         modelo.setRowCount(0);
 
         for (int i = 0; i < veiculos.size(); i++) {
@@ -105,8 +106,6 @@ public class VeiculoView extends javax.swing.JInternalFrame {
         jlAno = new javax.swing.JLabel();
         jlPlaca = new javax.swing.JLabel();
         jftfAno = new javax.swing.JFormattedTextField();
-        jsVeiculos = new javax.swing.JScrollPane();
-        jtVeiculos = new javax.swing.JTable();
         jtfMarca = new javax.swing.JTextField();
         jlModelo = new javax.swing.JLabel();
         jtfModelo = new javax.swing.JTextField();
@@ -116,6 +115,8 @@ public class VeiculoView extends javax.swing.JInternalFrame {
         jbCancelar = new javax.swing.JButton();
         jbPesquisar = new javax.swing.JButton();
         jtfPlaca = new javax.swing.JTextField();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        TabelaVeiculos = new javax.swing.JTable();
 
         setClosable(true);
         setTitle("Cadastro de Veículos");
@@ -165,44 +166,6 @@ public class VeiculoView extends javax.swing.JInternalFrame {
         jftfAno.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
         getContentPane().add(jftfAno, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 396, 180, 25));
 
-        jtVeiculos.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "ID", "Placa", "Marca", "Modelo", "Ano", "Status"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        jtVeiculos.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_LAST_COLUMN);
-        jtVeiculos.setPreferredSize(new java.awt.Dimension(450, 78));
-        jtVeiculos.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jtVeiculosMouseClicked(evt);
-            }
-        });
-        jsVeiculos.setViewportView(jtVeiculos);
-        if (jtVeiculos.getColumnModel().getColumnCount() > 0) {
-            jtVeiculos.getColumnModel().getColumn(0).setMinWidth(35);
-            jtVeiculos.getColumnModel().getColumn(0).setMaxWidth(45);
-        }
-
-        getContentPane().add(jsVeiculos, new org.netbeans.lib.awtextra.AbsoluteConstraints(198, 10, 582, 412));
-
         jtfMarca.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jtfMarcaActionPerformed(evt);
@@ -242,6 +205,31 @@ public class VeiculoView extends javax.swing.JInternalFrame {
         });
         getContentPane().add(jbPesquisar, new org.netbeans.lib.awtextra.AbsoluteConstraints(58, 115, -1, -1));
         getContentPane().add(jtfPlaca, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 229, 180, -1));
+
+        TabelaVeiculos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "ID", "Placa", "Marca", "Modelo", "Ano", "Status"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, true, true
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        TabelaVeiculos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                TabelaVeiculosMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(TabelaVeiculos);
+
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 0, 580, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -294,24 +282,6 @@ public class VeiculoView extends javax.swing.JInternalFrame {
 
         resetTela();
     }//GEN-LAST:event_jbSalvarActionPerformed
-
-    private void jtVeiculosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtVeiculosMouseClicked
-
-        if (tabelaAtiva == true) {
-            int linha = jtVeiculos.getSelectedRow();
-            DefaultTableModel modelo = (DefaultTableModel) jtVeiculos.getModel();
-
-            jtfID.setText((modelo.getValueAt(linha, 0)).toString());
-            jtfPlaca.setText((modelo.getValueAt(linha, 1)).toString());
-            jtfMarca.setText((modelo.getValueAt(linha, 2)).toString());
-            jtfModelo.setText((modelo.getValueAt(linha, 3)).toString());
-            jftfAno.setText((modelo.getValueAt(linha, 4)).toString());
-
-            jbEditar.setEnabled(true);
-            jbExcluir.setEnabled(true);
-        }
-
-    }//GEN-LAST:event_jtVeiculosMouseClicked
 
     private void jbEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEditarActionPerformed
         ativarEdicao();
@@ -384,7 +354,7 @@ public class VeiculoView extends javax.swing.JInternalFrame {
         else {
             JOptionPane.showMessageDialog(this, lista.size() + " veículos encontrados.\nExibindo os resultados na tabela.");
             resetTela();
-            DefaultTableModel model = (DefaultTableModel) jtVeiculos.getModel();
+            DefaultTableModel model = (DefaultTableModel) TabelaVeiculos.getModel();
             model.setRowCount(0);
 
             for (VeiculoModel veiculoEncontrado : lista) {
@@ -400,8 +370,29 @@ public class VeiculoView extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_jbPesquisarActionPerformed
 
+    private void TabelaVeiculosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TabelaVeiculosMouseClicked
+       if (tabelaAtiva == true) {
+            int linha = TabelaVeiculos.getSelectedRow();
+            DefaultTableModel modelo = (DefaultTableModel) TabelaVeiculos.getModel();
+
+            jtfID.setText((modelo.getValueAt(linha, 0)).toString());
+            jtfPlaca.setText((modelo.getValueAt(linha, 1)).toString());
+            jtfMarca.setText((modelo.getValueAt(linha, 2)).toString());
+            jtfModelo.setText((modelo.getValueAt(linha, 3)).toString());
+            jftfAno.setText((modelo.getValueAt(linha, 4)).toString());
+            
+
+            jbEditar.setEnabled(true);
+            jbExcluir.setEnabled(true);
+            jbLimpar.setEnabled(true);
+            jbCancelar.setEnabled(false);
+        }
+    }//GEN-LAST:event_TabelaVeiculosMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTable TabelaVeiculos;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton jbCancelar;
     private javax.swing.JButton jbEditar;
     private javax.swing.JButton jbExcluir;
@@ -415,8 +406,6 @@ public class VeiculoView extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jlMarca;
     private javax.swing.JLabel jlModelo;
     private javax.swing.JLabel jlPlaca;
-    private javax.swing.JScrollPane jsVeiculos;
-    private javax.swing.JTable jtVeiculos;
     private javax.swing.JTextField jtfID;
     private javax.swing.JTextField jtfMarca;
     private javax.swing.JTextField jtfModelo;

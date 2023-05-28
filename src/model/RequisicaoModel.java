@@ -9,47 +9,74 @@ package model;
  * @author luixc
  */
 public class RequisicaoModel {
-    
 
-    private  int id;
+    private int id;
     private String Itens;
     private float Quantidade;
     private float ValorUnitario;
     private String Empresa;
     private String Veiculo;
     private String Funcionario;
-    private String Placaveiculo; 
+    private String Placaveiculo;
     private String data;
-    
-    public RequisicaoModel( String Itens, int Quantidade, float ValorUnitario) {
-    
+
+    public RequisicaoModel(int id, String Itens, float Quantidade, float ValorUnitario, String Empresa, String Veiculo, String Funcionario, String Placaveiculo, String data) {
+        this.id = id;
         this.Itens = Itens;
         this.Quantidade = Quantidade;
         this.ValorUnitario = ValorUnitario;
-    }
-
-    public RequisicaoModel() {    
-    }
-
-    
-    
-    public String getdata() {
-        return data;
-    }
-
-    public void setDate(String data) {
+        this.Empresa = Empresa;
+        this.Veiculo = Veiculo;
+        this.Funcionario = Funcionario;
+        this.Placaveiculo = Placaveiculo;
         this.data = data;
     }
-    
-    public String getPlacaveiculo() {
-        return Placaveiculo;
+
+    public RequisicaoModel() {
+        id = 0 ;
+        Itens = " ";
+        Quantidade = 0 ;
+        ValorUnitario = 0 ;
+        Empresa = " ";
+        Veiculo = " ";
+        Funcionario = " ";
+        Placaveiculo = " ";
+        data = " ";
     }
 
-    public void setPlacaveiculo(String Placaveiculo) {
-        this.Placaveiculo = Placaveiculo;
+
+public int getId() {
+        return id;
     }
 
-    
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getItens() {
+        return Itens;
+    }
+
+    public void setItens(String Itens) {
+        this.Itens = Itens;
+    }
+
+    public float getQuantidade() {
+        return Quantidade;
+    }
+
+    public void setQuantidade(float Quantidade) {
+        this.Quantidade = Quantidade;
+    }
+
+    public float getValorUnitario() {
+        return ValorUnitario;
+    }
+
+    public void setValorUnitario(float ValorUnitario) {
+        this.ValorUnitario = ValorUnitario;
+    }
+
     public String getEmpresa() {
         return Empresa;
     }
@@ -74,43 +101,21 @@ public class RequisicaoModel {
         this.Funcionario = Funcionario;
     }
 
-    
-    
-    
-    
-    
-    
-
-    
-
-    public String getItens() {
-        return Itens;
+    public String getPlacaveiculo() {
+        return Placaveiculo;
     }
 
-    public void setItens(String Itens) {
-        this.Itens = Itens;
+    public void setPlacaveiculo(String Placaveiculo) {
+        this.Placaveiculo = Placaveiculo;
     }
 
-    public float getQuantidade() {
-        return Quantidade;
+    public String getData() {
+        return data;
     }
 
-    public void setQuantidade(float Quantidade) {
-        this.Quantidade = Quantidade;
+    public void setData(String data) {
+        this.data = data;
     }
 
-   
 
-    public float getValorUnitario() {
-        return ValorUnitario;
-    }
-
-    public void setValorUnitario(float ValorUnitario) {
-        this.ValorUnitario = ValorUnitario;
-    }
-    
-    
-    
-    
-    
 }

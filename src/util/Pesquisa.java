@@ -7,10 +7,12 @@ import java.util.List;
 
 import model.FuncionarioModel;
 import controller.FuncionarioController;
+import controller.RequisicaoControlle;
 
 import model.VeiculoModel;
 import controller.VeiculoController;
 import model.EmpresasModel;
+import model.RequisicaoModel;
 
 import util.JOptionPaneCustom;
 
@@ -346,4 +348,120 @@ public class Pesquisa {
         return null;
     }
 
+    
+    
+    
+    public List<RequisicaoModel> pesquisaRequisicao(String[] opcoesBuscaRequisicao) {
+        
+        RequisicaoControlle controlle = new RequisicaoControlle();
+        RequisicaoModel Model = new RequisicaoModel();
+
+        int escolha = JOptionPane.showOptionDialog(null, "Escolha o tipo de pesquisa:", "Pesquisa de Requisição ",
+                JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, opcoesBuscaRequisicao, opcoesBuscaRequisicao[0]);
+
+        if (escolha >= 0) { //Se o usuário selecionou uma opção
+            String opcaoBusca = opcoesBuscaRequisicao[escolha];
+
+            switch (opcaoBusca) {
+                case "ID": {
+                    String idBusca = JOptionPaneCustom.showInputDialog("Digite o ID da Requisição (número inteiro positivo):", "Pesquisa por ID").trim();
+                    if (idBusca == null || idBusca.isEmpty()) {
+                        JOptionPane.showMessageDialog(null, "Operação Cancelada");
+                    } else {
+                        try {
+                            int id = Integer.parseInt(idBusca);
+
+                            if (idBusca.length() > 0 && id > 0) {
+                                Model.setId(id);
+                                RequisicaoModel requisicaoModel = controlle.selecionarID(Model);
+
+                                List<RequisicaoModel> lista = new ArrayList<>();;
+                                if (requisicaoModel != null) {
+                                    lista.add(requisicaoModel);
+                                }
+                                return lista;
+                            } else {
+                                JOptionPane.showMessageDialog(null, "O ID digitado deve ser um número inteiro positivo.");
+                            }
+                        } catch (NumberFormatException n) {
+                            JOptionPane.showMessageDialog(null, "O ID digitado deve ser um número inteiro positivo.");
+                        }
+                    }
+                }
+                break;
+
+                case "Placa": {
+                    String PlacaBusca = JOptionPaneCustom.showInputDialog("Digite a Placa do veiculo (formato XXXXXXX):", "Pesquisa por Placa").trim();
+                    if (PlacaBusca == null || PlacaBusca.isEmpty()) {
+                        JOptionPane.showMessageDialog(null, "Operação Cancelada");
+                    } else {
+                        if (PlacaBusca.length() == 7) {
+                            Model.setPlacaveiculo(PlacaBusca);
+                            RequisicaoModel requisicaoModel = controlle.selecionarPlacaVeiculo(Model);
+
+                            List<RequisicaoModel> lista = new ArrayList<>();;
+                            if (requisicaoModel != null) {
+                                lista.add(requisicaoModel);
+                            }
+                            return lista;
+                        } else {
+                            JOptionPane.showMessageDialog(null, "a Placa deve conter exatamente 7 caracteres .");
+                        }
+                    }
+                }
+                break;
+
+                case "Empresa": {
+                    String nomeBusca = JOptionPaneCustom.showInputDialog("Digite o nome da Empresa: ", "Pesquisa por nome").trim();
+                    if (nomeBusca == null || nomeBusca.isEmpty()) {
+                        JOptionPane.showMessageDialog(null, "Operação Cancelada");
+                    } else {
+                        if (nomeBusca.length() > 0 && nomeBusca.matches("[a-zA-Z]+")) {
+                            Model.setEmpresa(nomeBusca);
+                            List<RequisicaoModel> lista = controlle.selecionarNome(Model);
+                            return lista;
+                        } else {
+                            JOptionPane.showMessageDialog(null, "O nome digitado não é valido.");
+                        }
+                    }
+                }
+                break;
+
+                case "Data": {
+
+                    String DataBusca = JOptionPaneCustom.showInputDialog("Digite a Data Formato(##/##/####)", "Pesquisa por Data").trim();
+                    if (DataBusca == null || DataBusca.isEmpty()) {
+                        JOptionPane.showMessageDialog(null, "Operação Cancelada");
+                    } else {
+                        if (DataBusca.length() == 10) {
+                            Model.setData(DataBusca);
+                            List<RequisicaoModel> requisicao = controlle.selecionarData(Model);
+
+                            List<RequisicaoModel> lista = new ArrayList<>();;
+                            if (requisicao != null) {
+                                lista=requisicao;
+                            }
+                            return lista;
+                        } else {
+                            JOptionPane.showMessageDialog(null, "O campo Data deve conter 10 caracters(inclua os pontos e traços na busca).");
+                        }
+                    }
+                }
+                break;
+            }
+        }
+        return null;
+    }
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 }
+

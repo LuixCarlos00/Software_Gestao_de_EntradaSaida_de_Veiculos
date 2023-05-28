@@ -8,8 +8,6 @@ import java.util.List;
 import model.EmpresasModel;
 
 
-import model.FuncionarioModel;
-
 import util.Conexao;
 
 public class EmpresasController {
@@ -214,16 +212,14 @@ public class EmpresasController {
 
             if (resultado.next()) {
                 idencontrado = new EmpresasModel();
-                 while (resultado.next()) {
-                EmpresasModel nomeEncontrado = new EmpresasModel();
-                nomeEncontrado.setId(resultado.getInt("id"));
-                nomeEncontrado.setNomeEmpresa(resultado.getString("nome"));
-                nomeEncontrado.setCnpj(resultado.getString("cnpj"));
-                nomeEncontrado.setFax(resultado.getString("fax"));
-                nomeEncontrado.setEndereco(resultado.getString("endereco"));
-                nomeEncontrado.setUf(resultado.getString("uf"));
+                idencontrado.setId(resultado.getInt("id"));
+                idencontrado.setNomeEmpresa(resultado.getString("nome"));
+                idencontrado.setCnpj(resultado.getString("cnpj"));
+                idencontrado.setFax(resultado.getString("fax"));
+                idencontrado.setEndereco(resultado.getString("endereco"));
+                idencontrado.setUf(resultado.getString("uf"));
                
-            }
+            
             }
 
         } catch (SQLException e) {

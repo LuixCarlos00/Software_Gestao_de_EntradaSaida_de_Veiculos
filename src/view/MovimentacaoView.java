@@ -228,10 +228,7 @@ public class MovimentacaoView extends javax.swing.JInternalFrame {
 
         jtMovimentacoes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null}
+
             },
             new String [] {
                 "ID", "Tipo Mov.", "Veículo", "Funcionário", "Data", "Hora", "Destino", "KM"
@@ -276,7 +273,6 @@ public class MovimentacaoView extends javax.swing.JInternalFrame {
         });
 
         jftfQuilometragem.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
-        jftfQuilometragem.setText("");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
