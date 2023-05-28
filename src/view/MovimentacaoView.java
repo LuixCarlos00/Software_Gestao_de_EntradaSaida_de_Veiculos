@@ -428,14 +428,28 @@ public class MovimentacaoView extends javax.swing.JInternalFrame {
             movimentacao.setHora(jftfHora.getText());
             movimentacao.setDestino(jtfDestino.getText());
             movimentacao.setQuilometragem(Integer.parseInt(jftfQuilometragem.getText()));
-
-            if (movController.inserir(movimentacao)) {
-                JOptionPane.showMessageDialog(this, "Movimentação realizada com sucesso.");
-                VeiculoController veiculoController = new VeiculoController();
-                veiculoController.atualizarStatus(getVeiculo());
-            } else {
-                JOptionPane.showMessageDialog(this, "Erro ao registrar a movimentação.");
+                
+            MovimentacaoModel movimentacaoAnterior = movController.selecionarVeiculoUltMov(movimentacao);
+            
+            if (movimentacaoAnterior == null) 
+                movimentacaoAnterior = new MovimentacaoModel();
+                
+            if ("ENTRADA".equals(movimentacao.getTipo()) && movimentacaoAnterior.getQuilometragem() >= movimentacao.getQuilometragem())
+                JOptionPane.showMessageDialog(this, "A quilometragem no retorno do veículo deve ser maior do que a quilometragem da última saída.");
+            
+            else if ("SAIDA".equals(movimentacao.getTipo()) && movimentacaoAnterior.getQuilometragem() > movimentacao.getQuilometragem())
+                JOptionPane.showMessageDialog(this, "A quilometragem na saída do veículo deve ser maior ou igual à quilometragem da última entrada.");
+            
+            else {
+                if (movController.inserir(movimentacao)) {
+                    JOptionPane.showMessageDialog(this, "Movimentação realizada com sucesso.");
+                    VeiculoController veiculoController = new VeiculoController();
+                    veiculoController.atualizarStatus(getVeiculo());
+                    resetTela();
+                } 
+                else JOptionPane.showMessageDialog(this, "Erro ao registrar a movimentação.");
             }
+            
         } //Caso contrário, uma linha da tabela foi selecionada e o botão Editar foi pressionado
         else {
             movimentacao.setId(Integer.parseInt(jtfId.getText()));
@@ -448,12 +462,13 @@ public class MovimentacaoView extends javax.swing.JInternalFrame {
             
             if (movController.editar(movimentacao)) {
                 JOptionPane.showMessageDialog(this, "Os dados da movimentação foram atualizados com sucesso.");
+                resetTela();
             } else {
                 JOptionPane.showMessageDialog(this, "Erro ao atualizar dados do veículo.");
             }
+            
         }
 
-        resetTela();
     }//GEN-LAST:event_jbSalvarActionPerformed
 
     private void jbCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCancelarActionPerformed
@@ -461,7 +476,54 @@ public class MovimentacaoView extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jbCancelarActionPerformed
 
     private void jbPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbPesquisarActionPerformed
-    
+        Pesquisa p = new Pesquisa();
+        String[] opcoesBusca = {"ID", "Veiculo", "Data"};
+        List<MovimentacaoModel> lista = p.pesquisaMovimentacao(opcoesBusca);
+
+        if (lista == null) {
+            resetTela();
+        } 
+        else if (lista.size() == 0) {
+            JOptionPane.showMessageDialog(null, "Nenhuma movimentação encontrada no banco de dados.");
+            resetTela();
+        }
+        else if (lista.size() == 1) {
+            JOptionPane.showMessageDialog(this, "1 Movimentação encontrada.\nExibindo o resultado nos campos de texto.");
+            resetTela();
+            MovimentacaoModel m = lista.get(0);
+            
+            jtfId.setText(Integer.toString(m.getId()));
+            jtfTipoMov.setText(m.getTipo());
+            jtfIdVeiculo.setText(Integer.toString(m.getIdVeiculo()));
+            jtfIdFuncionario.setText(Integer.toString(m.getIdFuncionario()));
+            jftfData.setText(m.getData());
+            jftfHora.setText(m.getHora());
+            jtfDestino.setText(m.getDestino());
+            jftfQuilometragem.setText(Integer.toString(m.getQuilometragem()));
+         
+            jbEditar.setEnabled(true);
+            jbExcluir.setEnabled(true);
+            jbLimpar.setEnabled(true);
+        } 
+        else {
+            JOptionPane.showMessageDialog(this, lista.size() + " movimentações encontradas.\nExibindo os resultados na tabela.");
+            resetTela();
+            DefaultTableModel model = (DefaultTableModel) jtMovimentacoes.getModel();
+            model.setRowCount(0);
+
+            for (MovimentacaoModel movEncontrada : lista) {
+                model.addRow(new Object[]{
+                    movEncontrada.getId(),
+                    movEncontrada.getTipo(),
+                    movEncontrada.getIdVeiculo(),
+                    movEncontrada.getIdFuncionario(),
+                    movEncontrada.getData(),
+                    movEncontrada.getHora(),
+                    movEncontrada.getDestino(),
+                    movEncontrada.getQuilometragem()
+                });
+            }
+        }
     }//GEN-LAST:event_jbPesquisarActionPerformed
 
     private void jtMovimentacoesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtMovimentacoesMouseClicked
@@ -507,7 +569,15 @@ public class MovimentacaoView extends javax.swing.JInternalFrame {
             jtfIdVeiculo.setText(Integer.toString(v.getId()));
             if ("DISPONIVEL".equals(getVeiculo().getStatus()))
                 jtfTipoMov.setText("SAIDA");
-            else jtfTipoMov.setText("ENTRADA");
+            else {
+                jtfTipoMov.setText("ENTRADA");
+                jtfDestino.setText("Empresa");
+                MovimentacaoModel movimentacao = new MovimentacaoModel();
+                movimentacao.setIdVeiculo(Integer.parseInt(jtfIdVeiculo.getText()));
+                MovimentacaoModel movimentacaoAnterior = movController.selecionarVeiculoUltMov(movimentacao);
+                jtfIdFuncionario.setText(Integer.toString(movimentacaoAnterior.getIdFuncionario()));
+            }
+                
             
             
         }

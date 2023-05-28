@@ -229,7 +229,7 @@ public class VeiculoView extends javax.swing.JInternalFrame {
         });
         jScrollPane1.setViewportView(TabelaVeiculos);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 0, 580, -1));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 10, 580, 410));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -301,6 +301,7 @@ public class VeiculoView extends javax.swing.JInternalFrame {
 
             VeiculoModel veiculo = new VeiculoModel();
             veiculo.setId(Integer.parseInt(jtfID.getText()));
+            veiculoController.excluir(veiculo);
             resetTela();
             limparCampos();
         } else if (JOptionPane.CLOSED_OPTION == JOptionPane.CLOSED_OPTION) {

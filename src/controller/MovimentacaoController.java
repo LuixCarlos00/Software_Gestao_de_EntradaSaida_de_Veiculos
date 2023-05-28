@@ -147,4 +147,106 @@ public class MovimentacaoController {
         return movimentacoes;
     }
     
+    public MovimentacaoModel selecionarVeiculoUltMov(MovimentacaoModel movimentacao){
+        String sql = "SELECT * FROM movimentacoes WHERE id_veiculo = ? ORDER BY id DESC LIMIT 1;";
+        MovimentacaoModel modeloEncontrado = null;
+        Conexao.conectar();
+        
+        try{
+            PreparedStatement sentenca = Conexao.con.prepareStatement(sql);
+            sentenca.setInt(1, movimentacao.getIdVeiculo());
+            ResultSet resultado = sentenca.executeQuery();
+            
+            if(resultado.next()) {
+                modeloEncontrado = new MovimentacaoModel();
+                modeloEncontrado.setId(resultado.getInt("id"));
+                modeloEncontrado.setTipo(resultado.getString("tipo"));
+                modeloEncontrado.setIdVeiculo(resultado.getInt("id_veiculo"));
+                modeloEncontrado.setIdFuncionario(resultado.getInt("id_funcionario"));
+                modeloEncontrado.setData(resultado.getString("data"));
+                modeloEncontrado.setHora(resultado.getString("hora"));
+                modeloEncontrado.setDestino(resultado.getString("destino"));
+                modeloEncontrado.setQuilometragem(resultado.getInt("quilometragem"));
+            }
+            
+        }
+        
+        catch(SQLException e){
+            System.out.println("Erro na sentença SQL de seleção: "+ e.getMessage());
+        }
+        
+        Conexao.desconectar();
+        return modeloEncontrado;
+    }
+    
+    public ArrayList <MovimentacaoModel> selecionarVeiculo(MovimentacaoModel movimentacao){
+        ArrayList<MovimentacaoModel> movimentacoes = new ArrayList<>();
+        String sql = "SELECT * FROM movimentacoes WHERE id_veiculo = ?;";
+        Conexao.conectar();
+        
+        try{
+            PreparedStatement sentenca = Conexao.con.prepareStatement(sql);
+            sentenca.setInt(1, movimentacao.getIdVeiculo());
+            ResultSet resultado = sentenca.executeQuery();
+            
+            while(resultado.next()) {
+                MovimentacaoModel modeloEncontrado = new MovimentacaoModel();
+                modeloEncontrado = new MovimentacaoModel();
+                modeloEncontrado.setId(resultado.getInt("id"));
+                modeloEncontrado.setTipo(resultado.getString("tipo"));
+                modeloEncontrado.setIdVeiculo(resultado.getInt("id_veiculo"));
+                modeloEncontrado.setIdFuncionario(resultado.getInt("id_funcionario"));
+                modeloEncontrado.setData(resultado.getString("data"));
+                modeloEncontrado.setHora(resultado.getString("hora"));
+                modeloEncontrado.setDestino(resultado.getString("destino"));
+                modeloEncontrado.setQuilometragem(resultado.getInt("quilometragem"));
+                movimentacoes.add(modeloEncontrado);
+            
+            }
+            
+        }
+        
+        catch(SQLException e){
+            System.out.println("Erro na sentença SQL de seleção: "+ e.getMessage());
+        }
+        
+        Conexao.desconectar();
+        return movimentacoes;
+    }
+    
+    public ArrayList <MovimentacaoModel> selecionarData(MovimentacaoModel movimentacao){
+        ArrayList<MovimentacaoModel> movimentacoes = new ArrayList<>();
+        String sql = "SELECT * FROM movimentacoes WHERE data = ?;";
+        Conexao.conectar();
+        
+        try{
+            PreparedStatement sentenca = Conexao.con.prepareStatement(sql);
+            sentenca.setString(1, movimentacao.getData());
+            ResultSet resultado = sentenca.executeQuery();
+            
+            while(resultado.next()) {
+                MovimentacaoModel modeloEncontrado = new MovimentacaoModel();
+                modeloEncontrado = new MovimentacaoModel();
+                modeloEncontrado.setId(resultado.getInt("id"));
+                modeloEncontrado.setTipo(resultado.getString("tipo"));
+                modeloEncontrado.setIdVeiculo(resultado.getInt("id_veiculo"));
+                modeloEncontrado.setIdFuncionario(resultado.getInt("id_funcionario"));
+                modeloEncontrado.setData(resultado.getString("data"));
+                modeloEncontrado.setHora(resultado.getString("hora"));
+                modeloEncontrado.setDestino(resultado.getString("destino"));
+                modeloEncontrado.setQuilometragem(resultado.getInt("quilometragem"));
+                movimentacoes.add(modeloEncontrado);
+            
+            }
+            
+        }
+        
+        catch(SQLException e){
+            System.out.println("Erro na sentença SQL de seleção: "+ e.getMessage());
+        }
+        
+        Conexao.desconectar();
+        return movimentacoes;
+    }
+    
 }

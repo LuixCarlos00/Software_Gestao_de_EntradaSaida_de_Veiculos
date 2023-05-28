@@ -7,11 +7,13 @@ import java.util.List;
 
 import model.FuncionarioModel;
 import controller.FuncionarioController;
+import controller.MovimentacaoController;
 import controller.RequisicaoControlle;
 
 import model.VeiculoModel;
 import controller.VeiculoController;
 import model.EmpresasModel;
+import model.MovimentacaoModel;
 import model.RequisicaoModel;
 
 import util.JOptionPaneCustom;
@@ -453,8 +455,90 @@ public class Pesquisa {
         return null;
     }
 
-    
-    
+    public List<MovimentacaoModel> pesquisaMovimentacao(String[] opcoesBusca) {
+        MovimentacaoController movController = new MovimentacaoController();
+        MovimentacaoModel movimentacao = new MovimentacaoModel();
+
+        int escolha = JOptionPane.showOptionDialog(null, "Escolha o tipo de pesquisa:", "Pesquisa de Movimentações",
+                JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, opcoesBusca, opcoesBusca[0]);
+
+        if (escolha >= 0) { //Se o usuário selecionou uma opção
+            String opcaoBusca = opcoesBusca[escolha];
+
+            switch (opcaoBusca) {
+
+                case "ID": {
+                    String idBusca = JOptionPaneCustom.showInputDialog("Digite o ID da movimentação (número inteiro positivo):", "Pesquisa por ID").trim();
+                    if (idBusca == null || idBusca.isEmpty()) {
+                        JOptionPane.showMessageDialog(null, "Operação Cancelada");
+                    } else {
+                        try {
+                            int id = Integer.parseInt(idBusca);
+
+                            if (idBusca.length() > 0 && id > 0) {
+                                movimentacao.setId(id);
+                                MovimentacaoModel mov_encontrada = movController.selecionar(movimentacao);
+
+                                List<MovimentacaoModel> lista = new ArrayList<>();;
+                                if (mov_encontrada != null) {
+                                    lista.add(mov_encontrada);
+                                }
+                                return lista;
+                            } else {
+                                JOptionPane.showMessageDialog(null, "O ID digitado deve ser um número inteiro positivo.");
+                            }
+                        } catch (NumberFormatException n) {
+                            JOptionPane.showMessageDialog(null, "O ID digitado deve ser um número inteiro positivo.");
+                        }
+                    }
+                }
+                break;
+                              
+                case "Veiculo": {
+                    String idBusca = JOptionPaneCustom.showInputDialog("Digite o ID do veículo (número inteiro positivo):", "Pesquisa por veículo").trim();
+                    if (idBusca == null || idBusca.isEmpty()) {
+                        JOptionPane.showMessageDialog(null, "Operação Cancelada");
+                    } else {
+                        try {
+                            int id = Integer.parseInt(idBusca);
+
+                            if (idBusca.length() > 0 && id > 0) {
+                                movimentacao.setIdVeiculo(id);
+                                List<MovimentacaoModel> lista = movController.selecionarVeiculo(movimentacao);
+                                return lista;
+                            } else {
+                                JOptionPane.showMessageDialog(null, "O ID digitado deve ser um número inteiro positivo.");
+                            }
+                        } catch (NumberFormatException n) {
+                            JOptionPane.showMessageDialog(null, "O ID digitado deve ser um número inteiro positivo.");
+                        }
+                    }
+                }
+                break;
+                
+                case "Data": {
+                    String dataBusca = JOptionPaneCustom.showInputDialog("Digite a data das movimentações (formato XX/XX/XXXX):", "Pesquisa por data").trim();
+                    if (dataBusca == null || dataBusca.isEmpty()) {
+                        JOptionPane.showMessageDialog(null, "Operação Cancelada");
+                    } else {
+                        if (dataBusca.length() == 10) {
+                            movimentacao.setData(dataBusca); 
+
+                            List<MovimentacaoModel> lista = movController.selecionarData(movimentacao);
+                            return lista;
+                        } 
+                        
+                        else {
+                            JOptionPane.showMessageDialog(null, "A data digitada deve ter 10 caracteres.");
+                        }
+                    }
+                }
+                break;
+                
+            }
+        }
+        return null;
+    }
     
     
     
