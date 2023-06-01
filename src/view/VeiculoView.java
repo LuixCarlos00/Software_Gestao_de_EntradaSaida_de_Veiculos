@@ -250,11 +250,16 @@ public class VeiculoView extends javax.swing.JInternalFrame {
         String Marca = jtfMarca.getText();
         String modelo = jtfModelo.getText();
         String Ano = jftfAno.getText();
+        
+        String formato1Regex = "[A-Z]{3}[0-9]{4}";
+        String formato2Regex = "[A-Z]{3}[0-9]{1}[A-Z]{1}[0-9]{2}";
 
         if (placa.isEmpty() || Marca.isEmpty() || modelo.isEmpty() || Ano.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Por favor, prencha todos os campos solicitados.");
         } else if (placa.length() != 7) {
             JOptionPane.showMessageDialog(this, "A placa deve conter exatamente 7 caracteres.");
+        } else if (!placa.matches(formato1Regex) && !placa.matches(formato2Regex)) {
+            JOptionPane.showMessageDialog(this, "Placa de veículo inválida.");
         } else if ("".equals(jtfID.getText())) {
             veiculo.setPlaca(jtfPlaca.getText());
             veiculo.setMarca(jtfMarca.getText());
@@ -372,7 +377,7 @@ public class VeiculoView extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jbPesquisarActionPerformed
 
     private void TabelaVeiculosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TabelaVeiculosMouseClicked
-       if (tabelaAtiva == true) {
+        if (tabelaAtiva == true) {
             int linha = TabelaVeiculos.getSelectedRow();
             DefaultTableModel modelo = (DefaultTableModel) TabelaVeiculos.getModel();
 
@@ -381,7 +386,6 @@ public class VeiculoView extends javax.swing.JInternalFrame {
             jtfMarca.setText((modelo.getValueAt(linha, 2)).toString());
             jtfModelo.setText((modelo.getValueAt(linha, 3)).toString());
             jftfAno.setText((modelo.getValueAt(linha, 4)).toString());
-            
 
             jbEditar.setEnabled(true);
             jbExcluir.setEnabled(true);

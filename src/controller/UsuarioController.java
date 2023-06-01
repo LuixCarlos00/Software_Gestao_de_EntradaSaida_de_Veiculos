@@ -45,9 +45,7 @@ public class UsuarioController {
     }
     
     
-      
 
-    
     
     public UsuarioModel selecionar(UsuarioModel usuario){
         String sql = "SELECT * FROM usuarios WHERE cpf = ? AND senha = ?;";

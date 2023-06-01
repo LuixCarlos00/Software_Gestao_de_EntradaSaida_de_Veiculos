@@ -3,13 +3,15 @@ package view;
 import controller.UsuarioController;
 import javax.swing.JOptionPane;
 import model.UsuarioModel;
+import util.Validacoes;
+
 import view.LoginView;
 import view.LoginView;
 
 public class CriarContaView extends javax.swing.JFrame {
-    
+
     UsuarioController usuario = new UsuarioController();
-    
+
     public CriarContaView() {
         initComponents();
     }
@@ -135,20 +137,27 @@ public class CriarContaView extends javax.swing.JFrame {
         String repetirSenha = jtfRepetirSenha.getText();
         String user = jtfUsuario.getText();
         String cpf = textCPF.getText();
-        
+        Validacoes v = new Validacoes();
+
         if (senha.isEmpty() || repetirSenha.isEmpty() || user.isEmpty() || cpf.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Preencha todos os campos.");
         } else if (senha.contains(" ") || repetirSenha.contains(" ") || user.contains(" ") || cpf.contains(" ")) {
             JOptionPane.showMessageDialog(this, "Não é possível cadastrar usuário com espaços em branco.");
-        } else if (usuarioCont.verificarCPF(cpf)) {
-            JOptionPane.showMessageDialog(this, "Já existe um usuário cadastrado com esse CPF.");
+        }else  {
+            if (usuarioCont.verificarCPF(cpf)) {
+                 JOptionPane.showMessageDialog(this, "Já existe um usuário cadastrado com esse CPF.");
+            }  
+        } 
+        boolean valido = Validacoes.validarCPF(cpf);
+        if (valido != true) {
+            JOptionPane.showMessageDialog(this, "CPF Invalido.");
         } else if (senha.equals(repetirSenha)) {
             UsuarioModel usuario = new UsuarioModel();
             usuario.setNome(user);
             usuario.setSenha(senha);
             usuario.setCpf(cpf);
             usuario.setAdmin("N");
-            
+
             if (usuarioCont.inserir(usuario)) {
                 JOptionPane.showMessageDialog(this, "Usuário cadastrado com sucesso.");
                 LoginView login = new LoginView();
@@ -162,8 +171,9 @@ public class CriarContaView extends javax.swing.JFrame {
             limparCampos();
             jtfUsuario.requestFocus();
         }
-        
+
     }//GEN-LAST:event_jbCriarUsuarioActionPerformed
+
 
     private void jtfUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfUsuarioActionPerformed
         // TODO add your handling code here:
@@ -178,13 +188,12 @@ public class CriarContaView extends javax.swing.JFrame {
     private void textCPFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textCPFActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_textCPFActionPerformed
-    
+
     private void limparCampos() {
         jtfRepetirSenha.setText("");
         jtfSenha.setText("");
         jtfUsuario.setText("");
-        
-        
+
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
