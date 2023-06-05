@@ -1,5 +1,6 @@
 package view;
 
+import controller.FuncionarioController;
 import controller.MovimentacaoController;
 import controller.VeiculoController;
 import java.util.ArrayList;
@@ -14,6 +15,8 @@ import util.Pesquisa;
 public class MovimentacaoView extends javax.swing.JInternalFrame {
    
     MovimentacaoController movController = new MovimentacaoController();
+    VeiculoController veiculoController = new VeiculoController();
+    FuncionarioController funcionarioController = new FuncionarioController();
     boolean tabelaAtiva = true;
 
     public MovimentacaoView() {
@@ -39,15 +42,19 @@ public class MovimentacaoView extends javax.swing.JInternalFrame {
     public void carregarTabela() {
         
         ArrayList <MovimentacaoModel> movimentacoes = movController.selecionarTodos();
+        VeiculoModel veiculo = new VeiculoModel();
+        FuncionarioModel funcionario = new FuncionarioModel();
         DefaultTableModel modelo = (DefaultTableModel)jtMovimentacoes.getModel();
         modelo.setRowCount(0);
         
         for (int i = 0; i < movimentacoes.size(); i++) {
+            veiculo.setId(movimentacoes.get(i).getIdVeiculo());
+            funcionario.setId(movimentacoes.get(i).getIdFuncionario());
             modelo.addRow(new String[]{
                 String.valueOf(movimentacoes.get(i).getId()), 
                 movimentacoes.get(i).getTipo(),
-                String.valueOf(movimentacoes.get(i).getIdVeiculo()),
-                String.valueOf(movimentacoes.get(i).getIdFuncionario()),
+                veiculoController.selecionar(veiculo).getModelo() + ' ' + veiculoController.selecionar(veiculo).getAno(),
+                funcionarioController.selecionarID(funcionario).getNome(),
                 movimentacoes.get(i).getData(),
                 movimentacoes.get(i).getHora(),
                 movimentacoes.get(i).getDestino(),
@@ -531,11 +538,14 @@ public class MovimentacaoView extends javax.swing.JInternalFrame {
         if(tabelaAtiva == true) {
             int linha = jtMovimentacoes.getSelectedRow();
             DefaultTableModel modelo = (DefaultTableModel)jtMovimentacoes.getModel();
-
+            MovimentacaoModel movimentacao = new MovimentacaoModel();
+            movimentacao.setId(Integer.parseInt(modelo.getValueAt(linha, 0).toString()));
+            MovimentacaoModel movEncontrada = movController.selecionar(movimentacao);
+            
             jtfId.setText((modelo.getValueAt(linha, 0)).toString());
             jtfTipoMov.setText((modelo.getValueAt(linha, 1)).toString());
-            jtfIdVeiculo.setText((modelo.getValueAt(linha,2)).toString());
-            jtfIdFuncionario.setText((modelo.getValueAt(linha,3)).toString());
+            jtfIdVeiculo.setText(String.valueOf(movEncontrada.getIdVeiculo()));
+            jtfIdFuncionario.setText(String.valueOf(movEncontrada.getIdFuncionario()));
             jftfData.setText((modelo.getValueAt(linha,4)).toString());
             jftfHora.setText((modelo.getValueAt(linha,5)).toString());
             jtfDestino.setText((modelo.getValueAt(linha,6)).toString());
