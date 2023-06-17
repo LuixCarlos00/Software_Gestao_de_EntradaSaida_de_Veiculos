@@ -399,12 +399,9 @@ public class Pesquisa {
                     } else {
                         if (PlacaBusca.length() == 7) {
                             Model.setPlacaveiculo(PlacaBusca);
-                            RequisicaoModel requisicaoModel = controlle.selecionarPlacaVeiculo(Model);
-
-                            List<RequisicaoModel> lista = new ArrayList<>();;
-                            if (requisicaoModel != null) {
-                                lista.add(requisicaoModel);
-                            }
+                           
+                            List<RequisicaoModel> lista = controlle.selecionarPlacaVeiculo(Model);
+                           
                             return lista;
                         } else {
                             JOptionPane.showMessageDialog(null, "a Placa deve conter exatamente 7 caracteres .");
@@ -437,12 +434,7 @@ public class Pesquisa {
                     } else {
                         if (DataBusca.length() == 10) {
                             Model.setData(DataBusca);
-                            List<RequisicaoModel> requisicao = controlle.selecionarData(Model);
-
-                            List<RequisicaoModel> lista = new ArrayList<>();;
-                            if (requisicao != null) {
-                                lista=requisicao;
-                            }
+                            List<RequisicaoModel> lista = controlle.selecionarData(Model);
                             return lista;
                         } else {
                             JOptionPane.showMessageDialog(null, "O campo Data deve conter 10 caracters(inclua os pontos e traços na busca).");

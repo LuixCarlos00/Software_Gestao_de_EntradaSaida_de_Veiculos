@@ -163,18 +163,18 @@ public class RequisicaoControlle {
     
     
 
-    public RequisicaoModel selecionarPlacaVeiculo(RequisicaoModel requisicaoModel) {
-        String sql = "SELECT * FROM requisicao where placa_veiculo = ?;";
-        RequisicaoModel idencontrado = null;
+ public List<RequisicaoModel> selecionarPlacaVeiculo(RequisicaoModel requisicaoModel) {
+        String sql = "select * from requisicao where placa_veiculo like ?;";
+        List<RequisicaoModel> ListaEncontrada = new ArrayList<>();
         Conexao.conectar();
 
         try {
             PreparedStatement sentenca = Conexao.con.prepareStatement(sql);
-            sentenca.setString(1, requisicaoModel.getPlacaveiculo());
+             sentenca.setString(1, "%" +requisicaoModel.getPlacaveiculo() + "%");
             ResultSet resultado = sentenca.executeQuery();
 
-            if (resultado.next()) {
-                idencontrado = new RequisicaoModel();
+             while(resultado.next()) {
+               RequisicaoModel idencontrado = new RequisicaoModel();
                 idencontrado.setId(resultado.getInt("id"));
                 idencontrado.setItens(resultado.getString("itens"));
                 idencontrado.setQuantidade(Float.parseFloat(resultado.getString("quantidade")));
@@ -184,6 +184,7 @@ public class RequisicaoControlle {
                 idencontrado.setPlacaveiculo(resultado.getString("placa_veiculo"));
                 idencontrado.setFuncionario(resultado.getString("funcionario"));
                 idencontrado.setData(resultado.getString("data"));
+                ListaEncontrada.add(idencontrado);
             }
 
         } catch (SQLException e) {
@@ -191,7 +192,7 @@ public class RequisicaoControlle {
         }
 
         Conexao.desconectar();
-        return idencontrado;
+        return ListaEncontrada;
     }
 
     public ArrayList<RequisicaoModel> selecionarTodos() {
@@ -281,16 +282,16 @@ public class RequisicaoControlle {
     }
     
     public List<RequisicaoModel> selecionarData (RequisicaoModel requisicaoModel) {
-        String sql = "SELECT * FROM requisicao where data = ?;";
+         String sql = "SELECT * FROM requisicao where data like ?;";
         List<RequisicaoModel> dataEncontrada = new ArrayList<>();        
         Conexao.conectar();
 
         try {
             PreparedStatement sentenca = Conexao.con.prepareStatement(sql);
-            sentenca.setString(1, requisicaoModel.getData());
+             sentenca.setString(1,  "%"+ requisicaoModel.getData()+ "%");
             ResultSet resultado = sentenca.executeQuery();
 
-            if (resultado.next()) {
+            while (resultado.next()) {
                 RequisicaoModel idEncontrado = new RequisicaoModel();
                 idEncontrado.setId(resultado.getInt("id"));
                 idEncontrado.setItens(resultado.getString("itens"));
@@ -298,9 +299,9 @@ public class RequisicaoControlle {
                 idEncontrado.setValorUnitario(Float.parseFloat(resultado.getString("valor_unitario")));
                 idEncontrado.setEmpresa(resultado.getString("empresa"));
                 idEncontrado.setVeiculo(resultado.getString("veiculo"));
-               idEncontrado.setPlacaveiculo(resultado.getString("placa_veiculo"));
+                idEncontrado.setPlacaveiculo(resultado.getString("placa_veiculo"));
                 idEncontrado.setFuncionario(resultado.getString("funcionario"));
-               idEncontrado.setData(resultado.getString("data"));
+                idEncontrado.setData(resultado.getString("data"));
                dataEncontrada.add(idEncontrado);
                
             

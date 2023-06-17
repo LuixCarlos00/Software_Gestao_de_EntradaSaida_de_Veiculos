@@ -277,7 +277,7 @@ public class VeiculoView extends javax.swing.JInternalFrame {
             veiculo.setPlaca(jtfPlaca.getText());
             veiculo.setMarca(jtfMarca.getText());
             veiculo.setModelo(jtfModelo.getText());
-
+            veiculo.setAno(Integer.parseInt(jftfAno.getText()));
             if (veiculoController.editar(veiculo)) {
                 JOptionPane.showMessageDialog(this, "Os dados do veículo foram atualizados com sucesso.");
             } else {
