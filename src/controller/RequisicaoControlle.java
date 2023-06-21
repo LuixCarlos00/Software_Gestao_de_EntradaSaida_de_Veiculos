@@ -373,7 +373,7 @@ public class RequisicaoControlle {
             
             if(!resultSet.isBeforeFirst()) {
                 // Caso não exista um veículo com a placa fornecida, adicione uma mensagem de erro ao relatório
-                document.add(new Paragraph(" "));
+                document.add(new Paragraph("Placa nao existe no banco de dados  "));
             }
 
             // Fechar o documento

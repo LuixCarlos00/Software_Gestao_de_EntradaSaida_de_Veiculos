@@ -126,6 +126,7 @@ public class Principal extends javax.swing.JFrame {
         });
         jMenu3.add(jMenuItem1);
 
+        GerarRelatorioCompras.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/building.png"))); // NOI18N
         GerarRelatorioCompras.setText("Gerar Relatorio de Compras");
         GerarRelatorioCompras.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

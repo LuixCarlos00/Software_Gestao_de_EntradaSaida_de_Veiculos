@@ -349,10 +349,7 @@ public class Pesquisa {
         }
         return null;
     }
-
-    
-    
-    
+   
     public List<RequisicaoModel> pesquisaRequisicao(String[] opcoesBuscaRequisicao) {
         
         RequisicaoControlle controlle = new RequisicaoControlle();

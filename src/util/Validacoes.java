@@ -22,16 +22,12 @@ public class Validacoes {
         else if (cpf.matches("(\\d)\\1{10}")) {
             return false;
         }
-
-        
-        
         
         // Calculo do primeiro dígito verificador
         int soma = 0;
         for (int i = 0; i < 9; i++) {
             soma += (cpf.charAt(i) - '0') * (10 - i);
         }
-
         int digito1 = 11 - (soma % 11);
         if (digito1 > 9) {
             digito1 = 0;
@@ -41,10 +37,6 @@ public class Validacoes {
             return false;
         }
 
-        
-        
-        
-        
         
         // Calculo do segundo dígito verificador
         soma = 0;
@@ -57,9 +49,6 @@ public class Validacoes {
             digito2 = 0;
         }
 
-        
-        
-        
         
         return digito2 == (cpf.charAt(10) - '0');
 
